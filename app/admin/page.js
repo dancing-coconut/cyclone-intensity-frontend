@@ -2,6 +2,7 @@
  
 import { useRouter } from 'next/navigation'
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import Image from "next/image";
 import CycloneIcon from '@mui/icons-material/Cyclone';
@@ -41,6 +42,12 @@ export default function Admin() {
     createData('6.0 - 6.5', 159),
     createData('7.0 - 8.5', 159),
   ];
+
+  const variants = {
+    hidden: { opacity: 0},
+    enter: { opacity: 1},
+    exit: { opacity: 0},
+  };
   
   return (
     <div className="bg-black flex items-center p-6 h-screen w-screen">
@@ -87,7 +94,7 @@ export default function Admin() {
                     sx={{ '&:last-child td, &:last-child th': { border: 0 }, color:'white' }}
                   >
                     <TableCell component="th" scope="row" sx={{ color:'grey' }}>
-                      {row.name}
+                      {row.t_number}
                     </TableCell>
                     <TableCell align="right" sx={{ color:'grey' }}>{row.categories}</TableCell>
                   </TableRow>
@@ -98,6 +105,12 @@ export default function Admin() {
         </div>
 
         <div className="relative flex flex-col items-center rounded-lg h-full w-full">
+          <div className="flex items-center text-white rounded-lg w-full bg-white bg-opacity-20 px-4 py-2 mb-6">
+              <div className='mr-4 w-1/4'>Date: {new Date().toISOString().split('T')[0]}</div>
+              <div className='mr-4 w-1/4'>Time: {new Date().toLocaleTimeString()}</div>
+              <div className='mr-4 w-1/4'>Temperature: 26 degC</div>
+              <div className='w-1/4'>Humidity: 27 g</div>
+          </div>
           <div className="flex rounded-lg h-full w-full">
             <div className="relative rounded-lg h-full mr-6 bg-white bg-opacity-10 w-1/2">
               <Image 
@@ -133,11 +146,19 @@ export default function Admin() {
               />
             </label>
           </div>
+          <AnimatePresence>
           {visible?
-          <div className='absolute z-10 right-0 bottom-0'>
+          <motion.div 
+          initial="hidden"
+          animate="enter"
+          exit="exit"
+          variants={variants}
+          transition={{ type: "linear" }}
+          className='rounded-lg absolute z-10 right-0 bottom-0 bg-white overflow-hidden'>
             <iframe className="rounded-lg shadow-2xl shadow-zinc-950" width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/e94e4dc9-5391-4087-8221-ec7bb543eee6"></iframe>
-          </div>
+          </motion.div>
           :""}
+          </AnimatePresence>
         </div>
       </div>
     </div>
