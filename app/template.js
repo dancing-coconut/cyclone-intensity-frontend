@@ -18,7 +18,10 @@ export default function Template({
         exit: { opacity: 0},
       };
     return (
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="wait"
+        // initial={false}
+    //   onExitComplete={() => window.scrollTo(0, 0)}
+      >
             <motion.div
                 key={key}
                 initial="hidden"
@@ -33,3 +36,5 @@ export default function Template({
         </AnimatePresence>
     )
 }
+
+
