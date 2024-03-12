@@ -10,12 +10,16 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ChatIcon from '@mui/icons-material/Chat';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import dayjs from 'dayjs';
+import { StaticDateTimePicker } from '@mui/x-date-pickers';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 
 export default function Admin() {
@@ -23,25 +27,18 @@ export default function Admin() {
 
   const [visible, setVisible] = useState(false)
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
   function createData(
     t_number,
     categories,
   ) {
     return { t_number, categories};
   }
-  
-  const rows = [
-    createData('1.0 - 1.5', 159),
-    createData('2.0', 159),
-    createData('2.5 - 3.0', 159),
-    createData('3.5', 159),
-    createData('4.0', 159),
-    createData('4.5', 159),
-    createData('5.0', 159),
-    createData('5.5', 159),
-    createData('6.0 - 6.5', 159),
-    createData('7.0 - 8.5', 159),
-  ];
 
   const variants = {
     hidden: { opacity: 0},
@@ -50,6 +47,8 @@ export default function Admin() {
   };
   
   return (
+    <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
     <div className="bg-black flex items-center p-6 h-screen w-screen">
       <div className="rounded-lg mr-6 h-full w-20 bg-white bg-opacity-10 flex flex-col items-center justify-between">
         <div className="flex flex-col items-center justify-between">
@@ -78,30 +77,28 @@ export default function Admin() {
       </div>
       <div className="flex items-center rounded-lg h-full w-full">
         <div className='flex flex-col'>
-          <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>DVORAK SCALE</div>
+          <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>ARCHIVES</div>
           <div className="grow h-30 bg-white bg-opacity-10 rounded-lg w-80 mr-6">
-            <Table sx={{ color:'white' }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ color:'white', fontWeight:'bold' }}>T-Number</TableCell>
-                  <TableCell align="right" sx={{ color:'white', fontWeight: 'bold' }}>Category</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.t_number}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 }, color:'white' }}
-                  >
-                    <TableCell component="th" scope="row" sx={{ color:'grey' }}>
-                      {row.t_number}
-                    </TableCell>
-                    <TableCell align="right" sx={{ color:'grey' }}>{row.categories}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer
+                    components={[
+                    'StaticDateTimePicker',
+                    ]}
+                >
+                        <StaticDateTimePicker 
+                            defaultValue={dayjs('2022-04-17T15:30')} 
+                            sx={ {
+                                height: '525px',
+                                "& .MuiPickersCalendarHeader-root": {
+                                     height: 525,
+                                },
+                                                    
+                            } }
+                        />
+                </DemoContainer>
+            </LocalizationProvider>
           </div>
+          <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mt-4 mr-6'>SUBMIT</div>
         </div>
 
         <div className="relative flex flex-col items-center rounded-lg h-full w-full">
@@ -136,15 +133,7 @@ export default function Admin() {
           <div className="flex items-center rounded-lg h-16 mt-6 p-6 w-full bg-white bg-opacity-10">
             <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Intensity: 20 kn</button>
             <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Estimated Pressure: 20 kPa</button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: Cat-1</button>
-            <label for="main-btn" className="p-2 h-10 bg-white bg-opacity-50 rounded-lg hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">
-              UPLOAD
-              <input
-                type="file"
-                hidden
-                id="main-btn"
-              />
-            </label>
+            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: Cat-1</button>
           </div>
           <AnimatePresence>
           {visible?
@@ -162,5 +151,6 @@ export default function Admin() {
         </div>
       </div>
     </div>
+    </ThemeProvider>
   );
 }
