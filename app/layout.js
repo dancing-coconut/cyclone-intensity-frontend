@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import PageAnimatePresence from "./components/HOC/PageAnimatePresence";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-black">
-        {children}
+        <PageAnimatePresence>{children}</PageAnimatePresence>
       </body>
     </html>
   );
