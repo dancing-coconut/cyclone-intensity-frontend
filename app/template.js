@@ -28,7 +28,7 @@ export default function Template({
                 animate="enter"
                 exit="exit"
                 variants={variants}
-                transition={{ type: "linear" }}
+                transition={{ type: 'linear', duration: 0.25 }}
                 className="overflow-hidden"
             >
                 {children}

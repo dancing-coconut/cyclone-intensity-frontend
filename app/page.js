@@ -14,7 +14,7 @@ export default function Home(){
                 >REAL - TIME</button>
                 <button 
                     className="text-white border border-white rounded-md p-2 w-48 mt-10 mr-4 hover:bg-white hover:text-zinc-900 transition ease-in-out delay-150"
-                    onClick={() => router.push('/admin')}
+                    onClick={() => router.push('/time-series')}
                 >TIME SERIES</button>
             </div>
         </div>
