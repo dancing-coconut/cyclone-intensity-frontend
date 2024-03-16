@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import NavBar from '../components/NavBar';
 import PredictionBar from '../components/PredictionBar';
@@ -18,8 +18,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import { useRouter } from 'next/navigation'
+import { useSession } from "next-auth/react"
 
-export default function Admin() {
+const Archive = () => {
   const [visible, setVisible] = useState(false)
   const [archiveDate, setArchiveDate] = useState('2024-01-01')
   const [archiveTime, setArchiveTime] = useState('12:00:00')
@@ -34,66 +36,80 @@ export default function Admin() {
     console.log(archiveDate)
     console.log(archiveTime)
   }
-  
-  return (
-    <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-    <div className="bg-black flex items-center p-6 h-screen w-screen">
-      <NavBar setVisible={setVisible} visible={visible} />
-      <div className="flex items-center rounded-lg h-full w-full">
-        <div className='flex flex-col h-full'>
-          <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>ARCHIVES</div>
-          <div className="h-full bg-white bg-opacity-10 rounded-lg w-80 mr-6">
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer
-                    components={[
-                    'StaticDateTimePicker',
-                    ]}
-                >
-                  <StaticDateTimePicker 
-                      onChange={(newValue) =>{
-                        setArchiveDate(dayjs(newValue).format('YYYY-MM-DD'))
-                        const time = {
-                          hour: dayjs(newValue).format('HH'),
-                          second: dayjs(newValue).format('ss')
-                        }
-                        var minutes = Number(dayjs(newValue).format('mm'))
-                        if (minutes >= 30) {
-                          time.minute = '30'
-                        } else {
-                          time.minute = '00'
-                        }
-                        setArchiveTime(time.hour + ':' + time.minute + ':' + time.second)
-                      }}
-                      defaultValue={dayjs('2022-04-17T15:30')} 
-                      sx={ {
-                          height: '520px',
-                          "& .MuiPickersCalendarHeader-root": {
-                                height: 520,
-                          },
-                          "& .MuiDialogActions-root":{
-                            display: "none"
-                          }
-                                              
-                      } }
-                  />
-                </DemoContainer>
-            </LocalizationProvider>
-          </div>
-          <button className='flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-4 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950' 
-          onClick={handleArchiveRequest}>
-            SUBMIT
-          </button>
-        </div>
+  const router = useRouter()
 
-        <div className="relative flex flex-col items-center rounded-lg h-full w-full">
-          <TimeDateBar />
-          <PictureBar />
-          <PredictionBar />
-          <MiniChatbot visible={visible} />
+  const { data: session } = useSession()
+  
+  if (session) {
+    return (
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <div className="bg-black flex items-center p-6 h-screen w-screen">
+          <NavBar setVisible={setVisible} visible={visible} />
+          <div className="flex items-center rounded-lg h-full w-full">
+            <div className='flex flex-col h-full'>
+              <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>ARCHIVES</div>
+              <div className="h-full bg-white bg-opacity-10 rounded-lg w-80 mr-6">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer
+                        components={[
+                        'StaticDateTimePicker',
+                        ]}
+                    >
+                      <StaticDateTimePicker 
+                          onChange={(newValue) =>{
+                            setArchiveDate(dayjs(newValue).format('YYYY-MM-DD'))
+                            const time = {
+                              hour: dayjs(newValue).format('HH'),
+                              second: dayjs(newValue).format('ss')
+                            }
+                            var minutes = Number(dayjs(newValue).format('mm'))
+                            if (minutes >= 30) {
+                              time.minute = '30'
+                            } else {
+                              time.minute = '00'
+                            }
+                            setArchiveTime(time.hour + ':' + time.minute + ':' + time.second)
+                          }}
+                          defaultValue={dayjs('2022-04-17T15:30')} 
+                          sx={ {
+                              height: '520px',
+                              "& .MuiPickersCalendarHeader-root": {
+                                    height: 520,
+                              },
+                              "& .MuiDialogActions-root":{
+                                display: "none"
+                              }
+                                                  
+                          } }
+                      />
+                    </DemoContainer>
+                </LocalizationProvider>
+              </div>
+              <button className='flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-4 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950' 
+              onClick={handleArchiveRequest}>
+                SUBMIT
+              </button>
+            </div>
+
+            <div className="relative flex flex-col items-center rounded-lg h-full w-full">
+              <TimeDateBar />
+              <PictureBar />
+              <PredictionBar />
+              <MiniChatbot visible={visible} />
+            </div>
+          </div>
         </div>
-      </div>
+      </ThemeProvider>
+    );
+  } 
+  return (
+    <div className='w-screen h-screen bg-black'>
+      {useEffect(() => {
+        router.push('/');
+      })}
     </div>
-    </ThemeProvider>
-  );
+  )
 }
+
+export default Archive;

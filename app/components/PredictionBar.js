@@ -9,16 +9,118 @@ import Select from '@mui/material/Select';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 
+import { pressureConverter, speedConverter } from './UnitConversionFunctions';
+
 export default function PredictionBar() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [intensity, setIntensity] = useState('');
+    const [intensity, setIntensity] = useState(20);
 
-    const handleIntensityChange = (event) => {
-      setIntensity(event.target.value);
+    const handleIntensityChange = () => {
+      const fromUnit =  intensityUnit["curr"]
+      const newIntensityUnits = {
+        "prev": intensityUnit["curr"]
+      }
+      if (fromUnit == "knots") {
+        newIntensityUnits["curr"] = 'kmh'
+      } else if (fromUnit == "kmh") {
+        newIntensityUnits["curr"] = 'mps'
+      } else if (fromUnit == "mps") {
+        newIntensityUnits["curr"] = 'mph'
+      } else if (fromUnit == "mph") {
+        newIntensityUnits["curr"] = 'fps'
+      } else {
+        newIntensityUnits["curr"] = 'knots'
+      }
+
+      const changedSpeed = speedConverter(intensity, newIntensityUnits["prev"], newIntensityUnits["curr"])
+
+      setIntensityUnit(newIntensityUnits)
+      setIntensity(changedSpeed);
     };
+
+    const [pressure, setPressure] = useState(20);
+
+    const handlePressureChange = () => {
+      const fromUnit =  pressureUnit["curr"]
+      const newPressureUnits = {
+        "prev": pressureUnit["curr"]
+      }
+      if (fromUnit == "Pa") {
+        newPressureUnits["curr"] = 'mbar'
+      } else if (fromUnit == "mbar") {
+        newPressureUnits["curr"] = 'bar'
+      } else if (fromUnit == "bar") {
+        newPressureUnits["curr"] = 'mmHg'
+      } else if (fromUnit == "mmHg") {
+        newPressureUnits["curr"] = 'atm'
+      } else {
+        newPressureUnits["curr"] = 'Pa'
+      }
+
+      const changedPressure = pressureConverter(pressure, newPressureUnits["prev"], newPressureUnits["curr"])
+
+      setPressureUnit(newPressureUnits)
+      setPressure(changedPressure);
+    };
+
+    const [category, setCategory] = useState('Cat-1');
+
+    const handleCategoryChange = (event) => {
+      setCategory(event.target.value);
+    };
+
+    const [intensityUnit, setIntensityUnit] = useState({
+      "prev": "knots",
+      "curr": "knots"
+    });
+
+    const handleIntensityUnitChange = (event) => {
+      const newIntensityUnits = {
+        "prev": intensityUnit["curr"],
+        "curr": event.target.value
+      }
+      setIntensityUnit(newIntensityUnits);
+    };
+
+    const [pressureUnit, setPressureUnit] = useState({
+      "prev": "Pa",
+      "curr": "Pa"
+    });
+
+    const handlePressureUnitChange = (event) => {
+      const newPressureUnits = {
+        "prev": pressureUnit["curr"],
+        "curr": event.target.value
+      }
+      setPressureUnit(newPressureUnits);
+    };
+
+    const [categoryUnit, setCategoryUnit] = useState({
+      "prev": "cat",
+      "curr": "cat"
+    });
+
+    const handleCategoryUnitChange = (event) => {
+      const newCategoryUnits = {
+        "prev": categoryUnit["curr"],
+        "curr": event.target.value
+      }
+      setCategoryUnit(newCategoryUnits);
+    };
+
+    function settingsSaveHandler () {
+
+      const changedSpeed = speedConverter(intensity, intensityUnit["prev"], intensityUnit["curr"])
+      const changedPressure = pressureConverter(pressure, pressureUnit["prev"], pressureUnit["curr"])
+
+      setIntensity(changedSpeed)
+      setPressure(changedPressure)
+
+      setOpen(false);
+    }
 
     const style = {
       position: 'absolute',
@@ -43,9 +145,13 @@ export default function PredictionBar() {
             >
               <SettingsIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }} />
             </button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Intensity: 20 kn</button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Estimated Pressure: 20 kPa</button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: Cat-1</button>
+            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
+              onClick={handleIntensityChange}
+            >Predicted Intensity: {intensity} {intensityUnit["curr"]}</button>
+            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
+              onClick={handlePressureChange}
+            >Estimated Pressure: {pressure} {pressureUnit["curr"]}</button>
+            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: {category}</button>
             <label for="main-btn" className="p-2 h-10 bg-white bg-opacity-50 rounded-lg hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">
               UPLOAD
               <input
@@ -57,8 +163,8 @@ export default function PredictionBar() {
             <Modal
               open={open}
               onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
+              aria-labelledby="unit-conversion-settings"
+              aria-describedby="unit-conversion-for-predicted-categories"
             >
               <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -68,50 +174,54 @@ export default function PredictionBar() {
                   <Typography id="modal-modal-description" sx={{ mt: 2 , marginLeft: 2 }}>Wind Intensity</Typography>
                   <Select
                     defaultValue={'knots'}
-                    value={intensity}
+                    value={intensityUnit["curr"]}
                     label=""
-                    onChange={handleIntensityChange}
+                    onChange={handleIntensityUnitChange}
                     sx={{color:'white', width: 400}}
                   >
-                    <MenuItem value={'knots'}>Knots</MenuItem>
-                    <MenuItem value={'kmh'}>Kilometers per hour</MenuItem>
-                    <MenuItem value={'mps'}>Meters per second</MenuItem>
-                    <MenuItem value={'mph'}>Miles per hour</MenuItem>
-                    <MenuItem value={'fps'}>Feet per second</MenuItem>
+                    {intensityUnit["curr"] == 'knots' ? <MenuItem disabled value={'knots'}>Knots</MenuItem> : <MenuItem value={'knots'}>Knots</MenuItem>}
+                    {intensityUnit["curr"] == 'kmh' ? <MenuItem disabled value={'kmh'}>Kilometers per hour</MenuItem> : <MenuItem value={'kmh'}>Kilometers per hour</MenuItem>}
+                    {intensityUnit["curr"] == 'mps' ? <MenuItem disabled value={'mps'}>Meters per second</MenuItem> : <MenuItem value={'mps'}>Meters per second</MenuItem>}
+                    {intensityUnit["curr"] == 'mph' ? <MenuItem disabled value={'mph'}>Miles per hour</MenuItem> : <MenuItem value={'mph'}>Miles per hour</MenuItem>}
+                    {intensityUnit["curr"] == 'fps' ? <MenuItem disabled value={'fps'}>Feet per second</MenuItem> : <MenuItem value={'fps'}>Feet per second</MenuItem>}
                   </Select>
                 </div>
                 <div className='rounded-md mt-4 flex justify-between p-3 border border-white opacity-40'>
                   <Typography id="modal-modal-description" sx={{ mt: 2 , marginLeft: 2 }}>Cyclonic Pressure</Typography>
                   <Select
                     defaultValue={10}
-                    value={intensity}
+                    value={pressureUnit["curr"]}
                     label=""
-                    onChange={handleIntensityChange}
+                    onChange={handlePressureUnitChange}
                     sx={{color:'white', width: 400}}
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    {pressureUnit["curr"] == 'Pa' ? <MenuItem disabled value={'Pa'}>Pascal</MenuItem> : <MenuItem value={'Pa'}>Pascal</MenuItem> }
+                    {pressureUnit["curr"] == 'mbar' ? <MenuItem disabled value={'mbar'}>Millibar</MenuItem> : <MenuItem value={'mbar'}>Millibar</MenuItem>}
+                    {pressureUnit["curr"] == 'bar' ? <MenuItem disabled value={'bar'}>Bar</MenuItem> : <MenuItem value={'bar'}>Bar</MenuItem>}
+                    {pressureUnit["curr"] == 'mmHg' ? <MenuItem disabled value={'mmHg'}>Millimeter of Mercury</MenuItem> : <MenuItem value={'mmHg'}>Millimeter of Mercury</MenuItem>}
+                    {pressureUnit["curr"] == 'atm' ? <MenuItem disabled value={'atm'}>Standard Atmosphere</MenuItem> : <MenuItem value={'atm'}>Standard Atmosphere</MenuItem>}
                   </Select>
                 </div>
                 <div className='rounded-md mt-4 flex justify-between p-3 border border-white opacity-40'>
                   <Typography id="modal-modal-description" sx={{ mt: 2 , marginLeft: 2 }}>Cyclone Category</Typography>
                   <Select
                     defaultValue={10}
-                    value={intensity}
+                    value={categoryUnit["curr"]}
                     label=""
-                    onChange={handleIntensityChange}
+                    onChange={handleCategoryUnitChange}
                     sx={{color:'white', width: 400}}
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={'cat'}>Category</MenuItem>
+                    <MenuItem value={'t_no'}>T Number</MenuItem>
                   </Select>
                 </div>
-                <button className='flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-8 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950' 
-                >
-                  SAVE
-                </button>
+                <div className='w-full flex justify-center'>
+                  <button className='flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-8 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950' 
+                    onClick={settingsSaveHandler}
+                  >
+                    SAVE
+                  </button>
+                </div>
               </Box>
             </Modal>
 

@@ -2,6 +2,8 @@
  
 import { useRouter, usePathname } from 'next/navigation'
 
+import { useSession } from 'next-auth/react';
+
 import CycloneIcon from '@mui/icons-material/Cyclone';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -9,8 +11,12 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+import Image from "next/image";
+
 const NavBar = ({ setVisible, visible }) => {
     const router = useRouter()
+
+    const { data: session } = useSession()
 
     const key = usePathname()
     return(
@@ -34,9 +40,17 @@ const NavBar = ({ setVisible, visible }) => {
             <button className={visible?"mb-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100"} onClick={() => setVisible(!visible)}>
                 <ChatIcon style={{ color: 'white', fontSize: 30 }}/>
             </button>
-            <button className="m-4">
-                <AccountCircleIcon style={{ color: 'white', fontSize: 40 }}/>
-            </button>
+            <div className="m-4">
+                {session? 
+                <Image
+                  src={session.user?.image}
+                  width={20}
+                  height={20}
+                  alt=""
+                  className="w-8 h-8 rounded-md mb-2"
+                /> : 
+                <AccountCircleIcon style={{ color: 'white', fontSize: 40 }}/>}
+            </div>
             </div>
         </div>
     )
