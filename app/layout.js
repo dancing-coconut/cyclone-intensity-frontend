@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import PageAnimatePresence from "./components/HOC/PageAnimatePresence";
+import SessionWrapper from "./components/SessionWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,11 +12,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="bg-black">
-        <PageAnimatePresence>{children}</PageAnimatePresence>
-      </body>
-    </html>
+    <SessionWrapper>
+      <html lang="en">
+        <body className="bg-black">
+            <PageAnimatePresence>
+              {children}
+            </PageAnimatePresence>
+        </body>
+      </html>
+    </SessionWrapper>
   );
 }
 
