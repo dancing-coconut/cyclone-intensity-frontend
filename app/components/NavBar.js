@@ -2,7 +2,7 @@
  
 import { useRouter, usePathname } from 'next/navigation'
 
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 
 import { useState } from 'react';
 
@@ -35,12 +35,12 @@ const NavBar = ({ setVisible, visible }) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 500,
+        width: 450,
         bgcolor: 'background.paper',
         border: '2px solid white',
         boxShadow: 24,
-        paddingTop: 4,
-        paddingBottom: 4,
+        paddingTop: 2,
+        paddingBottom: 2,
         paddingRight: 10,
         paddingLeft: 10,
         textAlign: 'center',
@@ -97,14 +97,22 @@ const NavBar = ({ setVisible, visible }) => {
                   width={500}
                   height={500}
                   alt=""
-                  className="w-full h-full rounded-md mb-8 mt-4"
+                  className="w-full h-full rounded-md mb-4 mt-4"
                 />
                 <div className='w-full bg-white bg-opacity-20 rounded-md mb-4 border border-white p-2'>
                     {session.user.name}
                 </div>
-                <div className='w-full bg-white bg-opacity-20 rounded-md mb-4 border border-white p-2'>
+                <div className='w-full bg-white bg-opacity-20 rounded-md mb-8 border border-white p-2'>
                     {session.user.email}
                 </div>
+                <button className='w-full rounded-md mb-2 border border-white p-2 hover:bg-white text-white hover:text-black transition ease-in-out delay-150'
+                    onClick={() => {
+                        signOut()
+                        router.push('/')
+                    }}
+                >
+                    SIGN OUT
+                </button>
               </Box>
             </Modal>
         </div>
