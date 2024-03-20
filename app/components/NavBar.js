@@ -4,12 +4,18 @@ import { useRouter, usePathname } from 'next/navigation'
 
 import { useSession } from 'next-auth/react';
 
+import { useState } from 'react';
+
 import CycloneIcon from '@mui/icons-material/Cyclone';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 
 import Image from "next/image";
 
@@ -19,6 +25,30 @@ const NavBar = ({ setVisible, visible }) => {
     const { data: session } = useSession()
 
     const key = usePathname()
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 500,
+        bgcolor: 'background.paper',
+        border: '2px solid white',
+        boxShadow: 24,
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingRight: 10,
+        paddingLeft: 10,
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: '10px'
+      };
+
     return(
         <div className="rounded-lg mr-6 h-full w-20 bg-white bg-opacity-10 flex flex-col items-center justify-between">
             <div className="flex flex-col items-center justify-between">
@@ -40,18 +70,43 @@ const NavBar = ({ setVisible, visible }) => {
             <button className={visible?"mb-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100"} onClick={() => setVisible(!visible)}>
                 <ChatIcon style={{ color: 'white', fontSize: 30 }}/>
             </button>
-            <div className="m-4">
+            <button className="m-4" onClick={handleOpen}>
                 {session? 
                 <Image
                   src={session.user?.image}
                   width={20}
                   height={20}
                   alt=""
-                  className="w-8 h-8 rounded-md mb-2"
+                  className="w-8 h-8 rounded-md mb-2 hover:border hover:border-white transition ease-in-out delay-150"
                 /> : 
                 <AccountCircleIcon style={{ color: 'white', fontSize: 40 }}/>}
+            </button>
             </div>
-            </div>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="unit-conversion-settings"
+              aria-describedby="unit-conversion-for-predicted-categories"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  ACCOUNT DETAILS
+                </Typography>
+                <Image
+                  src={session.user?.image}
+                  width={500}
+                  height={500}
+                  alt=""
+                  className="w-full h-full rounded-md mb-8 mt-4"
+                />
+                <div className='w-full bg-white bg-opacity-20 rounded-md mb-4 border border-white p-2'>
+                    {session.user.name}
+                </div>
+                <div className='w-full bg-white bg-opacity-20 rounded-md mb-4 border border-white p-2'>
+                    {session.user.email}
+                </div>
+              </Box>
+            </Modal>
         </div>
     )
 }
