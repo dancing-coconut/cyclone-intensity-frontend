@@ -45,10 +45,6 @@ const Admin = () => {
     createData('3.5', 159),
     createData('4.0', 159),
     createData('4.5', 159),
-    createData('5.0', 159),
-    createData('5.5', 159),
-    createData('6.0 - 6.5', 159),
-    createData('7.0 - 8.5', 159),
   ];
 
   const darkTheme = createTheme({
@@ -65,7 +61,7 @@ const Admin = () => {
           <div className="flex items-center rounded-lg h-full w-full">
             <div className='flex flex-col h-full'>
               <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>DVORAK SCALE</div>
-              <div className="h-full bg-white bg-opacity-10 rounded-lg w-80 mr-6">
+              <div className="bg-white bg-opacity-10 rounded-lg w-80 mr-6">
                 <Table sx={{ color:'white' }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
@@ -87,6 +83,9 @@ const Admin = () => {
                     ))}
                   </TableBody>
                 </Table>
+              </div>
+              <div className="h-full mt-6 p-4 bg-white bg-opacity-40 rounded-lg w-80 mr-6 text-center">
+              ABOUT CATEGORY
               </div>
             </div>
 
