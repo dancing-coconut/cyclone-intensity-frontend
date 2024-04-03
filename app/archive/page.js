@@ -39,6 +39,14 @@ const Archive = () => {
   const router = useRouter()
 
   const { data: session } = useSession()
+
+  useEffect(() => {
+    if(!session){
+      router.push('/')
+    } else {
+      router.push('/archive')
+    }
+  },[router, session])
   
   if (session) {
     return (
@@ -105,9 +113,9 @@ const Archive = () => {
   } 
   return (
     <div className='w-screen h-screen bg-black'>
-      {useEffect(() => {
+      {/* {useEffect(() => {
         router.push('/');
-      })}
+      })} */}
     </div>
   )
 }

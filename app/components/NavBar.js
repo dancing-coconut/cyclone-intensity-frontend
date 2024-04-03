@@ -107,8 +107,9 @@ const NavBar = ({ setVisible, visible }) => {
                 </div>
                 <button className='w-full rounded-md mb-2 border border-white p-2 hover:bg-white text-white hover:text-black transition ease-in-out delay-150'
                     onClick={() => {
-                        signOut()
+                        
                         router.push('/')
+                        signOut()
                     }}
                 >
                     SIGN OUT

@@ -45,13 +45,13 @@ export default function Home(){
         palette: {
           mode: 'dark',
         },
-    });
+    }); 
 
     return(
         <ThemeProvider theme={darkTheme}>
             <CssBaseline /> 
             <ToastContainer />
-            <div className="bg-black flex flex-col justify-center p-6 h-screen w-screen">
+            <div className="bg-black bg-cover flex flex-col justify-center p-6 h-screen w-screen">
                 <div className="text-white font-extrabold text-7xl ml-10">Cyclone<br />Intensity<br />Prediction<br /></div>
                 <div>
                     <button 
