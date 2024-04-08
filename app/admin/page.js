@@ -108,7 +108,7 @@ const Admin = () => {
 
             <div className="relative flex flex-col items-center rounded-lg h-full w-full">
               <TimeDateBar />
-              <PictureBar />
+              <PictureBar />A
               <PredictionBar />
               <MiniChatbot visible={visible} />
             </div>

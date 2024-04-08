@@ -56,18 +56,18 @@ const NavBar = ({ setVisible, visible }) => {
                     <CycloneIcon style={{ color: 'white', fontSize: 40 }}/>
                 </button>
                 <hr className="w-full opacity-20"/>
-                <button className={key=="/archive"?"flex justify-center items-center w-full mt-4 p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"mt-4 p-4 opacity-40 hover:opacity-100 focus:bg-white"} onClick={() => router.push('/archive')}>
+                <button className={key=="/archive"?"flex justify-center items-center w-full mt-4 p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"mt-4 p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/archive')}>
                     <CalendarMonthIcon style={{ color: 'white', fontSize: 30 }}/>
                 </button>
-                <button className={key=="/time-series"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white"} onClick={() => router.push('/time-series')}>
+                <button className={key=="/time-series"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/time-series')}>
                     <AccessTimeIcon style={{ color: 'white', fontSize: 30 }}/>
                 </button>
-                <button className={key=="/admin"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white"} onClick={() => router.push('/admin')}>
+                <button className={key=="/admin"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/admin')}>
                     <AnalyticsIcon style={{ color: 'white', fontSize: 30 }}/>
                 </button>
             </div>
             <div className="flex flex-col items-center justify-between">
-            <button className={visible?"mb-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100"} onClick={() => setVisible(!visible)}>
+            <button className={visible?"mb-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"} onClick={() => setVisible(!visible)}>
                 <ChatIcon style={{ color: 'white', fontSize: 30 }}/>
             </button>
             <button className="m-4" onClick={handleOpen}>

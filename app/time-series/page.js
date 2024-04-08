@@ -64,9 +64,33 @@ const TimeSeries = () => {
           <NavBar setVisible={setVisible} visible={visible} />
           <div className="flex items-center rounded-lg h-full w-full">
             <div className='flex flex-col h-full'>
-              <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>FORECASTS</div>
-              <div className="flex-1 bg-white bg-opacity-10 rounded-lg w-80 mr-6">
-                STUFF
+              <div className='h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>FORECASTS</div>
+              <div className="flex flex-col h-full bg-white bg-opacity-10 rounded-lg w-80 mr-6">
+                <div className='bg-white bg-opacity-20 p-4 h-1/5 rounded-md mt-4 mx-4 text-center'>Forecasted
+                <div className='bg-white bg-opacity-40 m-2 p-2 rounded-md border-box'>
+                  Predicted Intensity
+                </div>
+                </div>
+                <div className='bg-white bg-opacity-20 p-4 h-1/5 rounded-md mt-4 mx-4 text-center'>Forecasted
+                <div className='bg-white bg-opacity-40 m-2 p-2 rounded-md border-box'>
+                  Predicted Intensity
+                </div>
+                </div>
+                <div className='bg-white bg-opacity-20 p-4 h-1/5 rounded-md mt-4 mx-4 text-center'>Forecasted
+                <div className='bg-white bg-opacity-40 m-2 p-2 rounded-md border-box'>
+                  Predicted Intensity
+                </div>
+                </div>
+                <div className='bg-white bg-opacity-20 p-4 h-1/5 rounded-md mt-4 mx-4 text-center'>Forecasted
+                <div className='bg-white bg-opacity-40 m-2 p-2 rounded-md border-box'>
+                  Predicted Intensity
+                </div>
+                </div>
+                <div className='bg-white bg-opacity-20 p-4 h-1/5 rounded-md mt-4 mb-4 mx-4 text-center'>Forecasted
+                <div className='bg-white bg-opacity-40 m-2 p-2 rounded-md border-box'>
+                  Predicted Intensity
+                </div>
+                </div>
               </div>
             </div>
 
