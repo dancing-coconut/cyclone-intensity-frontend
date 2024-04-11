@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -6,8 +6,12 @@ import Box from '@mui/material/Box';
 
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Tooltip from '@mui/material/Tooltip';
 
 import SettingsIcon from '@mui/icons-material/Settings';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
+
 
 import { pressureConverter, speedConverter } from './UnitConversionFunctions';
 
@@ -137,6 +141,29 @@ export default function PredictionBar() {
       flexDirection: 'column',
       borderRadius: '10px'
     };
+
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+      const storedData = localStorage.getItem('data');
+      if (storedData) {
+        setData(JSON.parse(storedData));
+      }
+    }, []);
+
+    const pressureCopyHandler = () => {
+      const newData = { ...data, ["pressure"]: pressure };
+      setData(newData);
+      localStorage.setItem('data', JSON.stringify(newData));
+
+    }
+
+    const windCopyHandler = () => {
+      const newData = { ...data, ["wind"]: intensity };
+      setData(newData);
+      localStorage.setItem('data', JSON.stringify(newData));
+
+    }
     
     return(
         <div className="flex items-center rounded-lg h-16 mt-6 p-6 w-full bg-white bg-opacity-10">
@@ -145,13 +172,32 @@ export default function PredictionBar() {
             >
               <SettingsIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }} />
             </button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
+            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
               onClick={handleIntensityChange}
             >Predicted Intensity: {intensity} {intensityUnit["curr"]}</button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
+            <Tooltip title="Copy to logs">
+              <button className='rounded-md border border-white flex items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'
+                onClick={windCopyHandler}
+              >
+                  <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
+              </button>
+            </Tooltip>
+            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
               onClick={handlePressureChange}
             >Estimated Pressure: {pressure} {pressureUnit["curr"]}</button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: {category}</button>
+            <Tooltip title="Copy to logs">
+              <button className='rounded-md border border-white flex items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'
+                onClick={pressureCopyHandler}
+              >
+                  <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
+              </button>
+            </Tooltip>
+            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: {category}</button>
+            <Tooltip title="Copy to logs">
+              <button className='rounded-md border border-white flex items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'>
+                  <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
+              </button>
+            </Tooltip>
             <label for="main-btn" className="p-2 h-10 bg-white bg-opacity-50 rounded-lg hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">
               UPLOAD
               <input

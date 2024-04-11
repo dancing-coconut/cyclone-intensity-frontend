@@ -15,9 +15,9 @@ export default function RootLayout({ children }) {
     <SessionWrapper>
       <html lang="en">
         <body className="bg-black">
-            <PageAnimatePresence>
+            {/* <PageAnimatePresence> */}
               {children}
-            </PageAnimatePresence>
+            {/* </PageAnimatePresence> */}
         </body>
       </html>
     </SessionWrapper>

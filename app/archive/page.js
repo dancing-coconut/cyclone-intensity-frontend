@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 
 import NavBar from '../components/NavBar';
 import PredictionBar from '../components/PredictionBar';
-import TimeDateBar from '../components/TimeDateBar';
-import PictureBar from '../components/PictureBar';
+import ArchivePictureBar from '../components/ArchivePictureBar';
 
 import MiniChatbot from '../components/MiniChatbot';
 
@@ -56,13 +55,22 @@ const Archive = () => {
           <NavBar setVisible={setVisible} visible={visible} />
           <div className="flex items-center rounded-lg h-full w-full">
             <div className='flex flex-col h-full'>
-              <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>ARCHIVES</div>
-              <div className="h-full bg-white bg-opacity-10 rounded-lg w-80 mr-6">
+              <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-6 mr-6'>ARCHIVES</div>
+              <div className="h-fit bg-white bg-opacity-10 rounded-lg w-80 mr-6">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer
                         components={[
                         'StaticDateTimePicker',
                         ]}
+                        sx={ {
+                          margin: 0,
+                          padding: 0,
+                          "& .MuiStack-root":{
+                            margin: 0,
+                            padding: 0
+                          },
+                                              
+                      } }
                     >
                       <StaticDateTimePicker 
                           onChange={(newValue) =>{
@@ -81,28 +89,30 @@ const Archive = () => {
                           }}
                           defaultValue={dayjs('2022-04-17T15:30')} 
                           sx={ {
-                              height: '520px',
+                              height: '29vw',
                               "& .MuiPickersCalendarHeader-root": {
-                                    height: 520,
+                                    height: '29vw',
                               },
                               "& .MuiDialogActions-root":{
                                 display: "none"
-                              }
-                                                  
+                              },               
                           } }
                       />
                     </DemoContainer>
                 </LocalizationProvider>
               </div>
-              <button className='flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-4 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950' 
+              <div className='h-full bg-white bg-opacity-10 rounded-lg p-2 mt-6 mr-6'>
+
+              </div>
+              <button className='flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-6 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950' 
               onClick={handleArchiveRequest}>
                 SUBMIT
               </button>
             </div>
 
             <div className="relative flex flex-col items-center rounded-lg h-full w-full">
-              <TimeDateBar />
-              <PictureBar />
+              {/* <ArchiveTimeDateBar /> */}
+              <ArchivePictureBar />
               <PredictionBar />
               <MiniChatbot visible={visible} />
             </div>

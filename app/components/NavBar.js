@@ -12,10 +12,13 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AssistantIcon from '@mui/icons-material/Assistant';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 
 import Image from "next/image";
 
@@ -56,20 +59,38 @@ const NavBar = ({ setVisible, visible }) => {
                     <CycloneIcon style={{ color: 'white', fontSize: 40 }}/>
                 </button>
                 <hr className="w-full opacity-20"/>
-                <button className={key=="/archive"?"flex justify-center items-center w-full mt-4 p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"mt-4 p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/archive')}>
-                    <CalendarMonthIcon style={{ color: 'white', fontSize: 30 }}/>
-                </button>
-                <button className={key=="/time-series"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/time-series')}>
-                    <AccessTimeIcon style={{ color: 'white', fontSize: 30 }}/>
-                </button>
-                <button className={key=="/admin"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/admin')}>
-                    <AnalyticsIcon style={{ color: 'white', fontSize: 30 }}/>
-                </button>
+                <Tooltip title="Archives">
+                    <button className={key=="/archive"?"flex justify-center items-center w-full mt-4 p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"mt-4 p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/archive')}>
+                        <CalendarMonthIcon style={{ color: 'white', fontSize: 30 }}/>
+                    </button>
+                </Tooltip>
+                <Tooltip title="Time Series">
+                    <button className={key=="/time-series"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/time-series')}>
+                        <AccessTimeIcon style={{ color: 'white', fontSize: 30 }}/>
+                    </button>
+                </Tooltip>
+                <Tooltip title="Real Time">
+                    <button className={key=="/admin"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/admin')}>
+                        <AnalyticsIcon style={{ color: 'white', fontSize: 30 }}/>
+                    </button>
+                </Tooltip>
+                <Tooltip title="AI Chatbot">
+                    <button className={key=="/chatbot"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/chatbot')}>
+                        <AssistantIcon style={{ color: 'white', fontSize: 30 }}/>
+                    </button>
+                </Tooltip>
+                <Tooltip title="Log Book">
+                    <button className={key=="/notebook"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/notebook')}>
+                        <LibraryBooksIcon style={{ color: 'white', fontSize: 30 }}/>
+                    </button>
+                </Tooltip>
             </div>
             <div className="flex flex-col items-center justify-between">
-            <button className={visible?"mb-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"} onClick={() => setVisible(!visible)}>
-                <ChatIcon style={{ color: 'white', fontSize: 30 }}/>
-            </button>
+            <Tooltip title="Assistant">
+                <button className={visible?"mb-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"} onClick={() => setVisible(!visible)}>
+                    <ChatIcon style={{ color: 'white', fontSize: 30 }}/>
+                </button>
+            </Tooltip>
             <button className="m-4" onClick={handleOpen}>
                 {session? 
                 <Image
