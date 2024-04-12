@@ -22,7 +22,11 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import CodeIcon from '@mui/icons-material/Code';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import UndoIcon from '@mui/icons-material/Undo';
-
+import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
+import RedoIcon from '@mui/icons-material/Redo';
+import LayersClearIcon from '@mui/icons-material/LayersClear';
+import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
+import SegmentIcon from '@mui/icons-material/Segment';
 
 
 const MenuBar = ({ editor }) => {
@@ -31,7 +35,7 @@ const MenuBar = ({ editor }) => {
     }
   
     return (
-        <div>
+        <div className='mb-4 flex flex-row'>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={
@@ -41,9 +45,9 @@ const MenuBar = ({ editor }) => {
             .toggleBold()
             .run()
         }
-        className={editor.isActive('bold') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('bold') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2 opacity-40 hover:opacity-100'}
       >
-        bold
+        <FormatBoldIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
@@ -54,9 +58,9 @@ const MenuBar = ({ editor }) => {
             .toggleItalic()
             .run()
         }
-        className={editor.isActive('italic') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('italic') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        italic
+        <FormatItalicIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
@@ -67,9 +71,9 @@ const MenuBar = ({ editor }) => {
             .toggleStrike()
             .run()
         }
-        className={editor.isActive('strike') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('strike') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        strike
+        <FormatStrikethroughIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleUnderline().run()}
@@ -80,9 +84,9 @@ const MenuBar = ({ editor }) => {
             .toggleUnderline()
             .run()
         }
-        className={editor.isActive('underline') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('underline') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        strike
+        <FormatUnderlinedIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleCode().run()}
@@ -93,87 +97,102 @@ const MenuBar = ({ editor }) => {
             .toggleCode()
             .run()
         }
-        className={editor.isActive('code') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('code') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        code
+        <CodeIcon />
       </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear marks
+      <button 
+        onClick={() => editor.chain().focus().unsetAllMarks().run()}
+        className={'hover:text-black hover:bg-white opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
+      >
+        <DisabledByDefaultIcon />
       </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear nodes
+      <button 
+        onClick={() => editor.chain().focus().clearNodes().run()}
+        className={'hover:text-black hover:bg-white opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
+      >
+        <LayersClearIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive('paragraph') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('paragraph') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        paragraph
+        <SegmentIcon />
       </button>
+      <div className='border border-white rounded-md p-1 mr-2'>
+        <TitleIcon />
+      </div>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive('heading', { level: 1 }) ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('heading', { level: 1 }) ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
         h1
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive('heading', { level: 2 }) ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('heading', { level: 2 }) ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
         h2
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive('heading', { level: 3 }) ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('heading', { level: 3 }) ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
         h3
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive('heading', { level: 4 }) ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('heading', { level: 4 }) ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
         h4
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive('heading', { level: 5 }) ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('heading', { level: 5 }) ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
         h5
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive('heading', { level: 6 }) ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('heading', { level: 6 }) ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
         h6
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive('bulletList') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('bulletList') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        bullet list
+        <FormatListBulletedIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive('orderedList') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('orderedList') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        ordered list
+        <FormatListNumberedIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive('codeBlock') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('codeBlock') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        code block
+        <IntegrationInstructionsIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive('blockquote') ? 'border border-white rounded-md p-1 mr-2' : 'border border-white rounded-md p-1 mr-2'}
+        className={editor.isActive('blockquote') ? 'text-black bg-white border border-white rounded-md p-1 mr-2' : 'opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        blockquote
+        <FormatQuoteIcon />
       </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-        horizontal rule
+      <button 
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
+        className={'hover:text-black hover:bg-white opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
+      >
+        <HorizontalRuleIcon />
       </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-        hard break
+      <button 
+        onClick={() => editor.chain().focus().setHardBreak().run()}
+        className={'hover:text-black hover:bg-white opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
+      >
+        <InsertPageBreakIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().undo().run()}
@@ -184,8 +203,9 @@ const MenuBar = ({ editor }) => {
             .undo()
             .run()
         }
+        className={'hover:text-black hover:bg-white opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        undo
+        <UndoIcon />
       </button>
       <button
         onClick={() => editor.chain().focus().redo().run()}
@@ -196,22 +216,26 @@ const MenuBar = ({ editor }) => {
             .redo()
             .run()
         }
+        className={'hover:text-black hover:bg-white opacity-40 hover:opacity-100 border border-white rounded-md p-1 mr-2'}
       >
-        redo
+        <RedoIcon />
       </button>
-      <input
+      {/* <input
         type="color"
         onInput={event => editor.chain().focus().setColor(event.target.value).run()}
         value={editor.getAttributes('textStyle').color}
         data-testid="setColor"
-      />
+        className='w-9 h-9 p-1'
+      /> */}
 
 
         </div>
     )
 }
   
-const Tiptap = ({onEditorRender}) => {
+const Tiptap = ({ onEditorRender }) => {
+
+
   const editor = useEditor({
     extensions: [
         Placeholder.configure({
@@ -251,7 +275,6 @@ const Tiptap = ({onEditorRender}) => {
   useEffect(() => {
     onEditorRender(editor);
   }, [onEditorRender]);
-
 
   return (
     <div className='w-full h-full flex flex-col p-4'>

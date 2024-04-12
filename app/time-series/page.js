@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar';
 import PredictionBar from '../components/PredictionBar';
 import TimeDateBar from '../components/TimeDateBar';
 import PictureBar from '../components/PictureBar';
+import TimeSeriesPictureBar from '../components/TimeSeriesPictureBar';
 
 import MiniChatbot from '../components/MiniChatbot';
 
@@ -96,7 +97,7 @@ const TimeSeries = () => {
 
             <div className="relative flex flex-col items-center rounded-lg h-full w-full">
               <TimeDateBar />
-              <PictureBar />
+              <TimeSeriesPictureBar />
               <PredictionBar />
               <MiniChatbot visible={visible} />
             </div>

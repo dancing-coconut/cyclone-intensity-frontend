@@ -81,6 +81,7 @@ const Chatbot = () => {
                     break;
                 }
                 const resp = decoder.decode(value, { stream: true });
+                console.log(resp)
                 setMessages((oldMessages) => {
                   const newMessages = [...oldMessages];
                   newMessages[newMessages.length - 1] = newMessages[newMessages.length - 1] + JSON.parse(resp).response;

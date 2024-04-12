@@ -8,9 +8,23 @@ import CssBaseline from '@mui/material/CssBaseline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
-import PDFGenerator from '../components/PDFGenerator';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+
 import NavBar from '../components/NavBar';
 import Tiptap from '../components/Tiptap';
+import jsPDF from 'jspdf';
+
+import DownloadIcon from '@mui/icons-material/Download';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import PrintIcon from '@mui/icons-material/Print';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { IconButton } from '@mui/material';
+
+import { toast, ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Notebook = () => {
   const [visible, setVisible] = useState(false)
@@ -48,10 +62,75 @@ const Notebook = () => {
     setEditor(editorObject);
   };
 
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    // const htmlString = "<h1 style='color: black;'>Hello, world!</h1><p style='color: black;'>This is a sample HTML string with black text.</p>";
+    const htmlString = "<div style='color: black;'>" + ((editor?editor.getHTML():"")) + "</div>"
+    console.log(htmlString)
 
+    // doc.html(htmlString).then(() => doc.save('fileName.pdf'));
+
+    doc.html(htmlString, {
+      callback: () => {
+          // Save the PDF
+          doc.save("converted.pdf");
+      }
+  });
+
+    // doc.fromHTML('<h1>Hello world!</h1>', 10, 10);
+    // doc.save('example.pdf');
+  };
+
+  const printPage = () => {
+    window.print()
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(editor?editor.getText():"")
+      .then(() => {
+        toast.success('Text copied to clipboard!', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          });
+      })
+      .catch((error) => {
+        console.error('Error copying text: ', error);
+      });
+
+  }  
+
+  const clearDocument = () => {
+    if(editor) {
+      editor.commands.clearContent()
+    }
+  }
+
+  // const actions = [
+  //   { icon: <IconButton onClick={generatePDF}><FileCopyIcon /></IconButton>, name: 'Download' },
+  //   { icon: <IconButton onClick={printPage}><PrintIcon /></IconButton>, name: 'Print' },
+  //   { icon: <SaveIcon />, name: 'Print' },
+  //   { icon: <ShareIcon />, name: 'Share' },
+  // ];
+  const actions = [
+    { icon:<IconButton onClick={generatePDF}><DownloadIcon /></IconButton>, name: 'Download' },
+    { icon: <IconButton onClick={printPage}><PrintIcon /></IconButton>, name: 'Print' },
+    { icon: <IconButton onClick={copyToClipboard}><ContentCopyIcon /></IconButton>, name: 'Copy' },
+    { icon: <IconButton onClick={clearDocument}><HighlightOffIcon /></IconButton>, name: 'Share' },
+  ];
+
+  
+  
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      <ToastContainer />
       <div className="bg-black flex items-center p-6 h-screen w-screen">
         <NavBar setVisible={setVisible} visible={visible} />
         <div className="flex items-center rounded-lg h-full w-full">
@@ -80,6 +159,34 @@ const Notebook = () => {
             </div>
             <div className="relative flex flex-col items-center rounded-lg h-full w-full bg-white bg-opacity-10 rounded-lg">
               <Tiptap onEditorRender={handleEditorRender} />
+              <SpeedDial
+                ariaLabel="Log book actions"
+                sx={{ 
+                  position: 'absolute', 
+                  bottom: 40, 
+                  right: 40,
+                  "& .MuiButtonBase-root:hover":{
+                    background:"black",
+                    opacity:1.0
+                  },
+                  "& .MuiButtonBase-root":{
+                    background:"black",
+                    opacity: 0.5
+                  }
+                }}
+                icon={<SpeedDialIcon sx={{
+                  color:'white'
+                }}/>}
+              >
+                {actions.map((action) => (
+                  <SpeedDialAction
+                    key={action.name}
+                    icon={action.icon}
+                    tooltipTitle={action.name}
+                  />
+                ))}
+              </SpeedDial>
+
             </div>
         </div>
       </div>

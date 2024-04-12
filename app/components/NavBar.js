@@ -114,17 +114,17 @@ const NavBar = ({ setVisible, visible }) => {
                   ACCOUNT DETAILS
                 </Typography>
                 <Image
-                  src={session.user?.image}
+                  src={session ? session.user?.image:""}
                   width={500}
                   height={500}
                   alt=""
                   className="w-full h-full rounded-md mb-4 mt-4"
                 />
                 <div className='w-full bg-white bg-opacity-20 rounded-md mb-4 border border-white p-2'>
-                    {session.user.name}
+                    {session? session.user.name : ""}
                 </div>
                 <div className='w-full bg-white bg-opacity-20 rounded-md mb-8 border border-white p-2'>
-                    {session.user.email}
+                    {session? session.user.email: ""}
                 </div>
                 <button className='w-full rounded-md mb-2 border border-white p-2 hover:bg-white text-white hover:text-black transition ease-in-out delay-150'
                     onClick={() => {
