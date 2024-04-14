@@ -20,6 +20,15 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import TextField from '@mui/material/TextField';
+
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import ChatIcon from '@mui/icons-material/Chat';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+
 export default function Home(){
     const router = useRouter()
 
@@ -181,6 +190,85 @@ export default function Home(){
                     </div>
                 </div>
             </div>
+            <div className="bg-black bg-cover flex flex-row justify-center h-screen w-screen">
+                <div className='flex flex-col w-1/2 h-full justify-center'>
+                    <div className='w-full rounded-lg'>
+                        <div className='font-bold text-2xl ml-11 mb-2 opacity-50'>Research</div>
+                        <div className='flex flex-col font-bold text-4xl ml-11 mb-2'>Explore the Possibilities</div>
+                        <div className='ml-11 mb-2 opacity-50 ml-11 mb-7'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                        <div className='flex flex-col h-full px-6 ml-5'>
+                            <button className='flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150'>
+                                <div className='h-full flex flex-col justify-center'>
+                                    <AccessTimeIcon sx={{
+                                        fontSize: 40,
+                                        opacity: 0.5
+                                    }}/>
+                                </div>
+                                <div className='flex flex-col ml-4'>
+                                    <div className='font-bold text-2xl mb-2'>Real Time Prediction</div>
+                                    <div className='opacity-50'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada</div>
+                                </div>
+                            </button>
+                            <button className='flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150'>
+                                <div className='h-full flex flex-col justify-center'>
+                                    <CalendarMonthIcon sx={{
+                                        fontSize: 40,
+                                        opacity: 0.5
+                                    }}/>
+                                </div>
+                                <div className='flex flex-col ml-4'>
+                                    <div className='font-bold text-2xl mb-2'>Time Series Prediction</div>
+                                    <div className='opacity-50'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada</div>
+                                </div>
+                            </button>
+                            <button className='flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150'>
+                                <div className='h-full flex flex-col justify-center'>
+                                    <ChatIcon sx={{
+                                        fontSize: 40,
+                                        opacity: 0.5
+                                    }}/>
+                                </div>
+                                <div className='flex flex-col ml-4'>
+                                    <div className='font-bold text-2xl mb-2'>Archive Access</div>
+                                    <div className='opacity-50'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada</div>
+                                </div>
+                            </button>
+                            <button className='flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150'>
+                                <div className='h-full flex flex-col justify-center'>
+                                    <AnalyticsIcon sx={{
+                                        fontSize: 40,
+                                        opacity: 0.5
+                                    }}/>
+                                </div>
+                                <div className='flex flex-col ml-4'>
+                                    <div className='font-bold text-2xl mb-2'>AI Analysis</div>
+                                    <div className='opacity-50'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada</div>
+                                </div>
+                            </button>
+                            <button className='flex flex-row rounded-lg w-full p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150'>
+                                <div className='h-full flex flex-col justify-center'>
+                                    <AddPhotoAlternateIcon sx={{
+                                        fontSize: 40,
+                                        opacity: 0.5
+                                    }}/>
+                                </div>
+                                <div className='flex flex-col ml-4'>
+                                    <div className='font-bold text-2xl mb-2'>Custom Prediction</div>
+                                    <div className='opacity-50'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className='w-1/2 flex flex-col justify-center h-full p-6'>
+                    <div className='w-full h-3/4 bg-white bg-opacity-20 rounded-lg'>
+
+                    </div>
+                    <div className='w-full h-20 mt-7 bg-white bg-opacity-20 rounded-lg'>
+
+                    </div>
+                </div>
+            </div>
             <div className="bg-black bg-cover flex flex-col justify-center p-6 h-screen w-screen">
                 <div className='w-full text-center text-7xl font-extrabold'>FAQS</div>
                 <div className='w-full px-40 py-20'>
@@ -278,12 +366,47 @@ export default function Home(){
                 </div>
                 </div>
                 <div className="bg-black bg-cover flex flex-row justify-center h-screen w-screen">
-                    <div className='flex flex-col w-1/2 justify-center'>
+                    <div className='flex flex-col w-1/2 p-10 justify-center'>
                         <div className="text-white font-extrabold text-7xl ml-10">Contact Us</div>
                         <div className="text-white text-2xl ml-12 mt-5">Get in touch us with any comments you have!</div>
                     </div>
-                    <div className='w-1/2'>
-                        FORM
+                    <div className='w-1/2 flex flex-col justify-center p-6'>
+                        <TextField 
+                            id="outlined-basic" 
+                            label="Name" 
+                            variant="filled" 
+                            className='rounded-lg mb-6 mr-16'
+                            type='text'
+                        />
+                        <TextField 
+                            id="standard-basic" 
+                            label="Subject" 
+                            variant="filled" 
+                            className='rounded-lg mb-6 mr-16'
+                            type='text'
+                        />
+                        <TextField 
+                            id="filled-basic" 
+                            label="Email Address" 
+                            variant="filled"
+                            className='rounded-lg mb-6 mr-16' 
+                            type='email'
+                        />
+                        <TextField 
+                            id="filled-basic" 
+                            label="Phone Number" 
+                            variant="filled"
+                            className='rounded-lg mb-6 mr-16' 
+                            type='tel'
+                        />
+                        <TextField
+                            id="filled-multiline-static"
+                            label="Message"
+                            multiline
+                            rows={7}
+                            variant='filled'
+                            className='rounded-lg mr-16'
+                        />
                     </div>
                 </div>
             

@@ -194,18 +194,10 @@ export default function PredictionBar() {
             </Tooltip>
             <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: {category}</button>
             <Tooltip title="Copy to logs">
-              <button className='rounded-md border border-white flex items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'>
+              <button className='rounded-md border border-white flex items-center h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'>
                   <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
               </button>
             </Tooltip>
-            <label for="main-btn" className="p-2 h-10 bg-white bg-opacity-50 rounded-lg hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">
-              UPLOAD
-              <input
-                type="file"
-                hidden
-                id="main-btn"
-              />
-            </label>
             <Modal
               open={open}
               onClose={handleClose}

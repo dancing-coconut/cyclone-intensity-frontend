@@ -24,6 +24,135 @@ const Archive = () => {
   const [visible, setVisible] = useState(false)
   const [archiveDate, setArchiveDate] = useState('2024-01-01')
   const [archiveTime, setArchiveTime] = useState('12:00:00')
+  const [archiveData, setArchiveData] = useState({
+    "archive_data": {
+        "id": 662,
+        "wind": "0.00000",
+        "pressure": "0.00",
+        "name": "BUREVI",
+        "original_img": "/media/archive/3DIMG_04DEC2020_0900_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "timestamp": "2020-12-04T09:00:00+05:30"
+    },
+    "category": 0,
+    "t_number": 1,
+    "next_wind_data": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        20.0,
+        20.0,
+        20.0,
+        0.0
+    ],
+    "previous_wind_data": [
+        35.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
+    ],
+    "next_pressure_data": [
+        1002.0,
+        1002.0,
+        1003.0,
+        1003.0,
+        1004.0,
+        1006.0,
+        1006.0,
+        0.0
+    ],
+    "previous_pressure_data": [
+        999.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1001.0,
+        1001.0
+    ] 
+  }
+)
+  const [windData, setWindData] = useState([ 
+    {
+      "name": "00:00:00",
+      "Wind": 30.0,
+    }, 
+    {
+      "name": "03:00:00",
+      "Wind": 30.0,
+    },
+    {
+      "name": "06:00:00",
+      "Wind": 35.0,
+    },
+    {
+    "name": "09:00:00",
+    "Wind": 0.0,
+  },
+  {
+    "name": "12:00:00",
+    "Wind": 25.0,
+  },
+  {
+    "name": "15:00:00",
+    "Wind": 25.0,
+  },
+  {
+    "name": "18:00:00",
+    "Wind": 25.0,
+  },
+  {
+    "name": "21:00:00",
+    "Wind": 25.0,
+  },
+  {
+    "name": "00:00:00",
+    "Wind": 20.0,
+  },
+])
+
+  const [pressureData, setPressureData] = useState([  {
+    "name": "00:00:00",
+    "Pressure": 1000.0,
+  },
+  {
+    "name": "03:00:00",
+    "Pressure": 1000.0,
+  },
+  {
+    "name": "06:00:00",
+    "Pressure": 999.0,
+  },
+  {
+    "name": "09:00:00",
+    "Pressure": 0.0,
+  },
+  {
+    "name": "12:00:00",
+    "Pressure": 1002.0,
+  },
+  {
+    "name": "15:00:00",
+    "Pressure": 1002.0,
+  },
+  {
+    "name": "18:00:00",
+    "Pressure": 1003.0,
+  },
+  {
+    "name": "21:00:00",
+    "Pressure": 1003.0,
+  },
+  {
+    "name": "00:00:00",
+    "Pressure": 1004.0,
+  },
+])
 
   const darkTheme = createTheme({
     palette: {
@@ -31,10 +160,74 @@ const Archive = () => {
     },
   });
 
-  function handleArchiveRequest(){
-    console.log(archiveDate)
-    console.log(archiveTime)
+  async function handleArchiveRequest() {
+    //Uncomment for fetch
+    // try {
+    //   const response = await fetch('http://127.0.0.1:8000/time/archive/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: `${archiveDate} ${archiveTime}`
+    //   });
+  
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+  
+    //   const data = await response.json();
+  
+    //   setArchiveData(data);
+    //   const { archive_data, next_wind_data, previous_wind_data, next_pressure_data, previous_pressure_data } = data;
+    //   const { wind, pressure, timestamp } = archive_data;
+  
+    //   const currentDate = new Date(timestamp);
+  
+    //   const formatTime = (date) =>
+    //     `${String(date.getHours()).padStart(2, '0')}:${String(
+    //       date.getMinutes()
+    //     ).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+  
+    //   const previousWindObjects = previous_wind_data.map((windValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Wind: windValue
+    //   }));
+  
+    //   const currentWindObject = {
+    //     name: formatTime(currentDate),
+    //     Wind: parseFloat(wind)
+    //   };
+  
+    //   const nextWindObjects = next_wind_data.map((windValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Wind: windValue
+    //   }));
+  
+    //   const previousPressureObjects = previous_pressure_data.map((pressureValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Pressure: pressureValue
+    //   }));
+  
+    //   const currentPressureObject = {
+    //     name: formatTime(currentDate),
+    //     Pressure: parseFloat(pressure)
+    //   };
+  
+    //   const nextPressureObjects = next_pressure_data.map((pressureValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Pressure: pressureValue
+    //   }));
+  
+    //   const windResult = [...previousWindObjects.reverse(), currentWindObject, ...nextWindObjects];
+    //   setWindData(windResult);
+  
+    //   const pressureResult = [...previousPressureObjects.reverse(), currentPressureObject, ...nextPressureObjects];
+    //   setPressureData(pressureResult);
+    // } catch (error) {
+    //   console.error('There was a problem with your fetch operation:', error);
+    // }
   }
+  
   const router = useRouter()
 
   const { data: session } = useSession()
@@ -46,6 +239,75 @@ const Archive = () => {
       router.push('/archive')
     }
   },[router, session])
+
+  // Un comment below for fetching:
+  // useEffect(async () => {
+    //Uncomment for fetch
+    // try {
+    //   const response = await fetch('http://127.0.0.1:8000/time/archive/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: `${archiveDate} ${archiveTime}`
+    //   });
+  
+    //   if (!response.ok) {
+    //     throw new Error('Network response was not ok');
+    //   }
+  
+    //   const data = await response.json();
+  
+    //   setArchiveData(data);
+    //   const { archive_data, next_wind_data, previous_wind_data, next_pressure_data, previous_pressure_data } = data;
+    //   const { wind, pressure, timestamp } = archive_data;
+  
+    //   const currentDate = new Date(timestamp);
+  
+    //   const formatTime = (date) =>
+    //     `${String(date.getHours()).padStart(2, '0')}:${String(
+    //       date.getMinutes()
+    //     ).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+  
+    //   const previousWindObjects = previous_wind_data.map((windValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Wind: windValue
+    //   }));
+  
+    //   const currentWindObject = {
+    //     name: formatTime(currentDate),
+    //     Wind: parseFloat(wind)
+    //   };
+  
+    //   const nextWindObjects = next_wind_data.map((windValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Wind: windValue
+    //   }));
+  
+    //   const previousPressureObjects = previous_pressure_data.map((pressureValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Pressure: pressureValue
+    //   }));
+  
+    //   const currentPressureObject = {
+    //     name: formatTime(currentDate),
+    //     Pressure: parseFloat(pressure)
+    //   };
+  
+    //   const nextPressureObjects = next_pressure_data.map((pressureValue, index) => ({
+    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
+    //     Pressure: pressureValue
+    //   }));
+  
+    //   const windResult = [...previousWindObjects.reverse(), currentWindObject, ...nextWindObjects];
+    //   setWindData(windResult);
+  
+    //   const pressureResult = [...previousPressureObjects.reverse(), currentPressureObject, ...nextPressureObjects];
+    //   setPressureData(pressureResult);
+    // } catch (error) {
+    //   console.error('There was a problem with your fetch operation:', error);
+    // }
+  // }, [])
   
   if (session) {
     return (
@@ -112,7 +374,7 @@ const Archive = () => {
 
             <div className="relative flex flex-col items-center rounded-lg h-full w-full">
               {/* <ArchiveTimeDateBar /> */}
-              <ArchivePictureBar />
+              <ArchivePictureBar date={new Date(archiveData.archive_data.timestamp).toISOString().split('T')[0]} time={new Date(archiveData.archive_data.timestamp).toISOString().substring(11, 19)} wind={windData} pressure={pressureData}/>
               <PredictionBar />
               <MiniChatbot visible={visible} />
             </div>

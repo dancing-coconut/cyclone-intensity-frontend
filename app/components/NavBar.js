@@ -14,11 +14,18 @@ import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
+import SearchIcon from '@mui/icons-material/Search';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import InputAdornment from '@mui/material/InputAdornment';
+
 
 import Image from "next/image";
 
@@ -32,6 +39,10 @@ const NavBar = ({ setVisible, visible }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [openSearch, setOpenSearch] = useState(false);
+    const handleSearchOpen = () => setOpenSearch(true);
+    const handleSearchClose = () => setOpenSearch(false);
 
     const style = {
         position: 'absolute',
@@ -50,7 +61,28 @@ const NavBar = ({ setVisible, visible }) => {
         display: 'flex',
         flexDirection: 'column',
         borderRadius: '10px'
-      };
+    };
+
+
+    const searchStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 900,
+        bgcolor: 'background.paper',
+        border: '2px solid white',
+        boxShadow: 24,
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingRight: 2,
+        paddingLeft: 2,
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: '10px',
+        outline: 'none',
+    };
 
     return(
         <div className="rounded-lg mr-6 h-full w-20 bg-white bg-opacity-10 flex flex-col items-center justify-between">
@@ -84,10 +116,23 @@ const NavBar = ({ setVisible, visible }) => {
                         <LibraryBooksIcon style={{ color: 'white', fontSize: 30 }}/>
                     </button>
                 </Tooltip>
+                <Tooltip title="Upload Image">
+                    <button className={key=="/upload"?"flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white":"p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"} onClick={() => router.push('/upload')}>
+                        <AddPhotoAlternateIcon style={{ color: 'white', fontSize: 30 }}/>
+                    </button>
+                </Tooltip>
             </div>
             <div className="flex flex-col items-center justify-between">
+            <Tooltip title="Search">
+                <button 
+                    className={visible?"m-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"} 
+                    onClick={handleSearchOpen}
+                >
+                    <ContentPasteSearchIcon style={{ color: 'white', fontSize: 30 }}/>
+                </button>
+            </Tooltip>
             <Tooltip title="Assistant">
-                <button className={visible?"mb-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"} onClick={() => setVisible(!visible)}>
+                <button className={visible?"m-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"} onClick={() => setVisible(!visible)}>
                     <ChatIcon style={{ color: 'white', fontSize: 30 }}/>
                 </button>
             </Tooltip>
@@ -103,6 +148,40 @@ const NavBar = ({ setVisible, visible }) => {
                 <AccountCircleIcon style={{ color: 'white', fontSize: 40 }}/>}
             </button>
             </div>
+            <Modal
+                open={openSearch}
+                onClose={handleSearchClose}
+                aria-labelledby="unit-conversion-settings"
+                aria-describedby="unit-conversion-for-predicted-categories"
+            >
+                <Box sx={searchStyle}>
+                <Autocomplete
+                    multiple
+                    limitTags={2}
+                    id="multiple-limit-tags"
+                    options={[]}
+                    getOptionLabel={(option) => option.title}
+                    defaultValue={[]}
+                    renderInput={(params) => (
+                        <TextField {...params} 
+                            id="outlined-basic" 
+                            label="" 
+                            variant="outlined" 
+                            InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <SearchIcon />
+                                  </InputAdornment>
+                                ),
+                            }}
+                        />
+                    )}
+                    />
+
+                    
+                </Box>
+
+            </Modal>
             <Modal
               open={open}
               onClose={handleClose}

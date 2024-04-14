@@ -65,7 +65,7 @@ const Notebook = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
     // const htmlString = "<h1 style='color: black;'>Hello, world!</h1><p style='color: black;'>This is a sample HTML string with black text.</p>";
-    const htmlString = "<div style='color: black;'>" + ((editor?editor.getHTML():"")) + "</div>"
+    const htmlString = "<div style='color: black; font-size: 6px;'>" + ((editor?editor.getHTML():"")) + "</div>"
     console.log(htmlString)
 
     // doc.html(htmlString).then(() => doc.save('fileName.pdf'));
@@ -73,7 +73,7 @@ const Notebook = () => {
     doc.html(htmlString, {
       callback: () => {
           // Save the PDF
-          doc.save("converted.pdf");
+          doc.save("chakravaat.pdf");
       }
   });
 
@@ -122,7 +122,7 @@ const Notebook = () => {
     { icon:<IconButton onClick={generatePDF}><DownloadIcon /></IconButton>, name: 'Download' },
     { icon: <IconButton onClick={printPage}><PrintIcon /></IconButton>, name: 'Print' },
     { icon: <IconButton onClick={copyToClipboard}><ContentCopyIcon /></IconButton>, name: 'Copy' },
-    { icon: <IconButton onClick={clearDocument}><HighlightOffIcon /></IconButton>, name: 'Share' },
+    { icon: <IconButton onClick={clearDocument}><HighlightOffIcon /></IconButton>, name: 'Clear' },
   ];
 
   
@@ -158,7 +158,7 @@ const Notebook = () => {
               </div>
             </div>
             <div className="relative flex flex-col items-center rounded-lg h-full w-full bg-white bg-opacity-10 rounded-lg">
-              <Tiptap onEditorRender={handleEditorRender} />
+              <Tiptap onEditorRender={handleEditorRender} className='w-full'/>
               <SpeedDial
                 ariaLabel="Log book actions"
                 sx={{ 

@@ -24,20 +24,32 @@ import { useSession } from "next-auth/react"
 const Admin = () => {
   const [visible, setVisible] = useState(false)
 
-  const [category, setCategory] = useState("0")
-  const [tNumber, setTNumber] = useState('2.5 - 3.0')
+  const [intensity, setIntensity] = useState(20)
+  const [pressure, setPressure] = useState(20)
+  const [originalImage, setOriginalImage] = useState("/cyclone.jpg")
+  const [processedImage, setProcessedImage] = useState("/cyclone.jpg")
+  const [category, setCategory] = useState(0)
+  const [tNumber, setTNumber] = useState('1.0 - 3.5')
+  const [data, setData] = useState()
 
   const router = useRouter()
 
   const { data: session } = useSession()
 
-  useEffect(() => {
-    if(!session){
-      router.push('/')
-    } else {
-      router.push('/admin')
-    }
-  },[router, session])
+  async function logData() {
+    const response = await fetch("http://localhost:8000/predictions");
+    const dataset = await response.json();
+    
+    setData(dataset)
+    setIntensity(dataset.wind)
+    setPressure(dataset.pressure)
+    setOriginalImage("http://localhost:8000" + dataset.original_img)
+    setProcessedImage("http://localhost:8000" + dataset.processed_img)
+    setCategory(dataset.category)
+    setTNumber(dataset.t_number)
+    console.log('Category 0' === "Category " + dataset.category.toString())
+    console.log(dataset);
+}
 
   function createData(
     t_number,
@@ -47,12 +59,12 @@ const Admin = () => {
   }
 
   const rows = [
-    createData('1.0 - 1.5', 159),
-    createData('2.0', 159),
-    createData('2.5 - 3.0', 159),
-    createData('3.5', 159),
-    createData('4.0', 159),
-    createData('4.5', 159),
+    createData('1.0 - 3.5', 'Category 0'),
+    createData('4.0 - 4.5', 'Category 1'),
+    createData('5.0', 'Category 2'),
+    createData('5.5', 'Category 3'),
+    createData('6.0 - 6.5', 'Category 4'),
+    createData('7.0 - 8.0', 'Category 5'),
   ];
 
   const darkTheme = createTheme({
@@ -60,6 +72,10 @@ const Admin = () => {
       mode: 'dark',
     },
   });
+
+  // useEffect(() => {
+  //     logData()
+  // },[])
 
   if (session) {
     return (
@@ -69,7 +85,7 @@ const Admin = () => {
           <NavBar setVisible={setVisible} visible={visible} />
           <div className="flex items-center rounded-lg h-full w-full">
             <div className='flex flex-col h-full'>
-              <div className='h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>DVORAK SCALE</div>
+              <div className='flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>DVORAK SCALE</div>
               <div className="bg-white bg-opacity-10 rounded-lg w-80 mr-6">
                 <Table sx={{ color:'white' }} aria-label="simple table">
                   <TableHead>
@@ -80,9 +96,10 @@ const Admin = () => {
                   </TableHead>
                   <TableBody>
                     {rows.map((row) => (
+                      
                       <TableRow
                         key={row.t_number}
-                        sx={row.t_number == '2.5 - 3.0' ? { '&:last-child td, &:last-child th': { border: 0 }, color:'black', backgroundColor:'white' }:{ '&:last-child td, &:last-child th': { border: 0 }, color:'white' }}
+                        sx={row.categories === ("Category " + category.toString()) ? { '&:last-child td, &:last-child th': { border: 0 }, color:'black', backgroundColor:'white' }:{ '&:last-child td, &:last-child th': { border: 0 }, color:'white' }}
                       >
                         <TableCell component="th" scope="row" sx={{ color:'grey' }}>
                           {row.t_number}
@@ -110,8 +127,8 @@ const Admin = () => {
 
             <div className="relative flex flex-col items-center rounded-lg h-full w-full">
               <TimeDateBar />
-              <PictureBar />
-              <PredictionBar />
+              <PictureBar original={originalImage} processed={processedImage}/>
+              <PredictionBar windIntensity={intensity} windPressure={pressure} windCategory={category}/>
               <MiniChatbot visible={visible} />
             </div>
           </div>
@@ -122,8 +139,8 @@ const Admin = () => {
   return (
     <div className='w-screen h-screen bg-black'>
       {/* {useEffect(() => {
-        router.push('/')
-      },[check()])} */}
+        router.push('/');
+      })} */}
     </div>
   )
 }
