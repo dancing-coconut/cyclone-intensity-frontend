@@ -15,7 +15,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import { pressureConverter, speedConverter } from './UnitConversionFunctions';
 
-export default function PredictionBar() {
+export default function PredictionBar({ windIntensity, windPressure, windCategory }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -164,6 +164,11 @@ export default function PredictionBar() {
       localStorage.setItem('data', JSON.stringify(newData));
 
     }
+    useEffect(() => {
+      setIntensity(windIntensity);
+      setPressure(windPressure);
+      setCategory(windCategory);
+    }, [windIntensity, windPressure, windCategory]);    
     
     return(
         <div className="flex items-center rounded-lg h-16 mt-6 p-6 w-full bg-white bg-opacity-10">

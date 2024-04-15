@@ -30,7 +30,7 @@ const Archive = () => {
         "wind": "0.00000",
         "pressure": "0.00",
         "name": "BUREVI",
-        "original_img": "/media/archive/3DIMG_04DEC2020_0900_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "original_img": "/cyclone.jpg",
         "timestamp": "2020-12-04T09:00:00+05:30"
     },
     "category": 0,
@@ -163,7 +163,7 @@ const Archive = () => {
   async function handleArchiveRequest() {
     //Uncomment for fetch
     // try {
-    //   const response = await fetch('http://127.0.0.1:8000/time/archive/', {
+    //   const response = await fetch('http://127.0.0.1:8000/data/archive/', {
     //     method: 'POST',
     //     headers: {
     //       'Content-Type': 'application/json'
@@ -244,7 +244,7 @@ const Archive = () => {
   // useEffect(async () => {
     //Uncomment for fetch
     // try {
-    //   const response = await fetch('http://127.0.0.1:8000/time/archive/', {
+    //   const response = await fetch('http://127.0.0.1:8000/data/archive/', {
     //     method: 'POST',
     //     headers: {
     //       'Content-Type': 'application/json'
@@ -374,8 +374,8 @@ const Archive = () => {
 
             <div className="relative flex flex-col items-center rounded-lg h-full w-full">
               {/* <ArchiveTimeDateBar /> */}
-              <ArchivePictureBar date={new Date(archiveData.archive_data.timestamp).toISOString().split('T')[0]} time={new Date(archiveData.archive_data.timestamp).toISOString().substring(11, 19)} wind={windData} pressure={pressureData}/>
-              <PredictionBar />
+              <ArchivePictureBar date={new Date(archiveData.archive_data.timestamp).toISOString().split('T')[0]} time={new Date(archiveData.archive_data.timestamp).toISOString().substring(11, 19)} wind={windData} pressure={pressureData}  original={archiveData.archive_data.original_img}/>
+              <PredictionBar windIntensity={archiveData.archive_data.wind} windPressure={archiveData.archive_data.pressure} windCategory={archiveData.category} />
               <MiniChatbot visible={visible} />
             </div>
           </div>

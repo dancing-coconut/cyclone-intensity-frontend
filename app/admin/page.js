@@ -37,7 +37,7 @@ const Admin = () => {
   const { data: session } = useSession()
 
   async function logData() {
-    const response = await fetch("http://localhost:8000/predictions");
+    const response = await fetch("http://localhost:8000/real_time/prediction/");
     const dataset = await response.json();
     
     setData(dataset)
@@ -73,6 +73,7 @@ const Admin = () => {
     },
   });
 
+  // Uncomment for fetch
   // useEffect(() => {
   //     logData()
   // },[])
