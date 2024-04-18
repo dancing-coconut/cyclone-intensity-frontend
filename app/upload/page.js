@@ -24,7 +24,7 @@ const Upload = () => {
     const [pressure, setPressure] = useState(20)
     const [originalImage, setOriginalImage] = useState("/cyclone.jpg")
     const [processedImage, setProcessedImage] = useState("/cyclone.jpg")
-    const [category, setCategory] = useState(0)
+    const [category, setCategory] = useState(10)
     const [tNumber, setTNumber] = useState('1.0 - 3.5')
     const [data, setData] = useState()
 
@@ -97,9 +97,9 @@ const Upload = () => {
                 </div>
                 </div>
                 <div className="relative flex flex-col items-center rounded-lg h-full w-full">
-              <UploadBar />
               <PictureBar original={originalImage} processed={processedImage}/>
               <PredictionBar windIntensity={intensity} windPressure={pressure} windCategory={category}/>
+              <UploadBar />
               <MiniChatbot visible={visible} />
             </div>
                 </div>

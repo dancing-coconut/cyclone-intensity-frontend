@@ -179,67 +179,66 @@ const TimeSeries = () => {
   },
 ])
 
+async function logData() {
+        const response = await fetch('http://127.0.0.1:8000/time_series/prediction/');
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+  
+      setTimeSeries(data);
+      const { general_data, next_wind_data, previous_wind_data, next_pressure_data, previous_pressure_data } = data;
+      const { wind, pressure, timestamp } = general_data;
+  
+      const currentDate = new Date(timestamp);
+  
+      const formatTime = (date) =>
+        `${String(date.getHours()).padStart(2, '0')}:${String(
+          date.getMinutes()
+        ).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+  
+      const previousWindObjects = previous_wind_data.map((windValue, index) => ({
+        name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
+        Wind: windValue
+      }));
+  
+      const currentWindObject = {
+        name: formatTime(currentDate),
+        Wind: parseFloat(wind)
+      };
+  
+      const nextWindObjects = next_wind_data.map((windValue, index) => ({
+        name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
+        Wind: windValue
+      }));
+  
+      const previousPressureObjects = previous_pressure_data.map((pressureValue, index) => ({
+        name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
+        Pressure: pressureValue
+      }));
+  
+      const currentPressureObject = {
+        name: formatTime(currentDate),
+        Pressure: parseFloat(pressure)
+      };
+  
+      const nextPressureObjects = next_pressure_data.map((pressureValue, index) => ({
+        name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
+        Pressure: pressureValue
+      }));
+  
+      const windResult = [...previousWindObjects.reverse(), currentWindObject, ...nextWindObjects];
+      setWindData(windResult);
+  
+      const pressureResult = [...previousPressureObjects.reverse(), currentPressureObject, ...nextPressureObjects];
+      setPressureData(pressureResult);
+}
+
  // Un comment below for fetching:
-  // useEffect(async () => {
-    //Uncomment for fetch
-    // try {
-    //   const response = await fetch('http://127.0.0.1:8000/time_series/prediction/');
-  
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-  
-    //   const data = await response.json();
-  
-    //   setTimeSeries(data);
-    //   const { general_data, next_wind_data, previous_wind_data, next_pressure_data, previous_pressure_data } = data;
-    //   const { wind, pressure, timestamp } = general_data;
-  
-    //   const currentDate = new Date(timestamp);
-  
-    //   const formatTime = (date) =>
-    //     `${String(date.getHours()).padStart(2, '0')}:${String(
-    //       date.getMinutes()
-    //     ).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
-  
-    //   const previousWindObjects = previous_wind_data.map((windValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Wind: windValue
-    //   }));
-  
-    //   const currentWindObject = {
-    //     name: formatTime(currentDate),
-    //     Wind: parseFloat(wind)
-    //   };
-  
-    //   const nextWindObjects = next_wind_data.map((windValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Wind: windValue
-    //   }));
-  
-    //   const previousPressureObjects = previous_pressure_data.map((pressureValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Pressure: pressureValue
-    //   }));
-  
-    //   const currentPressureObject = {
-    //     name: formatTime(currentDate),
-    //     Pressure: parseFloat(pressure)
-    //   };
-  
-    //   const nextPressureObjects = next_pressure_data.map((pressureValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Pressure: pressureValue
-    //   }));
-  
-    //   const windResult = [...previousWindObjects.reverse(), currentWindObject, ...nextWindObjects];
-    //   setWindData(windResult);
-  
-    //   const pressureResult = [...previousPressureObjects.reverse(), currentPressureObject, ...nextPressureObjects];
-    //   setPressureData(pressureResult);
-    // } catch (error) {
-    //   console.error('There was a problem with your fetch operation:', error);
-    // }
+  // useEffect(() => {
+  // logData()
   // }, [])
   
   if (session) {
@@ -251,17 +250,27 @@ const TimeSeries = () => {
           <div className="flex items-center rounded-lg h-full w-full">
             <div className='flex flex-col h-full'>
               <div className='h-30 bg-white bg-opacity-30 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6'>FORECASTS</div>
-              <div className="flex flex-col h-full rounded-lg w-80 mr-6">
-                <div className='h-1/2 mb-6 flex flex-col'>
+              <div className="flex flex-col h-full rounded-lg w-80 mr-6 overflow-scroll">
+                <div className='h-1/2 mb-6 flex flex-col overflow-scroll'>
                   <div className='bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4'>INTENSITY</div>
                   <div className='h-full w-full bg-white bg-opacity-10 rounded-lg p-4 overflow-scroll'>
-
+                    {windData.map((windDatum) => (
+                      <div className='rounded-lg w-full bg-white bg-opacity-15 flex flex-col p-3 mb-2'>
+                        Wind: {windDatum.Wind} <br />
+                        Timestamp: {windDatum.name}
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className='h-1/2 flex flex-col'>
+                <div className='h-1/2 flex flex-col overflow-scroll'>
                   <div className='bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4'>PRESSURE</div>
                   <div className='h-full w-full bg-white bg-opacity-10 rounded-lg p-4 overflow-scroll'>
-
+                    {pressureData.map((pressureDatum) => (
+                      <div className='rounded-lg w-full bg-white bg-opacity-15 flex flex-col p-3 mb-2'>
+                        Pressure: {pressureDatum.Pressure} <br />
+                        Timestamp: {pressureDatum.name}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -11,11 +11,28 @@ import Tooltip from '@mui/material/Tooltip';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 
+import { IconButton } from '@mui/material';
 
 import { pressureConverter, speedConverter } from './UnitConversionFunctions';
 
+import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+
+// import SaveIcon from '@mui/icons-material/Save';
+// import PrintIcon from '@mui/icons-material/Print';
+// import ShareIcon from '@mui/icons-material/Share';
+
+
+
 export default function PredictionBar({ windIntensity, windPressure, windCategory }) {
+
+    
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -72,9 +89,6 @@ export default function PredictionBar({ windIntensity, windPressure, windCategor
 
     const [category, setCategory] = useState('Cat-1');
 
-    const handleCategoryChange = (event) => {
-      setCategory(event.target.value);
-    };
 
     const [intensityUnit, setIntensityUnit] = useState({
       "prev": "knots",
@@ -107,15 +121,9 @@ export default function PredictionBar({ windIntensity, windPressure, windCategor
       "curr": "cat"
     });
 
-    const handleCategoryUnitChange = (event) => {
-      const newCategoryUnits = {
-        "prev": categoryUnit["curr"],
-        "curr": event.target.value
-      }
-      setCategoryUnit(newCategoryUnits);
-    };
 
     function settingsSaveHandler () {
+      // window.open(`https://www.google.com/search?q=${encodeURIComponent('Wind Intensity: 20')}`, '_blank');
 
       const changedSpeed = speedConverter(intensity, intensityUnit["prev"], intensityUnit["curr"])
       const changedPressure = pressureConverter(pressure, pressureUnit["prev"], pressureUnit["curr"])
@@ -169,40 +177,176 @@ export default function PredictionBar({ windIntensity, windPressure, windCategor
       setPressure(windPressure);
       setCategory(windCategory);
     }, [windIntensity, windPressure, windCategory]);    
+
+    // const actions = [
+    //   { icon: <FileCopyIcon />, name: 'Copy to Clipboard' },
+    //   { icon: <ExitToAppIcon />, name: 'Copy to Logs' },
+    //   { icon: <ContactSupportIcon />, name: 'Ask the Chatbot' },
+    //   { icon: <TravelExploreIcon />, name: 'Search the Web' },
+    // ];
+    // const actions = [
+    //   { icon: <IconButton onClick={}><FileCopyIcon /></IconButton>, name: 'Copy to Clipboard' },
+    //   { icon: <IconButton onClick={}><ExitToAppIcon /></IconButton>, name: 'Copy to Logs' },
+    //   { icon: <IconButton onClick={}><TravelExploreIcon /></IconButton>, name: 'Search the Web' },
+    //   { icon: <IconButton onClick={}><ContactSupportIcon /></IconButton>, name: 'Ask the Chatbot' },
+    // ];
+
+    const actions = [
+      { icon: <FileCopyIcon />, name: 'Copy to Clipboard' },
+      { icon: <ExitToAppIcon />, name: 'Copy to Logs' },
+      { icon: <TravelExploreIcon />, name: 'Search the Web' },
+      { icon: <ContactSupportIcon />, name: 'Ask the Chatbot' },
+    ];
+
+    const getNextPressureUnit = () => {
+      if (pressureUnit["curr"] == "Pa") {
+        return 'mbar'
+      } else if (pressureUnit["curr"] == "mbar") {
+        return 'bar'
+      } else if (pressureUnit["curr"] == "bar") {
+        return 'mmHg'
+      } else if (pressureUnit["curr"] == "mmHg") {
+        return 'atm'
+      } else {
+        return 'Pa'
+      }
+    }
+    
+    const getNextWindUnit = () => {
+      if (intensityUnit["curr"] == "knots") {
+        return 'kmh'
+      } else if (intensityUnit["curr"] == "kmh") {
+        return 'mps'
+      } else if (intensityUnit["curr"] == "mps") {
+        return 'mph'
+      } else if (intensityUnit["curr"] == "mph") {
+        return 'fps'
+      } else {
+        return 'knots'
+      }
+    }
     
     return(
-        <div className="flex items-center rounded-lg h-16 mt-6 p-6 w-full bg-white bg-opacity-10">
-            <button className='rounded-md border border-white flex items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'
-              onClick={handleOpen}
-            >
-              <SettingsIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }} />
-            </button>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
-              onClick={handleIntensityChange}
-            >Predicted Intensity: {intensity} {intensityUnit["curr"]}</button>
-            <Tooltip title="Copy to logs">
-              <button className='rounded-md border border-white flex items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'
+      <div className='flex flex-row w-full'>
+        <div className="flex items-center rounded-lg h-16 mt-6 py-6 pl-4 w-3/4 bg-white bg-opacity-10">
+            <Tooltip title="Unit Settings">
+              <button className='rounded-md border border-white flex items-center mr-4 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'
+                onClick={handleOpen}
+              >
+                <SettingsIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }} />
+              </button>
+            </Tooltip>
+            <Tooltip title={"Change Intensity Unit To " + getNextWindUnit()}>
+                <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
+                  onClick={handleIntensityChange}
+                >Predicted Intensity: {intensity} {intensityUnit["curr"]}</button>
+            </Tooltip>
+            {/* <Tooltip title="Copy to logs">
+              <button className='rounded-md border border-white flex flex-row items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'
                 onClick={windCopyHandler}
               >
                   <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
               </button>
+            </Tooltip> */}
+            <div className='flex ml-2 mr-4'>
+              <div className='relative h-10 w-10'>
+                <SpeedDial
+                  ariaLabel="Log book actions"
+                  sx={{ 
+                    position: 'absolute',
+                    bottom:0,
+                    right: 0,
+                    // top:0,
+                    // left:0,
+                    "& .MuiButtonBase-root:hover":{
+                      background:"white",
+                      color:"black",
+                      border: 2,
+                    },
+                    "& .MuiButtonBase-root":{
+                      background:"black",
+                      height: '2.5rem',
+                      width: '2.5rem',
+                      border: 2,
+                      color: 'rgba(255,255,255,0.5)',
+                    },
+                  }}
+                  icon={<SpeedDialIcon sx={{
+                    marginBottom: '3px'
+                    // color:'white',
+                    // '&:hover':{
+                    //   color:"black"
+                    // }
+                  }}
+                  />}
+                  // icon={<AddCircleOutlineIcon />}
+                >
+                  {actions.map((action) => (
+                    <SpeedDialAction
+                      key={action.name}
+                      icon={action.icon}
+                      tooltipTitle={action.name}
+                    />
+                  ))}
+                </SpeedDial>
+              </div>
+            </div>
+            <Tooltip title={"Change Pressure Unit To " + getNextPressureUnit()}>
+              <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
+                onClick={handlePressureChange}
+              >Estimated Pressure: {pressure} {pressureUnit["curr"]}</button>
             </Tooltip>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
-              onClick={handlePressureChange}
-            >Estimated Pressure: {pressure} {pressureUnit["curr"]}</button>
-            <Tooltip title="Copy to logs">
+            {/* <Tooltip title="Copy to logs">
               <button className='rounded-md border border-white flex items-center mr-6 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'
                 onClick={pressureCopyHandler}
               >
                   <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
               </button>
-            </Tooltip>
-            <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: {category}</button>
-            <Tooltip title="Copy to logs">
-              <button className='rounded-md border border-white flex items-center h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'>
-                  <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
-              </button>
-            </Tooltip>
+            </Tooltip> */}
+            <div className='flex ml-2 mr-4'>
+              <div className='relative h-10 w-10'>
+                <SpeedDial
+                  ariaLabel="Log book actions"
+                  sx={{ 
+                    position: 'absolute',
+                    bottom:0,
+                    right: 0,
+                    // top:0,
+                    // left:0,
+                    "& .MuiButtonBase-root:hover":{
+                      background:"white",
+                      color:"black",
+                      border: 2,
+                    },
+                    "& .MuiButtonBase-root":{
+                      background:"black",
+                      height: '2.5rem',
+                      width: '2.5rem',
+                      border: 2,
+                      color:'rgba(255,255,255,0.5)',
+                    },
+                  }}
+                  icon={<SpeedDialIcon sx={{
+                    marginBottom: '3px'
+                    // color:'white',
+                    // '&:hover':{
+                    //   color:"black"
+                    // }
+                  }}
+                  />}
+                  // icon={<AddCircleOutlineIcon />}
+                >
+                  {actions.map((action) => (
+                    <SpeedDialAction
+                      key={action.name}
+                      icon={action.icon}
+                      tooltipTitle={action.name}
+                    />
+                  ))}
+                </SpeedDial>
+              </div>
+            </div>
+            
             <Modal
               open={open}
               onClose={handleClose}
@@ -245,19 +389,6 @@ export default function PredictionBar({ windIntensity, windPressure, windCategor
                     {pressureUnit["curr"] == 'atm' ? <MenuItem disabled value={'atm'}>Standard Atmosphere</MenuItem> : <MenuItem value={'atm'}>Standard Atmosphere</MenuItem>}
                   </Select>
                 </div>
-                <div className='rounded-md mt-4 flex justify-between p-3 border border-white opacity-40'>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 , marginLeft: 2 }}>Cyclone Category</Typography>
-                  <Select
-                    defaultValue={10}
-                    value={categoryUnit["curr"]}
-                    label=""
-                    onChange={handleCategoryUnitChange}
-                    sx={{color:'white', width: 400}}
-                  >
-                    <MenuItem value={'cat'}>Category</MenuItem>
-                    <MenuItem value={'t_no'}>T Number</MenuItem>
-                  </Select>
-                </div>
                 <div className='w-full flex justify-center'>
                   <button className='flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-8 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950' 
                     onClick={settingsSaveHandler}
@@ -269,5 +400,57 @@ export default function PredictionBar({ windIntensity, windPressure, windCategor
             </Modal>
 
         </div>
+        <div className="flex items-center rounded-lg h-16 mt-6 ml-4 py-6 px-4 w-1/4 bg-white bg-opacity-10">
+        <button className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-2 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950">Predicted Category: {category}</button>
+            {/* <Tooltip title="Copy to logs">
+              <button className='rounded-md border border-white flex items-center h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150'>
+                  <ContentCopyIcon sx={{ fontSize: 25, height: '2rem', width: '2rem' }}/>
+              </button>
+            </Tooltip> */}
+            <div className='flex ml-2'>
+              <div className='relative h-10 w-10'>
+                <SpeedDial
+                  ariaLabel="Log book actions"
+                  sx={{ 
+                    position: 'absolute',
+                    bottom:0,
+                    right: 0,
+                    // top:0,
+                    // left:0,
+                    "& .MuiButtonBase-root:hover":{
+                      background:"white",
+                      color:"black",
+                      border: 2,
+                    },
+                    "& .MuiButtonBase-root":{
+                      color: "rgba(255,255,255,0.5)",
+                      background:"black",
+                      height: '2.5rem',
+                      width: '2.5rem',
+                      border: 2,
+                    },
+                  }}
+                  icon={<SpeedDialIcon sx={{
+                    marginBottom: '3px'
+                    // color:'white',
+                    // '&:hover':{
+                    //   color:"black"
+                    // },
+                  }}
+                  />}
+                  // icon={<AddCircleOutlineIcon />}
+                >
+                  {actions.map((action) => (
+                    <SpeedDialAction
+                      key={action.name}
+                      icon={action.icon}
+                      tooltipTitle={action.name}
+                    />
+                  ))}
+                </SpeedDial>
+              </div>
+            </div>
+        </div>
+      </div>
     )
 }
