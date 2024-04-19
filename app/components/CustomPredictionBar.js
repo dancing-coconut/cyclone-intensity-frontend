@@ -212,9 +212,7 @@ export default function PredictionBar({
     const dateTimeString = new Date();
     const newData = {
       ...data,
-      ["Current Pressure"]: `${pressure} ${
-        pressureUnit["curr"]
-      } at ${dateTimeString.toString()}`,
+      ["Custom Pressure"]: `${pressure} ${pressureUnit["curr"]}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -234,9 +232,7 @@ export default function PredictionBar({
     const dateTimeString = new Date();
     const newData = {
       ...data,
-      ["Current Wind"]: `${intensity} ${
-        intensityUnit["curr"]
-      } at ${dateTimeString.toString()}`,
+      ["Custom Wind"]: `${intensity} ${intensityUnit["curr"]}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -256,7 +252,7 @@ export default function PredictionBar({
     const dateTimeString = new Date();
     const newData = {
       ...data,
-      ["Current Category"]: `${category} at ${dateTimeString.toString()}`,
+      ["Custom Category"]: `${category}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -273,10 +269,7 @@ export default function PredictionBar({
   };
 
   const windClipboardHandler = () => {
-    const dateTimeString = new Date();
-    const textToCopy = `Cyclone Wind Intensity At: ${dateTimeString.toString()}: ${intensity} ${
-      intensityUnit["curr"]
-    }`;
+    const textToCopy = `Cyclone Wind Intensity: ${intensity} ${intensityUnit["curr"]}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -318,10 +311,7 @@ export default function PredictionBar({
   };
 
   const pressureClipboardHandler = () => {
-    const dateTimeString = new Date();
-    const textToCopy = `Cyclone Pressure At: ${dateTimeString.toString()}: ${pressure} ${
-      pressureUnit["curr"]
-    }`;
+    const textToCopy = `Cyclone Pressure: ${pressure} ${pressureUnit["curr"]}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -354,8 +344,7 @@ export default function PredictionBar({
   };
 
   const categoryClipboardHandler = () => {
-    const dateTimeString = new Date();
-    const textToCopy = `Cyclone Category At: ${dateTimeString.toString()}: ${category}`;
+    const textToCopy = `Cyclone Category: ${category}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -406,12 +395,9 @@ export default function PredictionBar({
   };
 
   const pressureChatbotHandler = () => {
-    const dateTimeString = new Date();
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The current cyclone pressure at the Indian Ocean is ${pressure} ${
-          pressureUnit["curr"]
-        } at ${dateTimeString.toString()}. Can you please analyze this?`,
+        `The  cyclone pressure at the Indian Ocean is ${pressure} ${pressureUnit["curr"]}. Can you please analyze this?`,
         ...prevQuestions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
@@ -430,12 +416,9 @@ export default function PredictionBar({
   };
 
   const windChatbotHandler = () => {
-    const dateTimeString = new Date();
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The current cyclone intensity at the Indian Ocean is ${intensity} ${
-          intensityUnit["curr"]
-        } at ${dateTimeString.toString()}. Can you please analyze this?`,
+        `The cyclone intensity at the Indian Ocean is ${intensity} ${intensityUnit["curr"]}. Can you please analyze this?`,
         ...prevQuestions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
@@ -454,10 +437,9 @@ export default function PredictionBar({
   };
 
   const categoryChatbotHandler = () => {
-    const dateTimeString = new Date();
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The current cyclone category at the Indian Ocean is ${category} at ${dateTimeString.toString()}. Can you please analyze this?`,
+        `The cyclone category at the Indian Ocean is ${category}. Can you please analyze this?`,
         ...questions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
