@@ -19,11 +19,10 @@ const MiniChatbot = ({ visible }) => {
           className="rounded-lg absolute z-[1500] right-0 bottom-0 bg-white overflow-hidden"
         >
           <iframe
-            className="rounded-lg shadow-2xl shadow-zinc-950"
+            allow="microphone;"
             width="350"
             height="430"
-            allow="microphone;"
-            src="https://console.dialogflow.com/api-client/demo/embedded/e94e4dc9-5391-4087-8221-ec7bb543eee6"
+            src="https://console.dialogflow.com/api-client/demo/embedded/10ee9a26-f24f-4fdd-ae6d-f4bd59622f41"
           ></iframe>
         </motion.div>
       ) : (

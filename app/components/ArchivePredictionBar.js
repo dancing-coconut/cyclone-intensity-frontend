@@ -26,6 +26,7 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import InfoIcon from "@mui/icons-material/Info";
 
 import { toast, ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
 // import SaveIcon from '@mui/icons-material/Save';
@@ -36,10 +37,14 @@ import Drawer from "@mui/material/Drawer";
 
 import InfoContent from "./InfoContent";
 
-export default function CustomPredictionBar({
+import TextField from "@mui/material/TextField";
+
+export default function ArchivePredictionBar({
   windIntensity,
   windPressure,
   windCategory,
+  date,
+  setMainTimezone,
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -48,6 +53,9 @@ export default function CustomPredictionBar({
   const [openInfo, setOpenInfo] = useState(false);
   const handleOpenInfo = () => setOpenInfo(true);
   const handleCloseInfo = () => setOpenInfo(false);
+
+  const [timezone, setTimezone] = useState("");
+  const [currentTimezone, setCurrentTimezone] = useState("IST");
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -157,7 +165,9 @@ export default function CustomPredictionBar({
 
     setIntensity(changedSpeed);
     setPressure(changedPressure);
-
+    setCurrentTimezone(timezone);
+    setMainTimezone(timezone);
+    setTimezone("");
     setOpen(false);
   }
 
@@ -166,7 +176,7 @@ export default function CustomPredictionBar({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 700,
+    width: 790,
     bgcolor: "background.paper",
     border: "1px solid rgba(255, 255, 255, 0.5)",
     boxShadow: 24,
@@ -175,6 +185,7 @@ export default function CustomPredictionBar({
     display: "flex",
     flexDirection: "column",
     borderRadius: "10px",
+    outline: "none",
   };
 
   const styleInfo = {
@@ -190,6 +201,7 @@ export default function CustomPredictionBar({
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
+    outline: "none",
     // borderRadius: "10px",
     // overflow: "scroll",
   };
@@ -209,10 +221,9 @@ export default function CustomPredictionBar({
   }, []);
 
   const pressureCopyHandler = () => {
-    const dateTimeString = new Date();
     const newData = {
       ...data,
-      ["Custom Pressure"]: `${pressure} ${pressureUnit["curr"]}`,
+      [`Archive Pressure (${date} ${currentTimezone})`]: `${pressure} ${pressureUnit["curr"]}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -229,10 +240,9 @@ export default function CustomPredictionBar({
   };
 
   const windCopyHandler = () => {
-    const dateTimeString = new Date();
     const newData = {
       ...data,
-      ["Custom Wind"]: `${intensity} ${intensityUnit["curr"]}`,
+      [`Archive Intensity (${date} ${currentTimezone})`]: `${intensity} ${intensityUnit["curr"]}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -249,10 +259,9 @@ export default function CustomPredictionBar({
   };
 
   const categoryCopyHandler = () => {
-    const dateTimeString = new Date();
     const newData = {
       ...data,
-      ["Custom Category"]: `${category}`,
+      [`Archive Category (${date} ${currentTimezone})`]: `${category}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -269,7 +278,7 @@ export default function CustomPredictionBar({
   };
 
   const windClipboardHandler = () => {
-    const textToCopy = `Cyclone Wind Intensity: ${intensity} ${intensityUnit["curr"]}`;
+    const textToCopy = `Cyclone Wind Intensity At: ${date} ${currentTimezone}: ${intensity} ${intensityUnit["curr"]}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -304,14 +313,14 @@ export default function CustomPredictionBar({
   const windWebSearchHandler = () => {
     window.open(
       `https://www.google.com/search?q=${encodeURIComponent(
-        `Cyclone Wind Intensity: ${intensity} ${intensityUnit["curr"]}`
+        `Cyclone Wind Intensity At ${date} ${currentTimezone}: ${intensity} ${intensityUnit["curr"]}`
       )}`,
       "_blank"
     );
   };
 
   const pressureClipboardHandler = () => {
-    const textToCopy = `Cyclone Pressure: ${pressure} ${pressureUnit["curr"]}`;
+    const textToCopy = `Cyclone Pressure At: ${date} ${currentTimezone}: ${pressure} ${pressureUnit["curr"]}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -344,7 +353,7 @@ export default function CustomPredictionBar({
   };
 
   const categoryClipboardHandler = () => {
-    const textToCopy = `Cyclone Category: ${category}`;
+    const textToCopy = `Cyclone Category At: ${date} ${currentTimezone}: ${category}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -379,7 +388,7 @@ export default function CustomPredictionBar({
   const pressureWebSearchHandler = () => {
     window.open(
       `https://www.google.com/search?q=${encodeURIComponent(
-        `Cyclone Pressure: ${pressure} ${pressureUnit["curr"]}`
+        `Cyclone Pressure At ${date} ${currentTimezone}: ${pressure} ${pressureUnit["curr"]}`
       )}`,
       "_blank"
     );
@@ -388,7 +397,7 @@ export default function CustomPredictionBar({
   const categoryWebSearchHandler = () => {
     window.open(
       `https://www.google.com/search?q=${encodeURIComponent(
-        `Cyclone Category: ${category}`
+        `Cyclone Category At ${date} ${currentTimezone}: ${category}`
       )}`,
       "_blank"
     );
@@ -397,7 +406,7 @@ export default function CustomPredictionBar({
   const pressureChatbotHandler = () => {
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The  cyclone pressure at the Indian Ocean is ${pressure} ${pressureUnit["curr"]}. Can you please analyze this?`,
+        `The cyclone pressure at the Indian Ocean was ${pressure} ${pressureUnit["curr"]} at ${date} ${currentTimezone}. Can you please analyze this?`,
         ...prevQuestions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
@@ -418,7 +427,7 @@ export default function CustomPredictionBar({
   const windChatbotHandler = () => {
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The cyclone intensity at the Indian Ocean is ${intensity} ${intensityUnit["curr"]}. Can you please analyze this?`,
+        `The cyclone intensity at the Indian Ocean was ${intensity} ${intensityUnit["curr"]} at ${date} ${currentTimezone}. Can you please analyze this?`,
         ...prevQuestions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
@@ -439,7 +448,7 @@ export default function CustomPredictionBar({
   const categoryChatbotHandler = () => {
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The cyclone category at the Indian Ocean is ${category}. Can you please analyze this?`,
+        `The cyclone category at the Indian Ocean was ${category} at ${date}. Can you please analyze this?`,
         ...questions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
@@ -473,7 +482,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={windClipboardHandler}>
-          <FileCopyIcon />
+          <FileCopyIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Clipboard",
@@ -481,7 +490,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={windCopyHandler}>
-          <ExitToAppIcon />
+          <ExitToAppIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Logs",
@@ -489,7 +498,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={windWebSearchHandler}>
-          <TravelExploreIcon />
+          <TravelExploreIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Search the Web",
@@ -497,7 +506,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={windChatbotHandler}>
-          <ContactSupportIcon />
+          <ContactSupportIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Ask the Chatbot",
@@ -508,7 +517,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={pressureClipboardHandler}>
-          <FileCopyIcon />
+          <FileCopyIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Clipboard",
@@ -516,7 +525,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={pressureCopyHandler}>
-          <ExitToAppIcon />
+          <ExitToAppIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Logs",
@@ -524,7 +533,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={pressureWebSearchHandler}>
-          <TravelExploreIcon />
+          <TravelExploreIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Search the Web",
@@ -532,7 +541,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={pressureChatbotHandler}>
-          <ContactSupportIcon />
+          <ContactSupportIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Ask the Chatbot",
@@ -543,7 +552,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={categoryClipboardHandler}>
-          <FileCopyIcon />
+          <FileCopyIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Clipboard",
@@ -551,7 +560,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={categoryCopyHandler}>
-          <ExitToAppIcon />
+          <ExitToAppIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Logs",
@@ -559,7 +568,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={categoryWebSearchHandler}>
-          <TravelExploreIcon />
+          <TravelExploreIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Search the Web",
@@ -567,7 +576,7 @@ export default function CustomPredictionBar({
     {
       icon: (
         <IconButton onClick={categoryChatbotHandler}>
-          <ContactSupportIcon />
+          <ContactSupportIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Ask the Chatbot",
@@ -602,11 +611,35 @@ export default function CustomPredictionBar({
     }
   };
 
+  const timeZoneOffsets = {
+    BIT: -12 * 60,
+    SST: -11 * 60,
+    HST: -10 * 60,
+    AKST: -9 * 60,
+    PST: -8 * 60,
+    MST: -7 * 60,
+    CST: -6 * 60,
+    EST: -5 * 60,
+    AST: -4 * 60,
+    NST: -3.5 * 60,
+    GMT: 0,
+    CET: 1 * 60,
+    EET: 2 * 60,
+    MSK: 3 * 60,
+    PKT: 5 * 60,
+    IST: 5.5 * 60,
+    BST: 6 * 60,
+    CST: 8 * 60,
+    JST: 9 * 60,
+    AEST: 10 * 60,
+    NZST: 12 * 60,
+  };
+
   return (
     <div className="flex flex-row w-full">
       <ToastContainer />
       <div className="flex items-center rounded-lg h-16 mt-6 py-6 pl-4 w-full bg-white bg-opacity-10">
-        <Tooltip title="Unit Settings">
+        <Tooltip title="Time And Unit Settings">
           <button
             className="rounded-md border border-white flex items-center mr-4 h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150"
             onClick={handleOpen}
@@ -657,11 +690,9 @@ export default function CustomPredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
-                    // color:'white',
-                    // '&:hover':{
-                    //   color:"black"
-                    // }
+                    "& .MuiSpeedDialIcon-icon": {
+                      fontSize: 20,
+                    },
                   }}
                 />
               }
@@ -718,11 +749,9 @@ export default function CustomPredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
-                    // color:'white',
-                    // '&:hover':{
-                    //   color:"black"
-                    // }
+                    "& .MuiSpeedDialIcon-icon": {
+                      fontSize: 20,
+                    },
                   }}
                 />
               }
@@ -851,6 +880,34 @@ export default function CustomPredictionBar({
                 )}
               </Select>
             </div>
+            <div className="rounded-md mt-4 flex justify-between p-3 border border-white opacity-40">
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2, marginLeft: 2 }}
+              >
+                Time Zone Settings
+              </Typography>
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                sx={{ color: "white", width: 400 }}
+                value={timezone}
+                placeholder="Enter the Time Zone Acronym"
+                onChange={(event) => setTimezone(event.target.value)}
+                error={
+                  timezone !== ""
+                    ? !timeZoneOffsets.hasOwnProperty(timezone)
+                    : false
+                }
+                helperText={
+                  timezone !== ""
+                    ? timeZoneOffsets.hasOwnProperty(timezone)
+                      ? ""
+                      : "Not A Valid Timezone"
+                    : ""
+                }
+              />
+            </div>
             <div className="w-full flex justify-center">
               <button
                 className="flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-8 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950"
@@ -863,7 +920,7 @@ export default function CustomPredictionBar({
         </Modal>
       </div>
       <div className="flex items-center rounded-lg h-16 mt-6 ml-4 py-6 px-4 w-[34rem] bg-white bg-opacity-10">
-        <Tooltip title="How to Handle">
+        <Tooltip title="About Category">
           <button
             className="w-full h-10 border border-white rounded-lg mr-3 hover:bg-white hover:text-black border-opacity-20 hover:border-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
             onClick={toggleDrawer(true)}
@@ -883,13 +940,83 @@ export default function CustomPredictionBar({
         </Modal>
         <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
           <Box
-            sx={{ width: 750 }}
+            sx={{ width: 500, height: "100%", padding: "1rem" }}
             role="presentation"
-            onClick={toggleDrawer(false)}
           >
-            {[1, 2, 3, 4, 5].map((num) => (
-              <div>num</div>
-            ))}
+            <div className="w-full rounded-lg h-full bg-black p-4 overflow-scroll">
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg mb-4 bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+              <div className="w-full rounded-lg bg-white bg-opacity-10 flex flex-col p-4">
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center mb-2">
+                  TITLE
+                </div>
+                <div className="bg-white bg-opacity-10 p-2 rounded-lg rounded-lg text-center">
+                  CONTENT
+                </div>
+              </div>
+            </div>
           </Box>
         </Drawer>
         {/* <Tooltip title="Copy to logs">
@@ -923,11 +1050,9 @@ export default function CustomPredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
-                    // color:'white',
-                    // '&:hover':{
-                    //   color:"black"
-                    // },
+                    "& .MuiSpeedDialIcon-icon": {
+                      fontSize: 20,
+                    },
                   }}
                 />
               }

@@ -26,6 +26,7 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import InfoIcon from "@mui/icons-material/Info";
 
 import { toast, ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
 // import SaveIcon from '@mui/icons-material/Save';
@@ -35,6 +36,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Drawer from "@mui/material/Drawer";
 
 import InfoContent from "./InfoContent";
+
+import HelperDrawerContent from "./HelperDrawerContent";
 
 export default function PredictionBar({
   windIntensity,
@@ -175,6 +178,7 @@ export default function PredictionBar({
     display: "flex",
     flexDirection: "column",
     borderRadius: "10px",
+    outline: "none",
   };
 
   const styleInfo = {
@@ -190,6 +194,7 @@ export default function PredictionBar({
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
+    outline: "none",
     // borderRadius: "10px",
     // overflow: "scroll",
   };
@@ -491,7 +496,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={windClipboardHandler}>
-          <FileCopyIcon />
+          <FileCopyIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Clipboard",
@@ -499,7 +504,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={windCopyHandler}>
-          <ExitToAppIcon />
+          <ExitToAppIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Logs",
@@ -507,7 +512,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={windWebSearchHandler}>
-          <TravelExploreIcon />
+          <TravelExploreIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Search the Web",
@@ -515,7 +520,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={windChatbotHandler}>
-          <ContactSupportIcon />
+          <ContactSupportIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Ask the Chatbot",
@@ -526,7 +531,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={pressureClipboardHandler}>
-          <FileCopyIcon />
+          <FileCopyIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Clipboard",
@@ -534,7 +539,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={pressureCopyHandler}>
-          <ExitToAppIcon />
+          <ExitToAppIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Logs",
@@ -542,7 +547,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={pressureWebSearchHandler}>
-          <TravelExploreIcon />
+          <TravelExploreIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Search the Web",
@@ -550,7 +555,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={pressureChatbotHandler}>
-          <ContactSupportIcon />
+          <ContactSupportIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Ask the Chatbot",
@@ -561,7 +566,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={categoryClipboardHandler}>
-          <FileCopyIcon />
+          <FileCopyIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Clipboard",
@@ -569,7 +574,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={categoryCopyHandler}>
-          <ExitToAppIcon />
+          <ExitToAppIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Copy to Logs",
@@ -577,7 +582,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={categoryWebSearchHandler}>
-          <TravelExploreIcon />
+          <TravelExploreIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Search the Web",
@@ -585,7 +590,7 @@ export default function PredictionBar({
     {
       icon: (
         <IconButton onClick={categoryChatbotHandler}>
-          <ContactSupportIcon />
+          <ContactSupportIcon sx={{ fontSize: 20 }} />
         </IconButton>
       ),
       name: "Ask the Chatbot",
@@ -675,11 +680,9 @@ export default function PredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
-                    // color:'white',
-                    // '&:hover':{
-                    //   color:"black"
-                    // }
+                    "& .MuiSpeedDialIcon-icon": {
+                      fontSize: 20,
+                    },
                   }}
                 />
               }
@@ -736,11 +739,9 @@ export default function PredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
-                    // color:'white',
-                    // '&:hover':{
-                    //   color:"black"
-                    // }
+                    "& .MuiSpeedDialIcon-icon": {
+                      fontSize: 20,
+                    },
                   }}
                 />
               }
@@ -901,13 +902,16 @@ export default function PredictionBar({
         </Modal>
         <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
           <Box
-            sx={{ width: 750 }}
+            sx={{ width: 750, height: "100vh", padding: "1rem" }}
             role="presentation"
-            onClick={toggleDrawer(false)}
+            // onClick={toggleDrawer(false)}
           >
-            {[1, 2, 3, 4, 5].map((num) => (
-              <div>num</div>
-            ))}
+            <div className="h-full w-full flex flex-col">
+              <div className="w-full rounded-lg p-2 bg-white bg-opacity-20 mb-4 text-center">
+                DISASTER MANAGEMENT
+              </div>
+              <HelperDrawerContent />
+            </div>
           </Box>
         </Drawer>
         {/* <Tooltip title="Copy to logs">
@@ -941,11 +945,9 @@ export default function PredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
-                    // color:'white',
-                    // '&:hover':{
-                    //   color:"black"
-                    // },
+                    "& .MuiSpeedDialIcon-icon": {
+                      fontSize: 20,
+                    },
                   }}
                 />
               }

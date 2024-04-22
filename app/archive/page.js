@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import NavBar from "../components/NavBar";
-import PredictionBar from "../components/PredictionBar";
+import ArchivePredictionBar from "../components/ArchivePredictionBar";
 import ArchivePictureBar from "../components/ArchivePictureBar";
 
 import MiniChatbot from "../components/MiniChatbot";
@@ -20,6 +20,19 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+
+import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import { IconButton } from "@mui/material";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Archive = () => {
   const [visible, setVisible] = useState(false);
   const [archiveDate, setArchiveDate] = useState("2024-01-01");
@@ -32,9 +45,10 @@ const Archive = () => {
       name: "BUREVI",
       original_img: "/cyclone.jpg",
       timestamp: "2020-12-04T09:00:00+05:30",
+      category: 0,
+      t_number: 1,
     },
-    category: 0,
-    t_number: 1,
+    data_exists: true,
     next_wind_data: [25.0, 25.0, 25.0, 25.0, 20.0, 20.0, 20.0, 0.0],
     previous_wind_data: [35.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0],
     next_pressure_data: [
@@ -44,80 +58,106 @@ const Archive = () => {
       999.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1001.0, 1001.0,
     ],
   });
+
+  const [mainTimezone, setMainTimezone] = useState("IST");
   const [windData, setWindData] = useState([
     {
-      name: "00:00:00",
+      name: "00:00",
       Wind: 30.0,
     },
     {
-      name: "03:00:00",
+      name: "00:00",
       Wind: 30.0,
     },
     {
-      name: "06:00:00",
+      name: "00:00",
+      Wind: 30.0,
+    },
+    {
+      name: "00:00",
+      Wind: 30.0,
+    },
+    {
+      name: "03:00",
+      Wind: 30.0,
+    },
+    {
+      name: "06:00",
       Wind: 35.0,
     },
     {
-      name: "09:00:00",
+      name: "09:00",
       Wind: 0.0,
     },
     {
-      name: "12:00:00",
+      name: "12:00",
       Wind: 25.0,
     },
     {
-      name: "15:00:00",
+      name: "15:00",
       Wind: 25.0,
     },
     {
-      name: "18:00:00",
+      name: "18:00",
       Wind: 25.0,
     },
     {
-      name: "21:00:00",
+      name: "21:00",
       Wind: 25.0,
     },
     {
-      name: "00:00:00",
+      name: "00:00",
       Wind: 20.0,
     },
   ]);
 
   const [pressureData, setPressureData] = useState([
     {
-      name: "00:00:00",
+      name: "00:00",
       Pressure: 1000.0,
     },
     {
-      name: "03:00:00",
+      name: "00:00",
       Pressure: 1000.0,
     },
     {
-      name: "06:00:00",
+      name: "00:00",
+      Pressure: 1000.0,
+    },
+    {
+      name: "00:00",
+      Pressure: 1000.0,
+    },
+    {
+      name: "03:00",
+      Pressure: 1000.0,
+    },
+    {
+      name: "06:00",
       Pressure: 999.0,
     },
     {
-      name: "09:00:00",
-      Pressure: 0.0,
+      name: "09:00",
+      Pressure: 1000.0,
     },
     {
-      name: "12:00:00",
+      name: "12:00",
       Pressure: 1002.0,
     },
     {
-      name: "15:00:00",
+      name: "15:00",
       Pressure: 1002.0,
     },
     {
-      name: "18:00:00",
+      name: "18:00",
       Pressure: 1003.0,
     },
     {
-      name: "21:00:00",
+      name: "21:00",
       Pressure: 1003.0,
     },
     {
-      name: "00:00:00",
+      name: "00:00",
       Pressure: 1004.0,
     },
   ]);
@@ -128,26 +168,135 @@ const Archive = () => {
     },
   });
 
+  function convertDateTime(
+    currentDate,
+    currentTime,
+    targetTimeZoneAcronym,
+    currentTimeZoneAcronym
+  ) {
+    const inputDateTime = new Date(`${currentDate}T${currentTime}`);
+
+    const timeZoneOffsets = {
+      BIT: -12 * 60,
+      SST: -11 * 60,
+      HST: -10 * 60,
+      AKST: -9 * 60,
+      PST: -8 * 60,
+      MST: -7 * 60,
+      CST: -6 * 60,
+      EST: -5 * 60,
+      AST: -4 * 60,
+      NST: -3.5 * 60,
+      GMT: 0,
+      CET: 1 * 60,
+      EET: 2 * 60,
+      MSK: 3 * 60,
+      PKT: 5 * 60,
+      IST: 5.5 * 60,
+      BST: 6 * 60,
+      CST: 8 * 60,
+      JST: 9 * 60,
+      AEST: 10 * 60,
+      NZST: 12 * 60,
+    };
+
+    if (!timeZoneOffsets.hasOwnProperty(targetTimeZoneAcronym)) {
+      return { date: currentDate, time: currentTime };
+    }
+
+    const targetOffset = timeZoneOffsets[targetTimeZoneAcronym];
+    const currentOffsetMinutes =
+      timeZoneOffsets[currentTimeZoneAcronym] ||
+      inputDateTime.getTimezoneOffset();
+
+    const adjustedTime =
+      inputDateTime.getTime() - (currentOffsetMinutes - targetOffset) * 60000;
+    const targetDateTime = new Date(adjustedTime);
+    const targetDateString = targetDateTime.toISOString().split("T")[0];
+    const targetTimeString = targetDateTime
+      .toISOString()
+      .split("T")[1]
+      .split(".")[0];
+
+    return { date: targetDateString, time: targetTimeString };
+  }
+
+  function convertTimestampToTimeZone(timestampString, targetTimeZoneAcronym) {
+    const timestamp = new Date(timestampString);
+
+    const timeZoneOffsets = {
+      BIT: -12 * 60,
+      SST: -11 * 60,
+      HST: -10 * 60,
+      AKST: -9 * 60,
+      PST: -8 * 60,
+      MST: -7 * 60,
+      CST: -6 * 60,
+      EST: -5 * 60,
+      AST: -4 * 60,
+      NST: -3.5 * 60,
+      GMT: 0,
+      CET: 1 * 60,
+      EET: 2 * 60,
+      MSK: 3 * 60,
+      PKT: 5 * 60,
+      IST: 5.5 * 60,
+      BST: 6 * 60,
+      CST: 8 * 60,
+      JST: 9 * 60,
+      AEST: 10 * 60,
+      NZST: 12 * 60,
+    };
+
+    if (!timeZoneOffsets.hasOwnProperty(targetTimeZoneAcronym)) {
+      return timestampString;
+    }
+    const istOffset = timeZoneOffsets["IST"];
+    const targetOffset = timeZoneOffsets[targetTimeZoneAcronym];
+    const adjustedTimestamp = new Date(
+      timestamp.getTime() + (targetOffset - istOffset) * 60000
+    );
+    const adjustedTimestampString = adjustedTimestamp.toISOString();
+
+    return adjustedTimestampString;
+  }
+
+  function sumNumbersInStringModulo(str) {
+    const numbers = str.match(/\d+/g);
+    if (!numbers) return 0;
+    const sum = numbers.reduce((total, num) => total + parseInt(num), 0);
+    return sum % 10;
+  }
+
   async function handleArchiveRequest() {
     //Uncomment for fetch
     // try {
-    //   const formData = new FormData();
-    // formData.append("timestamp", `${archiveDate} ${archiveTime}`);
+    // const currTimezone = "IST";
+    // const convertedDateTime = convertDateTime(
+    //   archiveDate,
+    //   archiveTime,
+    //   currTimezone,
+    //   mainTimezone
+    // );
+    // const formData = new FormData();
+    // formData.append("timestamp", `${convertedDateTime.date} ${convertedDateTime.time}`);
     //   const response = await fetch('http://127.0.0.1:8000/data/archive/', {
+    // method: "POST",
     //     body: formData
     //   });
     //   if (!response.ok) {
     //     throw new Error('Network response was not ok');
     //   }
     //   const data = await response.json();
+    //   if(data.data_exists){
     //   setArchiveData(data);
     //   const { archive_data, next_wind_data, previous_wind_data, next_pressure_data, previous_pressure_data } = data;
     //   const { wind, pressure, timestamp } = archive_data;
-    //   const currentDate = new Date(timestamp);
+    //   const currentDate = new Date(convertTimestampToTimeZone(timestamp, mainTimezone));
     //   const formatTime = (date) =>
     //     `${String(date.getHours()).padStart(2, '0')}:${String(
     //       date.getMinutes()
-    //     ).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+    //     ).padStart(2, '0')}`;
     //   const previousWindObjects = previous_wind_data.map((windValue, index) => ({
     //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
     //     Wind: windValue
@@ -176,6 +325,8 @@ const Archive = () => {
     //   setWindData(windResult);
     //   const pressureResult = [...previousPressureObjects.reverse(), currentPressureObject, ...nextPressureObjects];
     //   setPressureData(pressureResult);
+    //   } else {
+    // }
     // } catch (error) {
     //   console.error('There was a problem with your fetch operation:', error);
     // }
@@ -194,8 +345,18 @@ const Archive = () => {
   }, [router, session]);
 
   async function logData() {
+    const currTimezone = "IST";
+    const convertedDateTime = convertDateTime(
+      archiveDate,
+      archiveTime,
+      currTimezone,
+      mainTimezone
+    );
     const formData = new FormData();
-    formData.append("timestamp", `${archiveDate} ${archiveTime}`);
+    formData.append(
+      "timestamp",
+      `${convertedDateTime.date} ${convertedDateTime.time}`
+    );
     const response = await fetch("http://127.0.0.1:8000/data/archive/", {
       method: "POST",
       body: formData,
@@ -217,12 +378,14 @@ const Archive = () => {
     } = data;
     const { wind, pressure, timestamp } = archive_data;
 
-    const currentDate = new Date(timestamp);
+    const currentDate = new Date(
+      convertTimestampToTimeZone(timestamp, mainTimezone)
+    );
 
     const formatTime = (date) =>
       `${String(date.getHours()).padStart(2, "0")}:${String(
         date.getMinutes()
-      ).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+      ).padStart(2, "0")}`;
 
     const previousWindObjects = previous_wind_data.map((windValue, index) => ({
       name: formatTime(
@@ -287,6 +450,137 @@ const Archive = () => {
   //logData()
   // }, [])
 
+  const [data, setData] = useState({});
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("data");
+    if (storedData) {
+      setData(JSON.parse(storedData));
+    }
+    const storedQuestions = localStorage.getItem("questions");
+    if (storedQuestions) {
+      setQuestions(JSON.parse(storedQuestions));
+    }
+  }, []);
+
+  const cycloneCopyHandler = () => {
+    const newData = {
+      ...data,
+      [`Archive Cyclone (${archiveData.archive_data.timestamp})`]: `${archiveData.archive_data.name}`,
+    };
+    setData(newData);
+    localStorage.setItem("data", JSON.stringify(newData));
+    toast.success("Cyclone Name Copied To Logs!", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const cycloneClipboardHandler = () => {
+    const textToCopy = `Archive Cyclone (${archiveData.archive_data.timestamp}): ${archiveData.archive_data.name}`;
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        toast.success("Cyclone Name Copied To Clipboard!", {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        console.log("Info copied to clipboard:", textToCopy);
+      })
+      .catch((error) => {
+        console.error("Failed to copy info to clipboard:", error);
+        toast.error("Failed To Copy To Clipboard!", {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
+
+  const cycloneWebSearchHandler = () => {
+    window.open(
+      `https://www.google.com/search?q=${encodeURIComponent(
+        `Cyclone Name: ${archiveData.archive_data.name}`
+      )}`,
+      "_blank"
+    );
+  };
+
+  const cycloneChatbotHandler = () => {
+    setQuestions((prevQuestions) => {
+      const newQuestions = [
+        `The cyclone at ${archiveData.archive_data.timestamp} is ${archiveData.archive_data.name} on the Indian Ocean. Can you please give information about this cyclone?`,
+        ...prevQuestions,
+      ];
+      localStorage.setItem("questions", JSON.stringify(newQuestions));
+      return newQuestions;
+    });
+    toast.success("Cyclone Name Copied To Questions!", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
+  const actions = [
+    {
+      icon: (
+        <IconButton onClick={cycloneClipboardHandler}>
+          <FileCopyIcon sx={{ fontSize: 20 }} />
+        </IconButton>
+      ),
+      name: "Copy to Clipboard",
+    },
+    {
+      icon: (
+        <IconButton onClick={cycloneCopyHandler}>
+          <ExitToAppIcon sx={{ fontSize: 20 }} />
+        </IconButton>
+      ),
+      name: "Copy to Logs",
+    },
+    {
+      icon: (
+        <IconButton onClick={cycloneWebSearchHandler}>
+          <TravelExploreIcon sx={{ fontSize: 20 }} />
+        </IconButton>
+      ),
+      name: "Search the Web",
+    },
+    {
+      icon: (
+        <IconButton onClick={cycloneChatbotHandler}>
+          <ContactSupportIcon sx={{ fontSize: 20 }} />
+        </IconButton>
+      ),
+      name: "Ask the Chatbot",
+    },
+  ];
+
   if (session) {
     return (
       <ThemeProvider theme={darkTheme}>
@@ -342,7 +636,59 @@ const Archive = () => {
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
-              <div className="h-full bg-white bg-opacity-10 rounded-lg p-2 mt-6 mr-6"></div>
+              <div className="h-full bg-white bg-opacity-10 rounded-lg p-3 mt-6 mr-6 flex flex-col text-sm">
+                <div className="w-full rounded-lg bg-white bg-opacity-20 p-2 text-center mb-3">
+                  CYCLONE DETAILS
+                </div>
+                <div className="relative w-full h-full bg-white bg-opacity-10 rounded-lg text-sm flex flex-col justify-center text-center">
+                  {archiveData.data_exists
+                    ? "CYCLONE: " + archiveData.archive_data.name
+                    : "No Cylone!"}
+                  <SpeedDial
+                    ariaLabel="SpeedDial basic example"
+                    sx={{
+                      position: "absolute",
+                      bottom: "0.4rem",
+                      right: 0,
+                      // top:0,
+                      // left:0,
+                      "& .MuiButtonBase-root:hover": {
+                        background: "white",
+                        color: "black",
+                        border: 2,
+                      },
+                      "& .MuiButtonBase-root": {
+                        color: "rgba(255,255,255,0.5)",
+                        background: "black",
+                        border: 2,
+                      },
+                      "& .MuiSpeedDial-fab": {
+                        height: "2.5rem",
+                        width: "2.5rem",
+                      },
+                    }}
+                    icon={
+                      <SpeedDialIcon
+                        sx={{
+                          // marginBottom: "4px",
+                          "& .MuiSpeedDialIcon-icon": {
+                            fontSize: 20,
+                          },
+                        }}
+                      />
+                    }
+                    hidden={!archiveData.data_exists}
+                  >
+                    {actions.map((action) => (
+                      <SpeedDialAction
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                      />
+                    ))}
+                  </SpeedDial>
+                </div>
+              </div>
               <button
                 className="flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-6 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950"
                 onClick={handleArchiveRequest}
@@ -354,22 +700,19 @@ const Archive = () => {
             <div className="relative flex flex-col items-center rounded-lg h-full w-full">
               {/* <ArchiveTimeDateBar /> */}
               <ArchivePictureBar
-                date={
-                  new Date(archiveData.archive_data.timestamp)
-                    .toISOString()
-                    .split("T")[0]
-                }
-                time={new Date(archiveData.archive_data.timestamp)
-                  .toISOString()
-                  .substring(11, 19)}
+                date={archiveDate}
+                time={archiveTime}
                 wind={windData}
                 pressure={pressureData}
                 original={archiveData.archive_data.original_img}
+                timezone={mainTimezone}
               />
-              <PredictionBar
+              <ArchivePredictionBar
                 windIntensity={archiveData.archive_data.wind}
                 windPressure={archiveData.archive_data.pressure}
-                windCategory={archiveData.category}
+                windCategory={archiveData.archive_data.category}
+                date={`${archiveDate}-${archiveTime}`}
+                setMainTimezone={setMainTimezone}
               />
               <MiniChatbot visible={visible} />
             </div>

@@ -14,8 +14,8 @@ import TableRow from "@mui/material/TableRow";
 import NavBar from "../components/NavBar";
 import PictureBar from "../components/PictureBar";
 import MiniChatbot from "../components/MiniChatbot";
-import PredictionBar from "../components/PredictionBar";
 import UploadBar from "../components/UploadBar";
+import CustomPredictionBar from "../components/CustomPredictionBar";
 
 const Upload = () => {
   const [visible, setVisible] = useState(false);
@@ -134,7 +134,7 @@ const Upload = () => {
           </div>
           <div className="relative flex flex-col items-center rounded-lg h-full w-full">
             <PictureBar original={originalImage} processed={processedImage} />
-            <PredictionBar
+            <CustomPredictionBar
               windIntensity={intensity}
               windPressure={pressure}
               windCategory={category}

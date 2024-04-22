@@ -187,7 +187,7 @@ const Notebook = () => {
               )}
               {Object.entries(data).map(([key, value]) => (
                 <div className="flex flex-row rounded-lg border border-white p-2 border-opacity-20 mb-4">
-                  <div className="flex flex-row">
+                  <div className="flex flex-row w-full">
                     <div className="w-full bg-white bg-opacity-20 text-white rounded-md text-center p-2 mr-2">
                       {key} : {value}
                     </div>

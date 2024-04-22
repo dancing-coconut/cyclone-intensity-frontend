@@ -224,7 +224,7 @@ const Chatbot = () => {
     const result = formattedMessages.join("");
     const doc = new jsPDF();
     doc.text(result, 10, 10);
-    doc.save("example.pdf");
+    doc.save("chakravaat_analysis_chats.pdf");
   };
 
   const printCurrentView = () => {
@@ -272,17 +272,27 @@ const Chatbot = () => {
 
   const actions = [
     {
-      icon: <ContentCopyIcon onClick={copyAllChatsHandler} />,
+      icon: (
+        <ContentCopyIcon onClick={copyAllChatsHandler} sx={{ fontSize: 20 }} />
+      ),
       name: "Copy All Chats",
     },
-    { icon: <DownloadIcon onClick={saveChatPDF} />, name: "Download Chat PDF" },
     {
-      icon: <PrintIcon onClick={printCurrentView} />,
+      icon: <DownloadIcon onClick={saveChatPDF} sx={{ fontSize: 20 }} />,
+      name: "Download Chat PDF",
+    },
+    {
+      icon: <PrintIcon onClick={printCurrentView} sx={{ fontSize: 20 }} />,
       name: "Print Current Page",
     },
-    { icon: <ClearIcon onClick={clearChats} />, name: "Clear The Chat" },
     {
-      icon: <ArrowCircleDownIcon onClick={scrollToBottom} />,
+      icon: <ClearIcon onClick={clearChats} sx={{ fontSize: 20 }} />,
+      name: "Clear The Chat",
+    },
+    {
+      icon: (
+        <ArrowCircleDownIcon onClick={scrollToBottom} sx={{ fontSize: 20 }} />
+      ),
       name: "Scroll To Bottom",
     },
   ];
