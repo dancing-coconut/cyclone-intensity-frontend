@@ -71,6 +71,12 @@ const TimeSeries = () => {
   const [visible, setVisible] = useState(false);
   const [notesVisible, setNotesVisible] = useState(false);
 
+  const [windConversionFactor, setWindConversionFactor] = useState(1);
+  const [pressureConversionFactor, setPressureConversionFactor] = useState(1);
+
+  const [currentWindUnit, setCurrentWindUnit] = useState("knots");
+  const [currentPressureUnit, setCurrentPressureUnit] = useState("Pa");
+
   const [timeSeriesData, setTimeSeriesData] = useState({
     general_data: {
       id: 98,

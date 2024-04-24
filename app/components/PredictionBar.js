@@ -17,7 +17,12 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 
 import { IconButton } from "@mui/material";
 
-import { pressureConverter, speedConverter } from "./UnitConversionFunctions";
+import {
+  pressureConverter,
+  speedConverter,
+  pressureConversionFactor,
+  speedConversionFactor,
+} from "./UnitConversionFunctions";
 
 import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -57,6 +62,13 @@ export default function PredictionBar({
   const toggleDrawer = (newOpenDrawer) => () => {
     setOpenDrawer(newOpenDrawer);
   };
+
+  const [windDisabled, setWindDisabled] = useState(true);
+
+  const [pressureDisabled, setPressureDisabled] = useState(false);
+
+  const [currentIntensityUnit, setCurrentIntensityUnit] = useState("knots");
+  const [currentPressureUnit, setCurrentPressureUnit] = useState("Pa");
 
   const [intensity, setIntensity] = useState(20);
 
@@ -124,11 +136,8 @@ export default function PredictionBar({
   });
 
   const handleIntensityUnitChange = (event) => {
-    const newIntensityUnits = {
-      prev: intensityUnit["curr"],
-      curr: event.target.value,
-    };
-    setIntensityUnit(newIntensityUnits);
+    setWindDisabled(false);
+    setCurrentIntensityUnit(event.target.value);
   };
 
   const [pressureUnit, setPressureUnit] = useState({
@@ -137,29 +146,43 @@ export default function PredictionBar({
   });
 
   const handlePressureUnitChange = (event) => {
-    const newPressureUnits = {
-      prev: pressureUnit["curr"],
-      curr: event.target.value,
-    };
-    setPressureUnit(newPressureUnits);
+    setPressureDisabled(false);
+    setCurrentPressureUnit(event.target.value);
   };
 
   function settingsSaveHandler() {
     // window.open(`https://www.google.com/search?q=${encodeURIComponent('Wind Intensity: 20')}`, '_blank');
+    if (!windDisabled) {
+      const newIntensityUnits = {
+        prev: intensityUnit["curr"],
+        curr: currentIntensityUnit,
+      };
+      setIntensityUnit(newIntensityUnits);
 
-    const changedSpeed = speedConverter(
-      intensity,
-      intensityUnit["prev"],
-      intensityUnit["curr"]
-    );
-    const changedPressure = pressureConverter(
-      pressure,
-      pressureUnit["prev"],
-      pressureUnit["curr"]
-    );
+      const changedSpeed = speedConverter(
+        intensity,
+        intensityUnit["prev"],
+        intensityUnit["curr"]
+      );
 
-    setIntensity(changedSpeed);
-    setPressure(changedPressure);
+      setIntensity(changedSpeed);
+    }
+
+    if (!pressureDisabled) {
+      const newPressureUnits = {
+        prev: pressureUnit["curr"],
+        curr: currentPressureUnit,
+      };
+      setPressureUnit(newPressureUnits);
+
+      const changedPressure = pressureConverter(
+        pressure,
+        pressureUnit["prev"],
+        pressureUnit["curr"]
+      );
+
+      setPressure(changedPressure);
+    }
 
     setOpen(false);
   }
@@ -777,7 +800,7 @@ export default function PredictionBar({
               </Typography>
               <Select
                 defaultValue={"knots"}
-                value={intensityUnit["curr"]}
+                value={currentIntensityUnit}
                 label=""
                 onChange={handleIntensityUnitChange}
                 sx={{ color: "white", width: 400 }}
@@ -828,7 +851,7 @@ export default function PredictionBar({
               </Typography>
               <Select
                 defaultValue={10}
-                value={pressureUnit["curr"]}
+                value={currentPressureUnit}
                 label=""
                 onChange={handlePressureUnitChange}
                 sx={{ color: "white", width: 400 }}
@@ -872,7 +895,9 @@ export default function PredictionBar({
             </div>
             <div className="w-full flex justify-center">
               <button
-                className="flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-8 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950"
+                className={
+                  "flex-none h-30 bg-white bg-opacity-50 rounded-lg text-white text-center p-2 w-80 mt-8 mr-6 hover:bg-opacity-100 transition ease-in-out delay-150 hover:text-zinc-950"
+                }
                 onClick={settingsSaveHandler}
               >
                 SAVE
