@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import PredictionBar from "../components/PredictionBar";
 import TimeDateBar from "../components/TimeDateBar";
-import PictureBar from "../components/PictureBar";
 import TimeSeriesPictureBar from "../components/TimeSeriesPictureBar";
+import NoteTaker from "../components/NoteTaker";
 
 import MiniChatbot from "../components/MiniChatbot";
 
@@ -69,6 +69,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const TimeSeries = () => {
   const [visible, setVisible] = useState(false);
+  const [notesVisible, setNotesVisible] = useState(false);
+
   const [timeSeriesData, setTimeSeriesData] = useState({
     general_data: {
       id: 98,
@@ -600,7 +602,12 @@ const TimeSeries = () => {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <div className="bg-black flex items-center p-6 h-screen w-screen">
-          <NavBar setVisible={setVisible} visible={visible} />
+          <NavBar
+            setVisible={setVisible}
+            visible={visible}
+            setNotesVisible={setNotesVisible}
+            notesVisible={notesVisible}
+          />
           <div className="flex items-center rounded-lg h-full w-full">
             <div className="flex flex-col h-full">
               <div className="h-30 bg-white bg-opacity-30 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6">
@@ -1344,6 +1351,7 @@ const TimeSeries = () => {
                 windCategory={timeSeriesData.general_data.category}
               />
               <MiniChatbot visible={visible} />
+              <NoteTaker notesVisible={notesVisible} />
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import ArchivePredictionBar from "../components/ArchivePredictionBar";
 import ArchivePictureBar from "../components/ArchivePictureBar";
 
 import MiniChatbot from "../components/MiniChatbot";
+import NoteTaker from "../components/NoteTaker";
 
 import dayjs from "dayjs";
 import { StaticDateTimePicker } from "@mui/x-date-pickers";
@@ -248,6 +249,7 @@ const dataArray = [
 
 const Archive = () => {
   const [visible, setVisible] = useState(false);
+  const [notesVisible, setNotesVisible] = useState(false);
   const [archiveDate, setArchiveDate] = useState("2024-01-01");
   const [archiveTime, setArchiveTime] = useState("12:00:00");
   const [archiveData, setArchiveData] = useState({
@@ -799,7 +801,12 @@ const Archive = () => {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <div className="bg-black flex items-center p-6 h-screen w-screen">
-          <NavBar setVisible={setVisible} visible={visible} />
+          <NavBar
+            setVisible={setVisible}
+            visible={visible}
+            setNotesVisible={setNotesVisible}
+            notesVisible={notesVisible}
+          />
           <div className="flex items-center rounded-lg h-full w-full">
             <div className="flex flex-col h-full">
               <div className="flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-6 mr-6">
@@ -928,6 +935,7 @@ const Archive = () => {
                 setMainTimezone={setMainTimezone}
               />
               <MiniChatbot visible={visible} />
+              <NoteTaker notesVisible={notesVisible} />
             </div>
           </div>
         </div>

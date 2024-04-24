@@ -14,6 +14,9 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 
 import NavBar from "../components/NavBar";
 import Tiptap from "../components/Tiptap";
+import NoteTaker from "../components/NoteTaker";
+import MiniChatbot from "../components/MiniChatbot";
+
 import jsPDF from "jspdf";
 
 import DownloadIcon from "@mui/icons-material/Download";
@@ -30,6 +33,7 @@ import Tooltip from "@mui/material/Tooltip";
 const Notebook = () => {
   const [visible, setVisible] = useState(false);
   const [editor, setEditor] = useState();
+  const [notesVisible, setNotesVisible] = useState(false);
 
   const darkTheme = createTheme({
     palette: {
@@ -171,7 +175,12 @@ const Notebook = () => {
       <CssBaseline />
       <ToastContainer />
       <div className="bg-black flex items-center p-6 h-screen w-screen">
-        <NavBar setVisible={setVisible} visible={visible} />
+        <NavBar
+          setVisible={setVisible}
+          visible={visible}
+          setNotesVisible={setNotesVisible}
+          notesVisible={notesVisible}
+        />
         <div className="flex items-center rounded-lg h-full w-full">
           <div className="flex flex-col h-full">
             <div className="h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-96 mb-4 mr-6">
@@ -246,6 +255,8 @@ const Notebook = () => {
                 />
               ))}
             </SpeedDial>
+            <MiniChatbot visible={visible} />
+            <NoteTaker notesVisible={notesVisible} />
           </div>
         </div>
       </div>

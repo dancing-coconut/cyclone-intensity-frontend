@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import ChatBotMessage from "../components/ChatBotMessage";
 import UserMessage from "../components/UserMessage";
 import MiniChatbot from "../components/MiniChatbot";
+import NoteTaker from "../components/NoteTaker";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -37,6 +38,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Chatbot = () => {
   const [visible, setVisible] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [notesVisible, setNotesVisible] = useState(false);
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
@@ -303,7 +305,12 @@ const Chatbot = () => {
         <CssBaseline />
         <ToastContainer />
         <div className="bg-black flex items-center p-6 h-screen w-screen">
-          <NavBar setVisible={setVisible} visible={visible} />
+          <NavBar
+            setVisible={setVisible}
+            visible={visible}
+            setNotesVisible={setNotesVisible}
+            notesVisible={notesVisible}
+          />
           <div className="flex items-center rounded-lg h-full">
             <div className="flex flex-col h-full">
               <div className="h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-96 mb-4 mr-6">
@@ -416,6 +423,7 @@ const Chatbot = () => {
                 </IconButton>
               </div>
               <MiniChatbot visible={visible} />
+              <NoteTaker notesVisible={notesVisible} />
             </div>
           </div>
         </div>

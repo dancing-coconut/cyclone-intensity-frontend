@@ -16,9 +16,11 @@ import PictureBar from "../components/PictureBar";
 import MiniChatbot from "../components/MiniChatbot";
 import UploadBar from "../components/UploadBar";
 import CustomPredictionBar from "../components/CustomPredictionBar";
+import NoteTaker from "../components/NoteTaker";
 
 const Upload = () => {
   const [visible, setVisible] = useState(false);
+  const [notesVisible, setNotesVisible] = useState(false);
 
   const [intensity, setIntensity] = useState(20);
   const [pressure, setPressure] = useState(20);
@@ -51,7 +53,12 @@ const Upload = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div className="bg-black flex items-center p-6 h-screen w-screen">
-        <NavBar setVisible={setVisible} visible={visible} />
+        <NavBar
+          setVisible={setVisible}
+          visible={visible}
+          setNotesVisible={setNotesVisible}
+          notesVisible={notesVisible}
+        />
         <div className="flex items-center rounded-lg h-full w-full">
           <div className="flex flex-col h-full">
             <div className="flex-none h-30 bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 mr-6">
@@ -146,6 +153,7 @@ const Upload = () => {
               setCategory={setCategory}
             />
             <MiniChatbot visible={visible} />
+            <NoteTaker notesVisible={notesVisible} />
           </div>
         </div>
       </div>
