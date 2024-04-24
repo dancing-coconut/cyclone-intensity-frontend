@@ -4,10 +4,20 @@ import { useState, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
 import SendIcon from "@mui/icons-material/Send";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
+import { toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const NoteTaker = ({ notesVisible }) => {
   const [notes, setNotes] = useState([]);
   const [note, setNote] = useState("");
+
+  const [data, setData] = useState({});
+  const [logId, setLogId] = useState(0);
+
   const variants = {
     hidden: { opacity: 0 },
     enter: { opacity: 1 },
@@ -15,8 +25,13 @@ const NoteTaker = ({ notesVisible }) => {
   };
 
   const noteSubmitHandler = () => {
+    const submitTime = new Date();
+    const newNote = {
+      note: note,
+      dateTime: submitTime.toISOString(),
+    };
     setNotes((prevNotes) => {
-      const newNotes = [...prevNotes, note];
+      const newNotes = [...prevNotes, newNote];
       localStorage.setItem("notes", JSON.stringify(newNotes));
       return newNotes;
     });
@@ -27,7 +42,48 @@ const NoteTaker = ({ notesVisible }) => {
     if (storedNotes) {
       setNotes(JSON.parse(storedNotes));
     }
+    const storedData = localStorage.getItem("data");
+    if (storedData) {
+      setData(JSON.parse(storedData));
+    }
+    const storedLogId = localStorage.getItem("id");
+    if (storedLogId) {
+      setLogId(JSON.parse(storedLogId));
+    }
   }, []);
+
+  const handleNoteTransfer = (index) => {
+    const newData = {
+      ...data,
+      [`Note At ${notes[index].dateTime}${logId}`]: `${notes[index].note}`,
+    };
+    setData(newData);
+    localStorage.setItem("data", JSON.stringify(newData));
+    toast.success("Note Copied To Logs!", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    setLogId((prevLogId) => {
+      const newLogId = prevLogId + 1;
+      localStorage.setItem("id", newLogId);
+      return newLogId;
+    });
+  };
+
+  const handleDeleteNote = (index) => {
+    setNotes((prevNotes) => {
+      const newNotes = [...prevNotes];
+      newNotes.splice(index, 1);
+      localStorage.setItem("notes", JSON.stringify(newNotes));
+      return newNotes;
+    });
+  };
   return (
     <AnimatePresence>
       {notesVisible ? (
@@ -44,9 +100,25 @@ const NoteTaker = ({ notesVisible }) => {
               NOTES
             </div>
             <div className="w-full h-full rounded-lg bg-black bg-opacity-40 mb-2 p-2 overflow-scroll">
-              {notes.map((note) => (
-                <div className="w-full bg-white bg-opacity-10 text-center p-2 rounded mb-2 break-words">
-                  {note}
+              {notes?.map((note, index) => (
+                <div className="flex flex-row rounded-lg border border-white p-2 border-opacity-20 mb-2">
+                  <div className="flex flex-row w-full">
+                    <div className="w-full bg-white bg-opacity-15 text-center p-2 rounded break-words mr-2">
+                      {note.note}
+                    </div>
+                    <button
+                      className="rounded-md border border-white flex items-center h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150 mr-2"
+                      onClick={() => handleNoteTransfer(index)}
+                    >
+                      <ExitToAppIcon />
+                    </button>
+                    <button
+                      className="rounded-md border border-white flex items-center h-10 w-10 opacity-50 p-0.5 hover:opacity-100 transition ease-in-out delay-150"
+                      onClick={() => handleDeleteNote(index)}
+                    >
+                      <DeleteIcon />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
