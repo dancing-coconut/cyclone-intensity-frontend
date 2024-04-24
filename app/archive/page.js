@@ -33,6 +33,219 @@ import { IconButton } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const dataArray = [
+  {
+    archive_data: {
+      id: 1,
+      wind: "10.502",
+      pressure: "1001",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_01JAN2019_0300_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      12.174, 14.052, 15.55, 15.494, 14.654, 15.534, 14.288, 13.54,
+    ],
+    previous_wind_data: [
+      9.265, 9.488, 9.107, 9.84, 10.476, 10.389, 10.317, 10.496,
+    ],
+    next_pressure_data: [1002, 1001, 999, 1000, 1001, 1001, 1002, 1000],
+    previous_pressure_data: [1002, 1003, 1002, 1000, 999, 1000, 1000, 1001],
+  },
+  {
+    archive_data: {
+      id: 2,
+      wind: "12.174",
+      pressure: "1002",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_01JAN2019_0600_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      14.052, 15.55, 15.494, 14.654, 15.534, 14.288, 13.54, 12.22,
+    ],
+    previous_wind_data: [
+      9.488, 9.107, 9.84, 10.476, 10.389, 10.317, 10.496, 10.502,
+    ],
+    next_pressure_data: [1001, 999, 1000, 1001, 1001, 1002, 1000, 1000],
+    previous_pressure_data: [1003, 1002, 1000, 999, 1000, 1000, 1001, 1001],
+  },
+  {
+    archive_data: {
+      id: 3,
+      wind: "14.052",
+      pressure: "1001",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_01JAN2019_1500_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      15.55, 15.494, 14.654, 15.534, 14.288, 13.54, 12.22, 13.421,
+    ],
+    previous_wind_data: [
+      9.107, 9.84, 10.476, 10.389, 10.317, 10.496, 10.502, 12.174,
+    ],
+    next_pressure_data: [999, 1000, 1001, 1001, 1002, 1000, 1000, 1002],
+    previous_pressure_data: [1002, 1000, 999, 1000, 1000, 1001, 1001, 1002],
+  },
+  {
+    archive_data: {
+      id: 4,
+      wind: "15.55",
+      pressure: "999",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_01JAN2019_1800_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      15.494, 14.654, 15.534, 14.288, 13.54, 12.22, 13.421, 13.2981,
+    ],
+    previous_wind_data: [
+      9.84, 10.476, 10.389, 10.317, 10.496, 10.502, 12.174, 14.052,
+    ],
+    next_pressure_data: [1000, 1001, 1001, 1002, 1000, 1000, 1002, 1001],
+    previous_pressure_data: [1000, 999, 1000, 1000, 1001, 1001, 1002, 1001],
+  },
+  {
+    archive_data: {
+      id: 5,
+      wind: "15.494",
+      pressure: "1000",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_01JAN2019_2100_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      14.654, 15.534, 14.288, 13.54, 12.22, 13.421, 13.2981, 12.835,
+    ],
+    previous_wind_data: [
+      10.476, 10.389, 10.317, 10.496, 10.502, 12.174, 14.052, 15.55,
+    ],
+    next_pressure_data: [1001, 1001, 1002, 1000, 1000, 1002, 1001, 1000],
+    previous_pressure_data: [999, 1000, 1000, 1001, 1001, 1002, 1001, 999],
+  },
+  {
+    archive_data: {
+      id: 6,
+      wind: "14.654",
+      pressure: "1001",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0000_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      15.534, 14.288, 13.54, 12.22, 13.421, 13.2981, 12.835, 12.511,
+    ],
+    previous_wind_data: [
+      10.389, 10.317, 10.496, 10.502, 12.174, 14.052, 15.55, 15.494,
+    ],
+    next_pressure_data: [1001, 1002, 1000, 1000, 1002, 1001, 1000, 999],
+    previous_pressure_data: [1000, 1000, 1001, 1001, 1002, 1001, 999, 1000],
+  },
+  {
+    archive_data: {
+      id: 7,
+      wind: "15.534",
+      pressure: "1001",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0300_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      14.288, 13.54, 12.22, 13.421, 13.2981, 12.835, 12.511, 12.254,
+    ],
+    previous_wind_data: [
+      10.317, 10.496, 10.502, 12.174, 14.052, 15.55, 15.494, 14.654,
+    ],
+    next_pressure_data: [1002, 1000, 1000, 1002, 1001, 1000, 999, 998],
+    previous_pressure_data: [1000, 1001, 1001, 1002, 1001, 999, 1000, 1001],
+  },
+  {
+    archive_data: {
+      id: 8,
+      wind: "14.288",
+      pressure: "1002",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0600_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      13.54, 12.22, 13.421, 13.2981, 12.835, 12.511, 12.254, 12.407,
+    ],
+    previous_wind_data: [
+      10.496, 10.502, 12.174, 14.052, 15.55, 15.494, 14.654, 15.534,
+    ],
+    next_pressure_data: [1000, 1000, 1002, 1001, 1000, 999, 998, 999],
+    previous_pressure_data: [1001, 1001, 1002, 1001, 999, 1000, 1001, 1001],
+  },
+  {
+    archive_data: {
+      id: 9,
+      wind: "13.54",
+      pressure: "1000",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0900_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      12.22, 13.421, 13.2981, 12.835, 12.511, 12.254, 12.407, 11.764,
+    ],
+    previous_wind_data: [
+      10.502, 12.174, 14.052, 15.55, 15.494, 14.654, 15.534, 14.288,
+    ],
+    next_pressure_data: [1000, 1002, 1001, 1000, 999, 998, 999, 999],
+    previous_pressure_data: [1001, 1002, 1001, 999, 1000, 1001, 1001, 1002],
+  },
+  {
+    archive_data: {
+      id: 10,
+      wind: "12.22",
+      pressure: "1000",
+      name: "BUREVI",
+      original_img:
+        "http://localhost:8000/media/archive/3DIMG_03JAN2019_1200_L1C_ASIA_MER_IR1_V01R00.jpg",
+      category: 0,
+      t_number: 1,
+    },
+    data_exists: true,
+    next_wind_data: [
+      13.421, 13.2981, 12.835, 12.511, 12.254, 12.407, 11.764, 11.804,
+    ],
+    previous_wind_data: [
+      12.174, 14.052, 15.55, 15.494, 14.654, 15.534, 14.288, 13.54,
+    ],
+    next_pressure_data: [1002, 1001, 1000, 999, 998, 999, 999, 1000],
+    previous_pressure_data: [1002, 1001, 999, 1000, 1001, 1001, 1002, 1000],
+  },
+];
+
 const Archive = () => {
   const [visible, setVisible] = useState(false);
   const [archiveDate, setArchiveDate] = useState("2024-01-01");

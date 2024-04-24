@@ -16,6 +16,7 @@ import AssistantIcon from "@mui/icons-material/Assistant";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 // import SearchIcon from '@mui/icons-material/Search';
 
 import { IconButton } from "@mui/material";
@@ -47,7 +48,7 @@ import BookmarksBar from "./BookmarksBar";
 
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 
-const NavBar = ({ setVisible, visible }) => {
+const NavBar = ({ setVisible, visible, setNotesVisible, notesVisible }) => {
   const router = useRouter();
 
   const { data: session } = useSession();
@@ -177,6 +178,17 @@ const NavBar = ({ setVisible, visible }) => {
         </IconButton>
       ),
       name: "Help",
+    },
+    {
+      icon: (
+        <IconButton
+          // className={visible?"m-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"}
+          onClick={() => setNotesVisible(!notesVisible)}
+        >
+          <EditNoteIcon />
+        </IconButton>
+      ),
+      name: "Notes",
     },
   ];
 

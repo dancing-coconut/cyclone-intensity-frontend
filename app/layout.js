@@ -7,7 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Metereological Dashboard",
-  description: "A dashboard for metereologists to understand and analyze cyclones over the Indian Ocean with INSAT3D images.",
+  description:
+    "A dashboard for metereologists to understand and analyze cyclones over the Indian Ocean with INSAT3D images.",
 };
 
 export default function RootLayout({ children }) {
@@ -15,9 +16,9 @@ export default function RootLayout({ children }) {
     <SessionWrapper>
       <html lang="en">
         <body className="bg-black">
-            {/* <PageAnimatePresence> */}
-              {children}
-            {/* </PageAnimatePresence> */}
+          {/* <PageAnimatePresence> */}
+          {children}
+          {/* </PageAnimatePresence> */}
         </body>
       </html>
     </SessionWrapper>

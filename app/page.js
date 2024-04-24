@@ -66,6 +66,27 @@ export default function Home() {
     setExpanded(newExpanded ? panel : false);
   };
 
+  const images = [
+    "/govt.png",
+    "/ibtracs.png",
+    "/ieee.png",
+    "/isro.png",
+    "/mdpi.png",
+    "/mosdac.png",
+    "/vit.png",
+  ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 2000,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+  };
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -172,6 +193,129 @@ export default function Home() {
               </div>
             </Box>
           </Modal>
+        </div>
+        <div className="bg-black bg-cover flex flex-row justify-center h-[50vh] w-screen pt-[5vh] pb-[5vh] overflow-hidden">
+          <div className="flex flex-col justify-center">
+            <div className="text-3xl text-center mb-20">
+              In Collaboration With
+            </div>
+            <div className="flex overflow-hidden gap-4 flex-row border-t border-b bg-white opacity-40 pt-6 pb-6">
+              <div className="flex-shrink-0 flex justify-around min-w-full gap-4 animate-infinite-scroll">
+                <img
+                  src="/govt.png"
+                  className=" p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/ibtracs.png"
+                  className=" p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/ieee.png"
+                  className=" p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/isro.png"
+                  className=" p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/mdpi.png"
+                  className=" p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/mosdac.png"
+                  className=" p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/vit.png"
+                  className=" p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+              </div>
+              <div className="flex-shrink-0 flex justify-around min-w-full gap-4 animate-infinite-scroll">
+                <img
+                  src="/govt.png"
+                  className="p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/ibtracs.png"
+                  className="p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/ieee.png"
+                  className="p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/isro.png"
+                  className="p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/mdpi.png"
+                  className="p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/mosdac.png"
+                  className="p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+                <img
+                  src="/vit.png"
+                  className="p-2 rounded-lg h-[20vh] grayscale mr-6"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            {/* <div className="flex">
+
+            </div> */}
+            {/* <div className="relative m-auto w-[500px] overflow-hidden bg-white before:absolute before:left-0 before:top-0 before:z-[2] before:h-full before:w-[100px] before:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] before:content-[''] after:absolute after:right-0 after:top-0 after:z-[2] after:h-full after:w-[100px] after:-scale-x-100 after:bg-[linear-gradient(to_right,white_0%,rgba(255,255,255,0)_100%)] after:content-['']">
+              <div className="animate-infinite-slider flex w-[calc(250px*10)]">
+                {images.map((image, index) => (
+                  <div
+                    className="slide flex w-[125px] items-center justify-center"
+                    key={index}
+                  >
+                    <img
+                      src={image}
+                      className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+                {images.map((image, index) => (
+                  <div
+                    className="slide flex w-[125px] items-center justify-center"
+                    key={index}
+                  >
+                    <img
+                      src={image}
+                      className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div> */}
+            {/* {[...images].map((image, index) => (
+                <div key={index}>
+                  <img
+                    src={image}
+                    className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale"
+                    loading="lazy"
+                  />
+                </div>
+              ))} */}
+          </div>
         </div>
         <div className="bg-black bg-cover flex flex-row justify-center p-6 h-screen w-screen">
           <div className="flex flex-col justify-center w-1/2">
@@ -509,4 +653,74 @@ export default function Home() {
       </div>
     </ThemeProvider>
   );
+}
+
+{
+  /* <div className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale block flex-none mr-6">
+                  <img src="/govt.png" className="h-full w-content flex-none" />
+                </div>
+                <div className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale block flex-none mr-6">
+                  <img
+                    src="/ibtracs.png"
+                    className="h-full w-content flex-none"
+                  />
+                </div>
+                <div className="bg-white p-2 rounded-lg h-[20vh] bg-opacity-20 grayscale block flex-none mr-6">
+                  <img src="/ieee.png" className="h-full w-content flex-none" />
+                </div>
+                <div className="bg-white p-2 rounded-lg h-[20vh] bg-opacity-20 grayscale block flex-none mr-6">
+                  <img src="/isro.png" className="h-full w-content flex-none" />
+                </div>
+                <div className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale block flex-none mr-6">
+                  <img src="/mdpi.png" className="h-full w-content flex-none" />
+                </div>
+                <div className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale block flex-none mr-6">
+                  <img
+                    src="/mosdac.png"
+                    className="h-full w-content flex-none"
+                  />
+                </div>
+                <div className="bg-white p-2 rounded-lg h-[20vh] bg-opacity-20 grayscale block flex-none">
+                  <img src="/vit.png" className="h-full w-content flex-none" />
+                </div> */
+}
+
+{
+  /* <div className="flex space-x-16">
+              <img
+                src="/govt.png"
+                className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale max-w-none"
+                loading="lazy"
+              />
+              <img
+                src="/ibtracs.png"
+                className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale max-w-none"
+                loading="lazy"
+              />
+              <img
+                src="/ieee.png"
+                className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale max-w-none"
+                loading="lazy"
+              />
+              <img
+                src="/isro.png"
+                className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale max-w-none"
+                loading="lazy"
+              />
+              <img
+                src="/mdpi.png"
+                className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale max-w-none"
+                loading="lazy"
+              />
+              <img
+                src="/mosdac.png"
+                className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale max-w-none"
+                loading="lazy"
+              />
+              <img
+                src="/vit.png"
+                className="bg-white p-2 rounded-lg h-[20vh] opacity-20 grayscale max-w-none"
+                loading="lazy"
+              />
+            </div> */
 }
