@@ -17,7 +17,12 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 
 import { IconButton } from "@mui/material";
 
-import { pressureConverter, speedConverter } from "./UnitConversionFunctions";
+import {
+  pressureConverter,
+  speedConverter,
+  pressureConversionFactor,
+  speedConversionFactor,
+} from "./UnitConversionFunctions";
 
 import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -43,6 +48,10 @@ export default function PredictionBar({
   windIntensity,
   windPressure,
   windCategory,
+  setSpeedConversionFactorFunction,
+  setPressureConversionFactorFunction,
+  setCurrentWindUnitParent,
+  setCurrentPressureUnitParent,
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -89,7 +98,10 @@ export default function PredictionBar({
       newIntensityUnits["prev"],
       newIntensityUnits["curr"]
     );
-
+    setCurrentWindUnitParent(newIntensityUnits.curr);
+    setSpeedConversionFactorFunction(
+      speedConversionFactor(newIntensityUnits.prev, newIntensityUnits.curr)
+    );
     setIntensityUnit(newIntensityUnits);
     setIntensity(changedSpeed);
   };
@@ -117,6 +129,11 @@ export default function PredictionBar({
       pressure,
       newPressureUnits["prev"],
       newPressureUnits["curr"]
+    );
+
+    setCurrentPressureUnitParent(newPressureUnits.curr);
+    setPressureConversionFactorFunction(
+      pressureConversionFactor(newPressureUnits.prev, newPressureUnits.curr)
     );
 
     setPressureUnit(newPressureUnits);
@@ -152,6 +169,10 @@ export default function PredictionBar({
         prev: intensityUnit["curr"],
         curr: currentIntensityUnit,
       };
+      setCurrentWindUnitParent(currentIntensityUnit);
+      setSpeedConversionFactorFunction(
+        speedConversionFactor(newIntensityUnits.prev, newIntensityUnits.curr)
+      );
       setIntensityUnit(newIntensityUnits);
 
       const changedSpeed = speedConverter(
@@ -168,6 +189,10 @@ export default function PredictionBar({
         prev: pressureUnit["curr"],
         curr: currentPressureUnit,
       };
+      setCurrentPressureUnitParent(currentPressureUnit);
+      setPressureConversionFactorFunction(
+        pressureConversionFactor(newPressureUnits.prev, newPressureUnits.curr)
+      );
       setPressureUnit(newPressureUnits);
 
       const changedPressure = pressureConverter(

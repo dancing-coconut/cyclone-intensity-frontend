@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 import NavBar from "../components/NavBar";
-import PredictionBar from "../components/PredictionBar";
+import TimeSeriesPredictionBar from "../components/TimeSeriesPredictionBar";
 import TimeDateBar from "../components/TimeDateBar";
 import TimeSeriesPictureBar from "../components/TimeSeriesPictureBar";
 import NoteTaker from "../components/NoteTaker";
@@ -71,11 +71,36 @@ const TimeSeries = () => {
   const [visible, setVisible] = useState(false);
   const [notesVisible, setNotesVisible] = useState(false);
 
-  const [windConversionFactor, setWindConversionFactor] = useState(1);
-  const [pressureConversionFactor, setPressureConversionFactor] = useState(1);
-
   const [currentWindUnit, setCurrentWindUnit] = useState("knots");
   const [currentPressureUnit, setCurrentPressureUnit] = useState("Pa");
+
+  const setWindConversionFactorFunction = (conversionFactor) => {
+    setWindData((prevWindData) => {
+      const updatedWindData = prevWindData.map((obj) => {
+        const updatedWind = obj.Wind * conversionFactor;
+
+        return {
+          ...obj,
+          Wind: updatedWind,
+        };
+      });
+      return updatedWindData;
+    });
+  };
+
+  const setPressureConversionFactorFunction = (conversionFactor) => {
+    setPressureData((prevPressureData) => {
+      const updatedPressureData = prevPressureData.map((obj) => {
+        const updatedPressure = obj.Pressure * conversionFactor;
+
+        return {
+          ...obj,
+          Pressure: updatedPressure,
+        };
+      });
+      return updatedPressureData;
+    });
+  };
 
   const [timeSeriesData, setTimeSeriesData] = useState({
     general_data: {
@@ -362,7 +387,7 @@ const TimeSeries = () => {
   const pressureCopyHandler = (pressure, time, tense) => {
     const newData = {
       ...data,
-      [`${tense} Pressure From ${currentTimestamp}`]: `${pressure} at ${time}`,
+      [`${tense} Pressure From ${currentTimestamp}`]: `${pressure} ${currentPressureUnit} at ${time}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -381,7 +406,7 @@ const TimeSeries = () => {
   const windCopyHandler = (wind, time, tense) => {
     const newData = {
       ...data,
-      [`${tense} Intensity From ${currentTimestamp}`]: `${wind} at ${time}`,
+      [`${tense} Intensity From ${currentTimestamp}`]: `${wind} ${currentWindUnit} at ${time}`,
     };
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -398,7 +423,7 @@ const TimeSeries = () => {
   };
 
   const windClipboardHandler = (wind, time, tense) => {
-    const textToCopy = `${tense} Cyclone Wind Intensity From ${currentTimestamp}: ${wind} at ${time}`;
+    const textToCopy = `${tense} Cyclone Wind Intensity From ${currentTimestamp}: ${wind} ${currentWindUnit} at ${time}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -431,7 +456,7 @@ const TimeSeries = () => {
   };
 
   const pressureClipboardHandler = (pressure, time, tense) => {
-    const textToCopy = `${tense} Cyclone Pressure From ${currentTimestamp}: ${pressure} at ${time}`;
+    const textToCopy = `${tense} Cyclone Pressure From ${currentTimestamp}: ${pressure} ${currentPressureUnit} at ${time}`;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -466,7 +491,7 @@ const TimeSeries = () => {
   const pressureWebSearchHandler = (pressure, time, tense) => {
     window.open(
       `https://www.google.com/search?q=${encodeURIComponent(
-        `${tense} Cyclone Pressure From ${currentTimestamp}: ${pressure} at ${time}`
+        `${tense} Cyclone Pressure From ${currentTimestamp}: ${pressure} ${currentPressureUnit} at ${time}`
       )}`,
       "_blank"
     );
@@ -475,7 +500,7 @@ const TimeSeries = () => {
   const windWebSearchHandler = (wind, time, tense) => {
     window.open(
       `https://www.google.com/search?q=${encodeURIComponent(
-        `${tense} Cyclone Wind Intensity From ${currentTimestamp}: ${wind} at ${time}`
+        `${tense} Cyclone Wind Intensity From ${currentTimestamp}: ${wind} ${currentWindUnit} at ${time}`
       )}`,
       "_blank"
     );
@@ -484,7 +509,7 @@ const TimeSeries = () => {
   const pressureChatbotHandler = (pressure, time, tense) => {
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The ${tense} cyclone pressure at the Indian Ocean from ${currentTimestamp} is ${pressure} at ${time}. Can you please analyze this?`,
+        `The ${tense} cyclone pressure at the Indian Ocean from ${currentTimestamp} is ${pressure} ${currentPressureUnit} at ${time}. Can you please analyze this?`,
         ...prevQuestions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
@@ -505,7 +530,7 @@ const TimeSeries = () => {
   const windChatbotHandler = (wind, time, tense) => {
     setQuestions((prevQuestions) => {
       const newQuestions = [
-        `The ${tense} cyclone wind intensity at the Indian Ocean from ${currentTimestamp} is ${wind} at ${time}. Can you please analyze this?`,
+        `The ${tense} cyclone wind intensity at the Indian Ocean from ${currentTimestamp} is ${wind} ${currentWindUnit} at ${time}. Can you please analyze this?`,
         ...prevQuestions,
       ];
       localStorage.setItem("questions", JSON.stringify(newQuestions));
@@ -526,7 +551,7 @@ const TimeSeries = () => {
   const pinThisWindInfoHandler = (wind, time, tense) => {
     setWindPins((prevWindPins) => {
       const newWindPins = [
-        `${tense} Wind From ${currentTimestamp}: ${wind} at ${time}`,
+        `${tense} Wind From ${currentTimestamp}: ${wind} ${currentWindUnit} at ${time}`,
         ...prevWindPins,
       ];
       localStorage.setItem("windpins", JSON.stringify(newWindPins));
@@ -566,7 +591,7 @@ const TimeSeries = () => {
   const pinThisPressureInfoHandler = (pressure, time, tense) => {
     setPressurePins((prevPressurePins) => {
       const newPressurePins = [
-        `${tense} Pressure From ${currentTimestamp}: ${pressure} at ${time}`,
+        `${tense} Pressure From ${currentTimestamp}: ${pressure} ${currentPressureUnit} at ${time}`,
         ...prevPressurePins,
       ];
       localStorage.setItem("pressurepins", JSON.stringify(newPressurePins));
@@ -623,7 +648,9 @@ const TimeSeries = () => {
                 <div className="h-1/2 mb-6 flex flex-col overflow-scroll">
                   <div className="bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 flex justify-center h-10">
                     <div className="h-full flex flex-col justify-center mr-2">
-                      {showWindPins ? "INTENSITY PINS" : "INTENSITY"}
+                      {showWindPins
+                        ? "INTENSITY PINS"
+                        : `INTENSITY (${currentWindUnit})`}
                     </div>
                     {showWindPins ? (
                       <Tooltip title="Show Forecasts">
@@ -983,7 +1010,9 @@ const TimeSeries = () => {
                 <div className="h-1/2 flex flex-col overflow-scroll">
                   <div className="bg-white bg-opacity-20 rounded-lg text-white text-center p-2 w-80 mb-4 h-10 flex justify-center">
                     <div className="h-full flex flex-col justify-center mr-2">
-                      {showPressurePins ? "PRESSURE PINS" : "PRESSURE"}
+                      {showPressurePins
+                        ? "PRESSURE PINS"
+                        : `PRESSURE (${currentPressureUnit})`}
                     </div>
                     {showPressurePins ? (
                       <Tooltip title="Show Forecasts">
@@ -1351,10 +1380,18 @@ const TimeSeries = () => {
                 pressure={pressureData}
                 original={timeSeriesData.general_data.original_img}
               />
-              <PredictionBar
+              <TimeSeriesPredictionBar
                 windIntensity={timeSeriesData.general_data.wind}
                 windPressure={timeSeriesData.general_data.pressure}
                 windCategory={timeSeriesData.general_data.category}
+                setSpeedConversionFactorFunction={
+                  setWindConversionFactorFunction
+                }
+                setPressureConversionFactorFunction={
+                  setPressureConversionFactorFunction
+                }
+                setCurrentWindUnitParent={setCurrentWindUnit}
+                setCurrentPressureUnitParent={setCurrentPressureUnit}
               />
               <MiniChatbot visible={visible} />
               <NoteTaker notesVisible={notesVisible} />
