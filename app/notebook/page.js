@@ -30,10 +30,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Tooltip from "@mui/material/Tooltip";
 
+import { useSession } from "next-auth/react";
+
 const Notebook = () => {
   const [visible, setVisible] = useState(false);
   const [editor, setEditor] = useState();
   const [notesVisible, setNotesVisible] = useState(false);
+
+  const { data: session } = useSession();
 
   const darkTheme = createTheme({
     palette: {
@@ -71,7 +75,9 @@ const Notebook = () => {
     const doc = new jsPDF();
     // const htmlString = "<h1 style='color: black;'>Hello, world!</h1><p style='color: black;'>This is a sample HTML string with black text.</p>";
     const htmlString =
-      "<div style='color: black; font-size: 6px;'>" +
+      `<div style='color: black; font-size: 6px;'>${
+        session ? session.user.name + "'s Report" : "User Report"
+      }<br />` +
       (editor ? editor.getHTML() : "") +
       "</div>";
     console.log(htmlString);
@@ -174,7 +180,13 @@ const Notebook = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <ToastContainer />
-      <div className="bg-black flex items-center p-6 h-screen w-screen">
+      <div
+        className="bg-black flex items-center p-6 h-screen w-screen"
+        onClick={() => {
+          setNotesVisible(false);
+          setVisible(false);
+        }}
+      >
         <NavBar
           setVisible={setVisible}
           visible={visible}
@@ -221,42 +233,47 @@ const Notebook = () => {
               ))}
             </div>
           </div>
-          <div className="relative flex flex-col items-center rounded-lg h-full w-full bg-white bg-opacity-10 rounded-lg">
-            <Tiptap onEditorRender={handleEditorRender} className="w-full" />
-            <SpeedDial
-              ariaLabel="Log book actions"
-              sx={{
-                position: "absolute",
-                bottom: 40,
-                right: 40,
-                "& .MuiButtonBase-root:hover": {
-                  background: "black",
-                  opacity: 1.0,
-                },
-                "& .MuiButtonBase-root": {
-                  background: "black",
-                  opacity: 0.5,
-                },
-              }}
-              icon={
-                <SpeedDialIcon
-                  sx={{
-                    color: "white",
-                    marginBottom: "3px",
-                  }}
-                />
-              }
-            >
-              {actions.map((action) => (
-                <SpeedDialAction
-                  key={action.name}
-                  icon={action.icon}
-                  tooltipTitle={action.name}
-                />
-              ))}
-            </SpeedDial>
-            <MiniChatbot visible={visible} />
-            <NoteTaker notesVisible={notesVisible} />
+          <div className="flex flex-col h-full w-full">
+            <div className="w-full rounded-lg p-2 mb-4 text-center bg-white bg-opacity-20">
+              {session ? `${session.user.name}'S LOGS` : "USER'S LOGS"}
+            </div>
+            <div className="relative flex flex-col items-center rounded-lg h-full w-full bg-white bg-opacity-10 rounded-lg">
+              <Tiptap onEditorRender={handleEditorRender} className="w-full" />
+              <SpeedDial
+                ariaLabel="Log book actions"
+                sx={{
+                  position: "absolute",
+                  bottom: 40,
+                  right: 40,
+                  "& .MuiButtonBase-root:hover": {
+                    background: "black",
+                    opacity: 1.0,
+                  },
+                  "& .MuiButtonBase-root": {
+                    background: "black",
+                    opacity: 0.5,
+                  },
+                }}
+                icon={
+                  <SpeedDialIcon
+                    sx={{
+                      color: "white",
+                      marginBottom: "3px",
+                    }}
+                  />
+                }
+              >
+                {actions.map((action) => (
+                  <SpeedDialAction
+                    key={action.name}
+                    icon={action.icon}
+                    tooltipTitle={action.name}
+                  />
+                ))}
+              </SpeedDial>
+              <MiniChatbot visible={visible} />
+              <NoteTaker notesVisible={notesVisible} />
+            </div>
           </div>
         </div>
       </div>

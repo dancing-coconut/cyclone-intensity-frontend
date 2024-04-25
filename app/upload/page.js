@@ -52,7 +52,13 @@ const Upload = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <div className="bg-black flex items-center p-6 h-screen w-screen">
+      <div
+        className="bg-black flex items-center p-6 h-screen w-screen"
+        onClick={() => {
+          setNotesVisible(false);
+          setVisible(false);
+        }}
+      >
         <NavBar
           setVisible={setVisible}
           visible={visible}

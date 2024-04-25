@@ -17,6 +17,7 @@ const MiniChatbot = ({ visible }) => {
           variants={variants}
           transition={{ type: "linear" }}
           className="rounded-lg absolute z-[1500] right-0 bottom-0 bg-white overflow-hidden"
+          onClick={(event) => event.stopPropagation()}
         >
           <iframe
             allow="microphone;"

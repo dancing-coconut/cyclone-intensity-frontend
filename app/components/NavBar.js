@@ -150,7 +150,10 @@ const NavBar = ({ setVisible, visible, setNotesVisible, notesVisible }) => {
       icon: (
         <IconButton
           // className={visible?"m-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"}
-          onClick={() => setVisible(!visible)}
+          onClick={(event) => {
+            event.stopPropagation();
+            setVisible(!visible);
+          }}
         >
           <ChatIcon />
         </IconButton>
@@ -183,7 +186,10 @@ const NavBar = ({ setVisible, visible, setNotesVisible, notesVisible }) => {
       icon: (
         <IconButton
           // className={visible?"m-2 p-2 opacity-100":"mb-2 p-2 opacity-40 hover:opacity-100 transition ease-in-out delay-150"}
-          onClick={() => setNotesVisible(!notesVisible)}
+          onClick={(event) => {
+            event.stopPropagation();
+            setNotesVisible(!notesVisible);
+          }}
         >
           <EditNoteIcon />
         </IconButton>
@@ -387,7 +393,7 @@ const NavBar = ({ setVisible, visible, setNotesVisible, notesVisible }) => {
           <div className="w-full bg-white bg-opacity-20 rounded-md mb-4 border border-white p-2">
             {session ? session.user.name : ""}
           </div>
-          <div className="w-full bg-white bg-opacity-20 rounded-md mb-8 border border-white p-2">
+          <div className="w-full bg-white bg-opacity-20 rounded-md mb-8 border border-white p-2 text-ellipsis overflow-hidden">
             {session ? session.user.email : ""}
           </div>
           <button

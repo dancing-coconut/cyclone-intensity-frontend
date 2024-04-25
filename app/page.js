@@ -329,38 +329,37 @@ export default function Home() {
               <br />
             </div>
             <div className="ml-12 w-2/3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Our mission is to predict cyclone intensity with unparalleled
+              accuracy. Using cutting-edge models and algorithms, we provide
+              timely forecasts, empowering communities and organizations to
+              prepare for and mitigate the impact of cyclones
             </div>
           </div>
           <div className="w-1/2 flex flex-col justify-center h-full p-6">
             <div className="rounded-lg w-full mb-6 border border-white p-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Disaster Preparedness: Chakravaat aids in evacuation planning,
+              resource allocation, and precautionary measures for minimizing
+              cyclone impact on communities.
             </div>
             <div className="rounded-lg w-full mb-6 border border-white p-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Cyclonic Behavior Study: Chakravaat conducts thorough research on
+              cyclone behavior, uncovering patterns and dynamics to improve
+              predictive accuracy.
             </div>
             <div className="rounded-lg w-full mb-6 border border-white p-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Immediate Response: Chakravaat enables swift emergency response by
+              providing real-time updates on cyclone intensity and trajectory
+              for prompt action.
             </div>
             <div className="rounded-lg w-full mb-6 border border-white p-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Maritime Safety: Chakravaat provides real-time updates on cyclone
+              trajectory, ensuring safe navigation and preventing maritime
+              accidents.
             </div>
             <div className="rounded-lg w-full border border-white p-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Infrastructure Protection: Chakravaat predicts cyclone intensity
+              to safeguard critical infrastructure and minimize damage,
+              disruptions, and service outages.
             </div>
           </div>
         </div>
@@ -374,7 +373,7 @@ export default function Home() {
                 Explore the Possibilities
               </div>
               <div className="ml-11 mb-2 opacity-50 ml-11 mb-7">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Discover insights, prepare, and mitigate with Chakravaat.
               </div>
               <div className="flex flex-col h-full px-6 ml-5">
                 <button className="flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150">
@@ -391,8 +390,8 @@ export default function Home() {
                       Real Time Prediction
                     </div>
                     <div className="opacity-50">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse malesuada
+                      Instant updates on cyclone intensity and weather
+                      conditions in real-time.
                     </div>
                   </div>
                 </button>
@@ -410,8 +409,8 @@ export default function Home() {
                       Time Series Prediction
                     </div>
                     <div className="opacity-50">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse malesuada
+                      Forecasting future cyclone intensity and category trends
+                      with precision accuracy.
                     </div>
                   </div>
                 </button>
@@ -429,8 +428,8 @@ export default function Home() {
                       Archive Access
                     </div>
                     <div className="opacity-50">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse malesuada
+                      Retrieve past cyclone data, including intensity, pressure,
+                      and category.
                     </div>
                   </div>
                 </button>
@@ -446,8 +445,8 @@ export default function Home() {
                   <div className="flex flex-col ml-4">
                     <div className="font-bold text-2xl mb-2">AI Analysis</div>
                     <div className="opacity-50">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse malesuada
+                      Engage AI assistant for insightful inquiries and intensity
+                      analysis queries.
                     </div>
                   </div>
                 </button>
@@ -465,8 +464,8 @@ export default function Home() {
                       Custom Prediction
                     </div>
                     <div className="opacity-50">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse malesuada
+                      Experience personalized cyclone intensity predictions
+                      using your uploaded image.
                     </div>
                   </div>
                 </button>
@@ -490,12 +489,13 @@ export default function Home() {
                 aria-controls="panel1-content"
                 id="panel1-header"
               >
-                Accordion 1
+                What is the significance of accurate intensity prediction for
+                tropical cyclones?
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Accurate intensity prediction for tropical cyclones is crucial
+                for effective disaster management due to their devastating
+                nature.
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -507,12 +507,12 @@ export default function Home() {
                 aria-controls="panel2-content"
                 id="panel2-header"
               >
-                Accordion 2
+                How does Dvorak's estimation method fall short in predicting
+                cyclone intensity?
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Dvorak's estimation method often overlooks physical attributes
+                and temporal dynamics, limiting predictive capabilities.
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -524,12 +524,13 @@ export default function Home() {
                 aria-controls="panel3-content"
                 id="panel3-header"
               >
-                Accordion 3
+                What is the novel approach introduced in this study for cyclone
+                intensity prediction?
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                The study introduces a novel approach leveraging a Hierarchical
+                Attention-based Multihead Shift Invariant Artificial Neural
+                Network (SIANN).
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -541,12 +542,12 @@ export default function Home() {
                 aria-controls="panel4-content"
                 id="panel4-header"
               >
-                Accordion 4
+                How does the proposed SIANN model address the limitations of
+                existing methodologies?
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                The SIANN model addresses limitations by discerning cyclone
+                intensity-contributing factors and capturing temporal nuances.
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -558,12 +559,12 @@ export default function Home() {
                 aria-controls="panel5-content"
                 id="panel5-header"
               >
-                Accordion 5
+                What role does preprocessing play in enhancing the predictive
+                capabilities of the SIANN model?
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Preprocessing techniques enhance predictive capabilities by
+                preparing data for analysis and reducing noise.
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -575,12 +576,13 @@ export default function Home() {
                 aria-controls="panel5-content"
                 id="panel5-header"
               >
-                Accordion 6
+                How does coordinate-based adaptive cropping contribute to
+                cyclonic pattern extraction?
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Coordinate-based adaptive cropping focuses on Regions of
+                Interest (ROI) for precise cyclonic pattern extraction,
+                improving pattern recognition.
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -592,12 +594,31 @@ export default function Home() {
                 aria-controls="panel5-content"
                 id="panel5-header"
               >
-                Accordion 7
+                What environmental variables are considered in the time series
+                analysis for intensity estimation?
               </AccordionSummary>
               <AccordionDetails>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                Environmental variables such as sea surface temperatures,
+                atmospheric pressure, and wind patterns are analyzed in the time
+                series models.
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={expanded === "panel8"}
+              onChange={handleChange("panel8")}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel5-content"
+                id="panel5-header"
+              >
+                How does the proposed methodology amalgamate advanced neural
+                network architectures with time series analysis?
+              </AccordionSummary>
+              <AccordionDetails>
+                The methodology combines advanced neural network architectures
+                with time series analysis to establish a robust technique for
+                intensity estimation.
               </AccordionDetails>
             </Accordion>
           </div>

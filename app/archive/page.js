@@ -433,6 +433,8 @@ const Archive = () => {
       .split("T")[1]
       .split(".")[0];
 
+    if (currentTimeZoneAcronym === targetTimeZoneAcronym)
+      return { date: archiveDate, time: archiveTime };
     return { date: targetDateString, time: targetTimeString };
   }
 
@@ -800,7 +802,13 @@ const Archive = () => {
     return (
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <div className="bg-black flex items-center p-6 h-screen w-screen">
+        <div
+          className="bg-black flex items-center p-6 h-screen w-screen"
+          onClick={() => {
+            setNotesVisible(false);
+            setVisible(false);
+          }}
+        >
           <NavBar
             setVisible={setVisible}
             visible={visible}
@@ -926,6 +934,7 @@ const Archive = () => {
                 pressure={pressureData}
                 original={archiveData.archive_data.original_img}
                 timezone={mainTimezone}
+                // original={"http://localhost:8000/+"archiveData.archive_data.original_img}
               />
               <ArchivePredictionBar
                 windIntensity={archiveData.archive_data.wind}

@@ -67,6 +67,106 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
+const hurricaneCategoriesDescriptionsWind = [
+  {
+    category: 0,
+    description:
+      "With winds reaching speeds of up to 65 knots, minimal damage is anticipated in this cyclone category.",
+  },
+  {
+    category: 1,
+    description:
+      "Winds ranging from 66 to 90 knots signify this category, where some damage is expected to occur.",
+  },
+  {
+    category: 2,
+    description:
+      "With wind speeds ranging from 91 to 102 knots, significant damage is probable in this cyclone category.",
+  },
+  {
+    category: 3,
+    description:
+      "Expect severe damage with winds ranging from 103 to 115 knots in this cyclone category.",
+  },
+  {
+    category: 4,
+    description:
+      "With winds ranging from 116 to 140 knots, there is a possibility of catastrophic damage in this category.",
+  },
+  {
+    category: 5,
+    description:
+      "With wind speeds surpassing 140 knots, extreme devastation is highly probable in this cyclone category.",
+  },
+];
+
+const hurricaneCategoriesPressure = [
+  {
+    category: 0,
+    description:
+      "Pressure approximately 1000 hPa suggests relatively calm conditions, typical for lower intensity cyclones in this category.",
+  },
+  {
+    category: 1,
+    description:
+      "With pressure around 987 hPa, this category typically denotes mild cyclones with slightly lower atmospheric pressure.",
+  },
+  {
+    category: 2,
+    description:
+      "At around 970 hPa, the pressure indicates a moderate drop, signifying increasing cyclonic intensity in this category.",
+  },
+  {
+    category: 3,
+    description:
+      "Around 960 hPa, significant pressure decrease implies intensified cyclonic conditions within this category.",
+  },
+  {
+    category: 4,
+    description:
+      "At approximately 948 hPa, the pressure indicates a severe cyclone with notably low atmospheric pressure in this category.",
+  },
+  {
+    category: 5,
+    description:
+      "Around 921 hPa, the pressure denotes an extremely intense cyclone, characterized by very low atmospheric pressure in this category.",
+  },
+];
+
+function pressureContent(pressure) {
+  if (pressure < 921)
+    return "Around 921 hPa and lower, the pressure denotes an extremely intense cyclone, characterized by very low atmospheric pressure in this category";
+  else if (pressure >= 921 && pressure < 949)
+    return "At approximately 948 hPa and lower, the pressure indicates a severe cyclone with notably low atmospheric pressure in this category.";
+  else if (pressure >= 949 && pressure < 961)
+    return "Around 960 hPa, significant pressure decrease implies intensified cyclonic conditions within this category.";
+  else if (pressure >= 961 && pressure < 971)
+    return "At around 970 hPa, the pressure indicates a moderate drop, signifying increasing cyclonic intensity in this category.";
+  else if (pressure >= 971 && pressure < 978)
+    return "At around 970 hPa, the pressure indicates a moderate drop, signifying increasing cyclonic intensity in this category.";
+  else if (pressure >= 979 && pressure < 990)
+    return "With pressure around 987 hPa, this category typically denotes mild cyclones with slightly lower atmospheric pressure.";
+  else
+    return "Pressure approximately 1000 hPa suggests relatively calm conditions, typical for lower intensity cyclones in this category.";
+}
+
+function intensityContent(intensity) {
+  if (intensity < 56)
+    return "With winds reaching speeds of up to 56 knots, minimal damage is anticipated in this cyclone category.";
+  else if (intensity >= 56 && intensity < 78)
+    return "Winds ranging from 56 to 78 knots signify this category, where some damage is expected to occur.";
+  else if (intensity >= 78 && intensity < 90)
+    return "With wind speeds ranging from 78 to 90 knots, significant damage is probable in this cyclone category.";
+  else if (intensity >= 90 && intensity < 102)
+    return "Expect severe damage with winds ranging from 90 to 102 knots in this cyclone category.";
+  else if (intensity >= 102 && intensity < 115)
+    return "With winds ranging from 102 to 115 knots, there is a possibility of catastrophic damage in this category.";
+  else if (intensity >= 115 && intensity < 128)
+    return "Wind speeds exceeding 115 to 128 knots indicate a high likelihood of extreme devastation occurring within this cyclone category.";
+  else
+    return "With wind speeds surpassing 128 knots, extreme devastation is highly probable in this cyclone category.";
+}
+
 const TimeSeries = () => {
   const [visible, setVisible] = useState(false);
   const [notesVisible, setNotesVisible] = useState(false);
@@ -281,7 +381,7 @@ const TimeSeries = () => {
 
     const data = await response.json();
 
-    setTimeSeries(data);
+    setTimeSeriesData(data);
     const {
       general_data,
       next_wind_data,
@@ -293,7 +393,7 @@ const TimeSeries = () => {
 
     const currentDate = new Date();
 
-    setCurrentTimestamp(currentDate.toISOString);
+    setCurrentTimestamp(currentDate.toISOString());
 
     const formatTime = (date) =>
       `${String(date.getHours()).padStart(2, "0")}:${String(
@@ -628,11 +728,23 @@ const TimeSeries = () => {
     });
   };
 
+  const reverseArray = (array) => {
+    const tempArray = [...array];
+    tempArray.reverse();
+    return tempArray;
+  };
+
   if (session) {
     return (
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <div className="bg-black flex items-center p-6 h-screen w-screen">
+        <div
+          className="bg-black flex items-center p-6 h-screen w-screen"
+          onClick={() => {
+            setNotesVisible(false);
+            setVisible(false);
+          }}
+        >
           <NavBar
             setVisible={setVisible}
             visible={visible}
@@ -706,7 +818,7 @@ const TimeSeries = () => {
                             FUTURE
                           </div>
                         </Tooltip>
-                        {windData.slice(0, 4).map((windDatum, index) => (
+                        {windData.slice(-4).map((windDatum, index) => (
                           <Accordion className="mb-2">
                             <AccordionSummary
                               expandIcon={<ExpandMoreIcon />}
@@ -718,9 +830,7 @@ const TimeSeries = () => {
                             <AccordionDetails>
                               <div className="flex flex-col justify-items-center text-center w-full">
                                 <div className="mb-2">
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipiscing elit. Suspendisse malesuada lacus
-                                  ex, sit amet blandit leo lobortis eget.
+                                  {intensityContent(windDatum.Wind)}
                                 </div>
                                 <div className="w-full text-center flex justify-center mb-1">
                                   <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
@@ -807,7 +917,7 @@ const TimeSeries = () => {
                             CURRENT
                           </div>
                         </Tooltip>
-                        {[windData[4]].map((windDatum, index) => (
+                        {[windData[8]].map((windDatum, index) => (
                           <Accordion className="mb-2">
                             <AccordionSummary
                               expandIcon={<ExpandMoreIcon />}
@@ -819,9 +929,7 @@ const TimeSeries = () => {
                             <AccordionDetails>
                               <div className="flex flex-col justify-items-center text-center w-full">
                                 <div className="mb-2">
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipiscing elit. Suspendisse malesuada lacus
-                                  ex, sit amet blandit leo lobortis eget.
+                                  {intensityContent(windDatum.Wind)}
                                 </div>
                                 <div className="w-full text-center flex justify-center mb-1">
                                   <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
@@ -908,100 +1016,100 @@ const TimeSeries = () => {
                             PREVIOUS
                           </div>
                         </Tooltip>
-                        {windData.slice(-8).map((windDatum, index) => (
-                          <Accordion className="mb-2">
-                            <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              aria-controls={`panel${index + 1}-content`}
-                              id={`panel${index + 1}-header`}
-                            >
-                              {`[${windDatum.name}] Wind: ${windDatum.Wind}`}
-                            </AccordionSummary>
-                            <AccordionDetails>
-                              <div className="flex flex-col justify-items-center text-center w-full">
-                                <div className="mb-2">
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipiscing elit. Suspendisse malesuada lacus
-                                  ex, sit amet blandit leo lobortis eget.
-                                </div>
-                                <div className="w-full text-center flex justify-center mb-1">
-                                  <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
-                                    <Tooltip title="Copy to Clipboard">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          windClipboardHandler(
-                                            windDatum.Wind,
-                                            windDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <FileCopyIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Copy to Logs">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          windCopyHandler(
-                                            windDatum.Wind,
-                                            windDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <ExitToAppIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Search the Web">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          windWebSearchHandler(
-                                            windDatum.Wind,
-                                            windDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <TravelExploreIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Ask the Chatbot">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          windChatbotHandler(
-                                            windDatum.Wind,
-                                            windDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <ContactSupportIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Pin This Info">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          pinThisWindInfoHandler(
-                                            windDatum.Wind,
-                                            windDatum.name,
-                                            `Previous-${index + 1}`
-                                          )
-                                        }
-                                      >
-                                        <PushPinIcon />
-                                      </button>
-                                    </Tooltip>
+                        {reverseArray(windData.slice(0, 8)).map(
+                          (windDatum, index) => (
+                            <Accordion className="mb-2">
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls={`panel${index + 1}-content`}
+                                id={`panel${index + 1}-header`}
+                              >
+                                {`[${windDatum.name}] Wind: ${windDatum.Wind}`}
+                              </AccordionSummary>
+                              <AccordionDetails>
+                                <div className="flex flex-col justify-items-center text-center w-full">
+                                  <div className="mb-2">
+                                    {intensityContent(windDatum.Wind)}
+                                  </div>
+                                  <div className="w-full text-center flex justify-center mb-1">
+                                    <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
+                                      <Tooltip title="Copy to Clipboard">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            windClipboardHandler(
+                                              windDatum.Wind,
+                                              windDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <FileCopyIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Copy to Logs">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            windCopyHandler(
+                                              windDatum.Wind,
+                                              windDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <ExitToAppIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Search the Web">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            windWebSearchHandler(
+                                              windDatum.Wind,
+                                              windDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <TravelExploreIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Ask the Chatbot">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            windChatbotHandler(
+                                              windDatum.Wind,
+                                              windDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <ContactSupportIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Pin This Info">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            pinThisWindInfoHandler(
+                                              windDatum.Wind,
+                                              windDatum.name,
+                                              `Previous-${index + 1}`
+                                            )
+                                          }
+                                        >
+                                          <PushPinIcon />
+                                        </button>
+                                      </Tooltip>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </AccordionDetails>
-                          </Accordion>
-                        ))}
+                              </AccordionDetails>
+                            </Accordion>
+                          )
+                        )}
                       </div>
                     </div>
                   )}
@@ -1068,110 +1176,7 @@ const TimeSeries = () => {
                             FUTURE
                           </div>
                         </Tooltip>
-                        {pressureData
-                          .slice(0, 4)
-                          .map((pressureDatum, index) => (
-                            <Accordion className="mb-2">
-                              <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls={`panel${index + 1}-content`}
-                                id={`panel${index + 1}-header`}
-                              >
-                                {`[${pressureDatum.name}] Pressure: ${pressureDatum.Pressure}`}
-                              </AccordionSummary>
-                              <AccordionDetails>
-                                <div className="flex flex-col justify-items-center text-center w-full">
-                                  <div className="mb-2">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Suspendisse malesuada lacus
-                                    ex, sit amet blandit leo lobortis eget.
-                                  </div>
-                                  <div className="w-full text-center flex justify-center mb-1">
-                                    <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
-                                      <Tooltip title="Copy to Clipboard">
-                                        <button
-                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                          onClick={() =>
-                                            pressureClipboardHandler(
-                                              pressureDatum.Pressure,
-                                              pressureDatum.name,
-                                              "Future"
-                                            )
-                                          }
-                                        >
-                                          <FileCopyIcon />
-                                        </button>
-                                      </Tooltip>
-                                      <Tooltip title="Copy to Logs">
-                                        <button
-                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                          onClick={() =>
-                                            pressureCopyHandler(
-                                              pressureDatum.Pressure,
-                                              pressureDatum.name,
-                                              "Future"
-                                            )
-                                          }
-                                        >
-                                          <ExitToAppIcon />
-                                        </button>
-                                      </Tooltip>
-                                      <Tooltip title="Search the Web">
-                                        <button
-                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                          onClick={() =>
-                                            pressureWebSearchHandler(
-                                              pressureDatum.Pressure,
-                                              pressureDatum.name,
-                                              "Future"
-                                            )
-                                          }
-                                        >
-                                          <TravelExploreIcon />
-                                        </button>
-                                      </Tooltip>
-                                      <Tooltip title="Ask the Chatbot">
-                                        <button
-                                          className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150 mr-2"
-                                          onClick={() =>
-                                            pressureChatbotHandler(
-                                              pressureDatum.Pressure,
-                                              pressureDatum.name,
-                                              "Future"
-                                            )
-                                          }
-                                        >
-                                          <ContactSupportIcon />
-                                        </button>
-                                      </Tooltip>
-                                      <Tooltip title="Pin This Info">
-                                        <button
-                                          className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                          onClick={() =>
-                                            pinThisPressureInfoHandler(
-                                              pressureDatum.Pressure,
-                                              pressureDatum.name,
-                                              `Future-${index + 1}`
-                                            )
-                                          }
-                                        >
-                                          <PushPinIcon />
-                                        </button>
-                                      </Tooltip>
-                                    </div>
-                                  </div>
-                                </div>
-                              </AccordionDetails>
-                            </Accordion>
-                          ))}
-                      </div>
-                      <div className="flex flex-col border border-white rounded-md px-2 pt-2 overflow-scroll mt-4 border-opacity-20">
-                        <Tooltip title="Current Predicted Pressure Values">
-                          <div className="p-2 bg-white bg-opacity-15 text-center mb-4 rounded-md hover:text-black hover:bg-opacity-100 transition ease-in-out delay-150">
-                            CURRENT
-                          </div>
-                        </Tooltip>
-                        {[pressureData[4]].map((pressureDatum, index) => (
+                        {pressureData.slice(-4).map((pressureDatum, index) => (
                           <Accordion className="mb-2">
                             <AccordionSummary
                               expandIcon={<ExpandMoreIcon />}
@@ -1183,9 +1188,106 @@ const TimeSeries = () => {
                             <AccordionDetails>
                               <div className="flex flex-col justify-items-center text-center w-full">
                                 <div className="mb-2">
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipiscing elit. Suspendisse malesuada lacus
-                                  ex, sit amet blandit leo lobortis eget.
+                                  {pressureContent(pressureDatum.Pressure)}
+                                </div>
+                                <div className="w-full text-center flex justify-center mb-1">
+                                  <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
+                                    <Tooltip title="Copy to Clipboard">
+                                      <button
+                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                        onClick={() =>
+                                          pressureClipboardHandler(
+                                            pressureDatum.Pressure,
+                                            pressureDatum.name,
+                                            "Future"
+                                          )
+                                        }
+                                      >
+                                        <FileCopyIcon />
+                                      </button>
+                                    </Tooltip>
+                                    <Tooltip title="Copy to Logs">
+                                      <button
+                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                        onClick={() =>
+                                          pressureCopyHandler(
+                                            pressureDatum.Pressure,
+                                            pressureDatum.name,
+                                            "Future"
+                                          )
+                                        }
+                                      >
+                                        <ExitToAppIcon />
+                                      </button>
+                                    </Tooltip>
+                                    <Tooltip title="Search the Web">
+                                      <button
+                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                        onClick={() =>
+                                          pressureWebSearchHandler(
+                                            pressureDatum.Pressure,
+                                            pressureDatum.name,
+                                            "Future"
+                                          )
+                                        }
+                                      >
+                                        <TravelExploreIcon />
+                                      </button>
+                                    </Tooltip>
+                                    <Tooltip title="Ask the Chatbot">
+                                      <button
+                                        className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150 mr-2"
+                                        onClick={() =>
+                                          pressureChatbotHandler(
+                                            pressureDatum.Pressure,
+                                            pressureDatum.name,
+                                            "Future"
+                                          )
+                                        }
+                                      >
+                                        <ContactSupportIcon />
+                                      </button>
+                                    </Tooltip>
+                                    <Tooltip title="Pin This Info">
+                                      <button
+                                        className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                        onClick={() =>
+                                          pinThisPressureInfoHandler(
+                                            pressureDatum.Pressure,
+                                            pressureDatum.name,
+                                            `Future-${index + 1}`
+                                          )
+                                        }
+                                      >
+                                        <PushPinIcon />
+                                      </button>
+                                    </Tooltip>
+                                  </div>
+                                </div>
+                              </div>
+                            </AccordionDetails>
+                          </Accordion>
+                        ))}
+                      </div>
+                      <div className="flex flex-col border border-white rounded-md px-2 pt-2 overflow-scroll mt-4 border-opacity-20">
+                        <Tooltip title="Current Predicted Pressure Values">
+                          <div className="p-2 bg-white bg-opacity-15 text-center mb-4 rounded-md hover:text-black hover:bg-opacity-100 transition ease-in-out delay-150">
+                            CURRENT
+                          </div>
+                        </Tooltip>
+                        {[pressureData[8]].map((pressureDatum, index) => (
+                          <Accordion className="mb-2">
+                            <AccordionSummary
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls={`panel${index + 1}-content`}
+                              id={`panel${index + 1}-header`}
+                            >
+                              {`[${pressureDatum.name}] Pressure: ${pressureDatum.Pressure}`}
+                            </AccordionSummary>
+                            <AccordionDetails>
+                              <div className="flex flex-col justify-items-center text-center w-full">
+                                <div className="mb-2">
+                                  {pressureContent(pressureDatum.Pressure)}
                                 </div>
                                 <div className="w-full text-center flex justify-center mb-1">
                                   <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
@@ -1272,100 +1374,100 @@ const TimeSeries = () => {
                             PREVIOUS
                           </div>
                         </Tooltip>
-                        {pressureData.slice(-8).map((pressureDatum, index) => (
-                          <Accordion className="mb-2">
-                            <AccordionSummary
-                              expandIcon={<ExpandMoreIcon />}
-                              aria-controls={`panel${index + 1}-content`}
-                              id={`panel${index + 1}-header`}
-                            >
-                              {`[${pressureDatum.name}] Pressure: ${pressureDatum.Pressure}`}
-                            </AccordionSummary>
-                            <AccordionDetails>
-                              <div className="flex flex-col justify-items-center text-center w-full">
-                                <div className="mb-2">
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipiscing elit. Suspendisse malesuada lacus
-                                  ex, sit amet blandit leo lobortis eget.
-                                </div>
-                                <div className="w-full text-center flex justify-center mb-1">
-                                  <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
-                                    <Tooltip title="Copy to Clipboard">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          pressureClipboardHandler(
-                                            pressureDatum.Pressure,
-                                            pressureDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <FileCopyIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Copy to Logs">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          pressureCopyHandler(
-                                            pressureDatum.Pressure,
-                                            pressureDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <ExitToAppIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Search the Web">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          pressureWebSearchHandler(
-                                            pressureDatum.Pressure,
-                                            pressureDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <TravelExploreIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Ask the Chatbot">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150 mr-2"
-                                        onClick={() =>
-                                          pressureChatbotHandler(
-                                            pressureDatum.Pressure,
-                                            pressureDatum.name,
-                                            "Previous"
-                                          )
-                                        }
-                                      >
-                                        <ContactSupportIcon />
-                                      </button>
-                                    </Tooltip>
-                                    <Tooltip title="Pin This Info">
-                                      <button
-                                        className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
-                                        onClick={() =>
-                                          pinThisPressureInfoHandler(
-                                            pressureDatum.Pressure,
-                                            pressureDatum.name,
-                                            `Previous-${index + 1}`
-                                          )
-                                        }
-                                      >
-                                        <PushPinIcon />
-                                      </button>
-                                    </Tooltip>
+                        {reverseArray(pressureData.slice(0, 8)).map(
+                          (pressureDatum, index) => (
+                            <Accordion className="mb-2">
+                              <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls={`panel${index + 1}-content`}
+                                id={`panel${index + 1}-header`}
+                              >
+                                {`[${pressureDatum.name}] Pressure: ${pressureDatum.Pressure}`}
+                              </AccordionSummary>
+                              <AccordionDetails>
+                                <div className="flex flex-col justify-items-center text-center w-full">
+                                  <div className="mb-2">
+                                    {pressureContent(pressureDatum.Pressure)}
+                                  </div>
+                                  <div className="w-full text-center flex justify-center mb-1">
+                                    <div className="border border-white rounded-sm border-opacity-40 flex flex-row p-2 mt-3 w-fit">
+                                      <Tooltip title="Copy to Clipboard">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            pressureClipboardHandler(
+                                              pressureDatum.Pressure,
+                                              pressureDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <FileCopyIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Copy to Logs">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            pressureCopyHandler(
+                                              pressureDatum.Pressure,
+                                              pressureDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <ExitToAppIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Search the Web">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm mr-2 opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            pressureWebSearchHandler(
+                                              pressureDatum.Pressure,
+                                              pressureDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <TravelExploreIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Ask the Chatbot">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150 mr-2"
+                                          onClick={() =>
+                                            pressureChatbotHandler(
+                                              pressureDatum.Pressure,
+                                              pressureDatum.name,
+                                              "Previous"
+                                            )
+                                          }
+                                        >
+                                          <ContactSupportIcon />
+                                        </button>
+                                      </Tooltip>
+                                      <Tooltip title="Pin This Info">
+                                        <button
+                                          className="w-fit p-1 border border-white rounded-sm opacity-40 hover:bg-white hover:opacity-100 hover:text-black transition ease-in-out delay-150"
+                                          onClick={() =>
+                                            pinThisPressureInfoHandler(
+                                              pressureDatum.Pressure,
+                                              pressureDatum.name,
+                                              `Previous-${index + 1}`
+                                            )
+                                          }
+                                        >
+                                          <PushPinIcon />
+                                        </button>
+                                      </Tooltip>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </AccordionDetails>
-                          </Accordion>
-                        ))}
+                              </AccordionDetails>
+                            </Accordion>
+                          )
+                        )}
                       </div>
                     </div>
                   )}
@@ -1379,6 +1481,7 @@ const TimeSeries = () => {
                 wind={windData}
                 pressure={pressureData}
                 original={timeSeriesData.general_data.original_img}
+                // original={"http://localhost:8000/" + timeSeriesData.general_data.original_img}
               />
               <TimeSeriesPredictionBar
                 windIntensity={timeSeriesData.general_data.wind}

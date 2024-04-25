@@ -298,13 +298,32 @@ const Chatbot = () => {
       name: "Scroll To Bottom",
     },
   ];
+  const onKeyDown = (event) => {
+    if (event.key == "Enter") {
+      setMessages((oldMessages) => {
+        const newMessages = [...oldMessages, message];
+        localStorage.setItem("messages", JSON.stringify(newMessages));
+        return newMessages;
+      });
+      setMessage("");
+      setDisabled(true);
+      // chatting()
+      fetchDataStream();
+    }
+  };
 
   if (session) {
     return (
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <ToastContainer />
-        <div className="bg-black flex items-center p-6 h-screen w-screen">
+        <div
+          className="bg-black flex items-center p-6 h-screen w-screen"
+          onClick={() => {
+            setNotesVisible(false);
+            setVisible(false);
+          }}
+        >
           <NavBar
             setVisible={setVisible}
             visible={visible}
@@ -412,6 +431,9 @@ const Chatbot = () => {
                   disabled={disabled}
                   onChange={(event) => {
                     setMessage(event.target.value);
+                  }}
+                  onKeyDown={(event) => {
+                    onKeyDown(event);
                   }}
                 />
                 <IconButton

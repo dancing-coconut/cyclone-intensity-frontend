@@ -27,6 +27,69 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+const hurricaneCategories = [
+  {
+    category: 0,
+    cloudTop: "Low, below 10,000 feet",
+    temperatureRange: "Moderate, 20-30°C",
+    forceRange: "Weak, 25-40 knots",
+    gradientScale: "Mild, 1-3 hPa per 100 km",
+    coverageRange: "Limited",
+    influenceRange: "Localized",
+    torqueRange: "Low",
+  },
+  {
+    category: 1,
+    cloudTop: "Moderate, 10,000-15,000 feet",
+    temperatureRange: "Warm, 25-35°C",
+    forceRange: "Mild, 40-60 knots",
+    gradientScale: "Gentle, 3-5 hPa per 100 km",
+    coverageRange: "Small",
+    influenceRange: "Regional",
+    torqueRange: "Moderate",
+  },
+  {
+    category: 2,
+    cloudTop: "Elevated, 15,000-30,000 feet",
+    temperatureRange: "Warmer, 30-40°C",
+    forceRange: "Moderate, 60-80 knots",
+    gradientScale: "Moderate, 5-7 hPa per 100 km",
+    coverageRange: "Moderate",
+    influenceRange: "Subcontinental",
+    torqueRange: "Increased",
+  },
+  {
+    category: 3,
+    cloudTop: "High, 30,000-40,000 feet",
+    temperatureRange: "Hot, above 40°C",
+    forceRange: "Strong, 80-100 knots",
+    gradientScale: "Steeper, 7-9 hPa per 100 km",
+    coverageRange: "Extensive",
+    influenceRange: "Continental",
+    torqueRange: "High",
+  },
+  {
+    category: 4,
+    cloudTop: "Very high, above 40,000 feet",
+    temperatureRange: "Extremely hot, well above 40°C",
+    forceRange: "Very strong, 100-120 knots",
+    gradientScale: "Very steep, over 9 hPa per 100 km",
+    coverageRange: "Pervasive",
+    influenceRange: "Hemispheric",
+    torqueRange: "Very high",
+  },
+  {
+    category: 5,
+    cloudTop: "Extreme, above 50,000 feet",
+    temperatureRange: "Exceptionally hot",
+    forceRange: "Extreme, exceeding 120 knots",
+    gradientScale: "Extremely steep, over 10 hPa per 100 km",
+    coverageRange: "Ubiquitous",
+    influenceRange: "Global",
+    torqueRange: "Extreme",
+  },
+];
+
 const Admin = () => {
   const [visible, setVisible] = useState(false);
   const [notesVisible, setNotesVisible] = useState(false);
@@ -92,7 +155,13 @@ const Admin = () => {
     return (
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <div className="bg-black flex items-center p-6 h-screen w-screen">
+        <div
+          className="bg-black flex items-center p-6 h-screen w-screen"
+          onClick={() => {
+            setNotesVisible(false);
+            setVisible(false);
+          }}
+        >
           <NavBar
             setVisible={setVisible}
             visible={visible}
@@ -171,12 +240,10 @@ const Admin = () => {
                         aria-controls="panel1-content"
                         id="panel1-header"
                       >
-                        Accordion 1
+                        Cloud Top Height
                       </AccordionSummary>
                       <AccordionDetails>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        {hurricaneCategories[category].cloudTop}
                       </AccordionDetails>
                     </Accordion>
                     <Accordion
@@ -195,12 +262,10 @@ const Admin = () => {
                         aria-controls="panel2-content"
                         id="panel2-header"
                       >
-                        Accordion 2
+                        Temperature Range
                       </AccordionSummary>
                       <AccordionDetails>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        {hurricaneCategories[category].temperatureRange}
                       </AccordionDetails>
                     </Accordion>
                     <Accordion
@@ -219,12 +284,10 @@ const Admin = () => {
                         aria-controls="panel3-content"
                         id="panel3-header"
                       >
-                        Accordion 3
+                        Force Range
                       </AccordionSummary>
                       <AccordionDetails>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        {hurricaneCategories[category].forceRange}
                       </AccordionDetails>
                     </Accordion>
                     <Accordion
@@ -243,12 +306,10 @@ const Admin = () => {
                         aria-controls="panel4-content"
                         id="panel4-header"
                       >
-                        Accordion 4
+                        Gradient Scale
                       </AccordionSummary>
                       <AccordionDetails>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        {hurricaneCategories[category].gradientScale}
                       </AccordionDetails>
                     </Accordion>
                     <Accordion
@@ -267,12 +328,10 @@ const Admin = () => {
                         aria-controls="panel5-content"
                         id="panel5-header"
                       >
-                        Accordion 5
+                        Coverage Range
                       </AccordionSummary>
                       <AccordionDetails>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        {hurricaneCategories[category].coverageRange}
                       </AccordionDetails>
                     </Accordion>
                     <Accordion
@@ -291,12 +350,10 @@ const Admin = () => {
                         aria-controls="panel5-content"
                         id="panel5-header"
                       >
-                        Accordion 6
+                        Influence Range
                       </AccordionSummary>
                       <AccordionDetails>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        {hurricaneCategories[category].influenceRange}
                       </AccordionDetails>
                     </Accordion>
                     <Accordion
@@ -315,12 +372,10 @@ const Admin = () => {
                         aria-controls="panel5-content"
                         id="panel5-header"
                       >
-                        Accordion 7
+                        Torque Range
                       </AccordionSummary>
                       <AccordionDetails>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
+                        {hurricaneCategories[category].torqueRange}
                       </AccordionDetails>
                     </Accordion>
                     {/* {category=="0"?"This category represents the initial stage of a tropical cyclone's development. At this stage, satellite imagery may show a poorly organized system with minimal cloud cover and weak circulation. While it may not pose an immediate threat, it serves as an early indication of potential cyclone formation, prompting meteorologists to closely monitor its development.":""}

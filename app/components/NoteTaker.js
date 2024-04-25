@@ -84,6 +84,21 @@ const NoteTaker = ({ notesVisible }) => {
       return newNotes;
     });
   };
+  const onKeyDown = (event) => {
+    if (event.key == "Enter") {
+      const submitTime = new Date();
+      const newNote = {
+        note: note,
+        dateTime: submitTime.toISOString(),
+      };
+      setNotes((prevNotes) => {
+        const newNotes = [...prevNotes, newNote];
+        localStorage.setItem("notes", JSON.stringify(newNotes));
+        return newNotes;
+      });
+      setNote("");
+    }
+  };
   return (
     <AnimatePresence>
       {notesVisible ? (
@@ -94,6 +109,7 @@ const NoteTaker = ({ notesVisible }) => {
           variants={variants}
           transition={{ type: "linear" }}
           className="rounded-lg absolute z-[1500] right-0 bottom-0 bg-white overflow-hidden"
+          onClick={(event) => event.stopPropagation()}
         >
           <div className="h-[32rem] w-[26rem] rounded-lg bg-white flex flex-col p-2">
             <div className="w-full p-2 rounded-lg bg-black bg-opacity-70 text-center mb-2">
@@ -129,6 +145,9 @@ const NoteTaker = ({ notesVisible }) => {
                 placeholder="Add A Note"
                 onChange={(event) => setNote(event.target.value)}
                 value={note}
+                onKeyDown={(event) => {
+                  onKeyDown(event);
+                }}
               />
               <button
                 className="border border-white rounded p-2 hover:bg-white hover:text-black transition ease-in-out delay-150"
