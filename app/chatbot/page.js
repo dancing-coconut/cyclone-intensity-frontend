@@ -42,7 +42,11 @@ const Chatbot = () => {
 
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
-    "Hello! Feel free to ask me any question you have for analysis of cyclones!",
+    {
+      message:
+        "Hello! Feel free to ask me any question you have for analysis of cyclones!",
+      role: "chatbot",
+    },
   ]);
 
   const darkTheme = createTheme({
@@ -57,7 +61,8 @@ const Chatbot = () => {
 
   const sendHandler = () => {
     setMessages((oldMessages) => {
-      const newMessages = [...oldMessages, message];
+      const newMessage = { message: message, role: "user" };
+      const newMessages = [...oldMessages, newMessage];
       localStorage.setItem("messages", JSON.stringify(newMessages));
       return newMessages;
     });
@@ -72,7 +77,7 @@ const Chatbot = () => {
 
     const requestBody = {
       model: "mistral",
-      prompt: `[INST] ${message} [/INST]`,
+      prompt: `[INST] Do not include any non ASCII characters in your response. ${message} [/INST]`,
       raw: true,
       stream: true,
     };
@@ -104,8 +109,13 @@ const Chatbot = () => {
           console.log(resp);
           setMessages((oldMessages) => {
             const newMessages = [...oldMessages];
-            newMessages[newMessages.length - 1] =
-              newMessages[newMessages.length - 1] + JSON.parse(resp).response;
+            newMessages[newMessages.length - 1] = {
+              message:
+                (newMessages[newMessages.length - 1].message
+                  ? newMessages[newMessages.length - 1].message
+                  : "") + JSON.parse(resp).response,
+              role: "chatbot",
+            };
             localStorage.setItem("messages", JSON.stringify(newMessages));
             return newMessages;
           });
@@ -121,7 +131,10 @@ const Chatbot = () => {
       setMessages((oldMessages) => {
         const newMessages = [
           ...oldMessages,
-          "I'm so sorry there's been some error in the back!",
+          {
+            message: "I'm so sorry there's been some error in the back!",
+            role: "chatbot",
+          },
         ];
         localStorage.setItem("messages", JSON.stringify(newMessages));
         return newMessages;
@@ -301,7 +314,8 @@ const Chatbot = () => {
   const onKeyDown = (event) => {
     if (event.key == "Enter") {
       setMessages((oldMessages) => {
-        const newMessages = [...oldMessages, message];
+        const newMessage = { message: message, role: "user" };
+        const newMessages = [...oldMessages, newMessage];
         localStorage.setItem("messages", JSON.stringify(newMessages));
         return newMessages;
       });
@@ -374,11 +388,16 @@ const Chatbot = () => {
                   className="h-full flex flex-col-reverse overflow-scroll pt-2"
                   ref={divRef}
                 >
-                  {reverseArray()?.map((message, index) => {
-                    if (index % 2 == 0) {
-                      return <ChatBotMessage message={message} />;
+                  {reverseArray()?.map((message) => {
+                    if (message.role === "chatbot") {
+                      return <ChatBotMessage message={message.message} />;
                     } else {
-                      return <UserMessage message={message} />;
+                      return (
+                        <UserMessage
+                          message={message.message}
+                          src={session ? session?.user?.image : "/cyclone.jpg"}
+                        />
+                      );
                     }
                   })}
                 </div>

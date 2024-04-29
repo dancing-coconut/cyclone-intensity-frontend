@@ -42,11 +42,11 @@ const dataArray = [
       pressure: "1001",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_01JAN2019_0300_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_01JAN2019_0300_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       12.174, 14.052, 15.55, 15.494, 14.654, 15.534, 14.288, 13.54,
     ],
@@ -63,11 +63,11 @@ const dataArray = [
       pressure: "1002",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_01JAN2019_0600_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_01JAN2019_0600_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       14.052, 15.55, 15.494, 14.654, 15.534, 14.288, 13.54, 12.22,
     ],
@@ -84,11 +84,11 @@ const dataArray = [
       pressure: "1001",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_01JAN2019_1500_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_01JAN2019_1500_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       15.55, 15.494, 14.654, 15.534, 14.288, 13.54, 12.22, 13.421,
     ],
@@ -105,11 +105,11 @@ const dataArray = [
       pressure: "999",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_01JAN2019_1800_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_01JAN2019_1800_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       15.494, 14.654, 15.534, 14.288, 13.54, 12.22, 13.421, 13.2981,
     ],
@@ -126,11 +126,11 @@ const dataArray = [
       pressure: "1000",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_01JAN2019_2100_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_01JAN2019_2100_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       14.654, 15.534, 14.288, 13.54, 12.22, 13.421, 13.2981, 12.835,
     ],
@@ -147,11 +147,11 @@ const dataArray = [
       pressure: "1001",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0000_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_03JAN2019_0000_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       15.534, 14.288, 13.54, 12.22, 13.421, 13.2981, 12.835, 12.511,
     ],
@@ -168,11 +168,11 @@ const dataArray = [
       pressure: "1001",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0300_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_03JAN2019_0300_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       14.288, 13.54, 12.22, 13.421, 13.2981, 12.835, 12.511, 12.254,
     ],
@@ -189,11 +189,11 @@ const dataArray = [
       pressure: "1002",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0600_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_03JAN2019_0600_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       13.54, 12.22, 13.421, 13.2981, 12.835, 12.511, 12.254, 12.407,
     ],
@@ -210,11 +210,11 @@ const dataArray = [
       pressure: "1000",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_03JAN2019_0900_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_03JAN2019_0900_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       12.22, 13.421, 13.2981, 12.835, 12.511, 12.254, 12.407, 11.764,
     ],
@@ -231,11 +231,11 @@ const dataArray = [
       pressure: "1000",
       name: "BUREVI",
       original_img:
-        "http://localhost:8000/media/archive/3DIMG_03JAN2019_1200_L1C_ASIA_MER_IR1_V01R00.jpg",
+        "media/archive/3DIMG_03JAN2019_1200_L1C_ASIA_MER_IR1_V01R00.jpg",
       category: 0,
       t_number: 1,
     },
-    data_exists: true,
+    data_exists: false,
     next_wind_data: [
       13.421, 13.2981, 12.835, 12.511, 12.254, 12.407, 11.764, 11.804,
     ],
@@ -250,7 +250,7 @@ const dataArray = [
 const Archive = () => {
   const [visible, setVisible] = useState(false);
   const [notesVisible, setNotesVisible] = useState(false);
-  const [archiveDate, setArchiveDate] = useState("2024-01-01");
+  const [archiveDate, setArchiveDate] = useState("2023-12-04");
   const [archiveTime, setArchiveTime] = useState("12:00:00");
   const [archiveData, setArchiveData] = useState({
     archive_data: {
@@ -487,66 +487,190 @@ const Archive = () => {
 
   async function handleArchiveRequest() {
     //Uncomment for fetch
-    // try {
-    // const currTimezone = "IST";
-    // const convertedDateTime = convertDateTime(
-    //   archiveDate,
-    //   archiveTime,
-    //   currTimezone,
-    //   mainTimezone
-    // );
-    // const formData = new FormData();
-    // formData.append("timestamp", `${convertedDateTime.date} ${convertedDateTime.time}`);
-    //   const response = await fetch('http://127.0.0.1:8000/data/archive/', {
-    // method: "POST",
-    //     body: formData
-    //   });
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-    //   const data = await response.json();
-    //   if(data.data_exists){
-    //   setArchiveData(data);
-    //   const { archive_data, next_wind_data, previous_wind_data, next_pressure_data, previous_pressure_data } = data;
-    //   const { wind, pressure, timestamp } = archive_data;
-    //   const currentDate = new Date(convertTimestampToTimeZone(timestamp, mainTimezone));
-    //   const formatTime = (date) =>
-    //     `${String(date.getHours()).padStart(2, '0')}:${String(
-    //       date.getMinutes()
-    //     ).padStart(2, '0')}`;
-    //   const previousWindObjects = previous_wind_data.map((windValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Wind: windValue
-    //   }));
-    //   const currentWindObject = {
-    //     name: formatTime(currentDate),
-    //     Wind: parseFloat(wind)
-    //   };
-    //   const nextWindObjects = next_wind_data.map((windValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Wind: windValue
-    //   }));
-    //   const previousPressureObjects = previous_pressure_data.map((pressureValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Pressure: pressureValue
-    //   }));
-    //   const currentPressureObject = {
-    //     name: formatTime(currentDate),
-    //     Pressure: parseFloat(pressure)
-    //   };
-    //   const nextPressureObjects = next_pressure_data.map((pressureValue, index) => ({
-    //     name: formatTime(new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)),
-    //     Pressure: pressureValue
-    //   }));
-    //   const windResult = [...previousWindObjects.reverse(), currentWindObject, ...nextWindObjects];
-    //   setWindData(windResult);
-    //   const pressureResult = [...previousPressureObjects.reverse(), currentPressureObject, ...nextPressureObjects];
-    //   setPressureData(pressureResult);
-    //   } else {
-    // }
-    // } catch (error) {
-    //   console.error('There was a problem with your fetch operation:', error);
-    // }
+    try {
+      const currTimezone = "IST";
+      const convertedDateTime = convertDateTime(
+        archiveDate,
+        archiveTime,
+        currTimezone,
+        mainTimezone
+      );
+      const formData = new FormData();
+      formData.append(
+        "timestamp",
+        `${convertedDateTime.date} ${convertedDateTime.time}`
+      );
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/data/archive/`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      if (data.data_exists) {
+        setArchiveData(data);
+        const {
+          archive_data,
+          next_wind_data,
+          previous_wind_data,
+          next_pressure_data,
+          previous_pressure_data,
+        } = data;
+        const { wind, pressure, timestamp } = archive_data;
+        const currentDate = new Date(
+          convertTimestampToTimeZone(timestamp, mainTimezone)
+        );
+        const formatTime = (date) =>
+          `${String(date.getHours()).padStart(2, "0")}:${String(
+            date.getMinutes()
+          ).padStart(2, "0")}`;
+        const previousWindObjects = previous_wind_data.map(
+          (windValue, index) => ({
+            name: formatTime(
+              new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)
+            ),
+            Wind: windValue,
+          })
+        );
+        const currentWindObject = {
+          name: formatTime(currentDate),
+          Wind: parseFloat(wind),
+        };
+        const nextWindObjects = next_wind_data.map((windValue, index) => ({
+          name: formatTime(
+            new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)
+          ),
+          Wind: windValue,
+        }));
+        const previousPressureObjects = previous_pressure_data.map(
+          (pressureValue, index) => ({
+            name: formatTime(
+              new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)
+            ),
+            Pressure: pressureValue,
+          })
+        );
+        const currentPressureObject = {
+          name: formatTime(currentDate),
+          Pressure: parseFloat(pressure),
+        };
+        const nextPressureObjects = next_pressure_data.map(
+          (pressureValue, index) => ({
+            name: formatTime(
+              new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)
+            ),
+            Pressure: pressureValue,
+          })
+        );
+        const windResult = [
+          ...previousWindObjects.reverse(),
+          currentWindObject,
+          ...nextWindObjects,
+        ];
+        const newWind = windResult.splice(1, 17);
+        setWindData(newWind);
+        const pressureResult = [
+          ...previousPressureObjects.reverse(),
+          currentPressureObject,
+          ...nextPressureObjects,
+        ];
+        const newPressure = pressureResult.splice(1, 17);
+        setPressureData(newPressure);
+        // setPressureData(pressureResult);
+      } else {
+        console.log("ELSE");
+        const newArchiveData =
+          dataArray[sumNumbersInStringModulo(`${archiveDate} ${archiveTime}`)];
+        setArchiveData(newArchiveData);
+        const {
+          archive_data,
+          next_wind_data,
+          previous_wind_data,
+          next_pressure_data,
+          previous_pressure_data,
+        } = newArchiveData;
+        const { wind, pressure } = archive_data;
+
+        var dateComponents = archiveDate.split("-");
+        var year = parseInt(dateComponents[0]);
+        var month = parseInt(dateComponents[1]) - 1;
+        var day = parseInt(dateComponents[2]);
+
+        var timeComponents = archiveTime.split(":");
+        var hour = parseInt(timeComponents[0]);
+        var minute = parseInt(timeComponents[1]);
+        var second = parseInt(timeComponents[2]);
+
+        var combinedDate = new Date(year, month, day, hour, minute, second);
+
+        const currentDate = new Date(
+          convertTimestampToTimeZone(combinedDate, mainTimezone)
+        );
+        const formatTime = (date) =>
+          `${String(date.getHours()).padStart(2, "0")}:${String(
+            date.getMinutes()
+          ).padStart(2, "0")}`;
+        const previousWindObjects = previous_wind_data.map(
+          (windValue, index) => ({
+            name: formatTime(
+              new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)
+            ),
+            Wind: windValue,
+          })
+        );
+        const currentWindObject = {
+          name: formatTime(currentDate),
+          Wind: parseFloat(wind),
+        };
+        const nextWindObjects = next_wind_data.map((windValue, index) => ({
+          name: formatTime(
+            new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)
+          ),
+          Wind: windValue,
+        }));
+        const previousPressureObjects = previous_pressure_data.map(
+          (pressureValue, index) => ({
+            name: formatTime(
+              new Date(currentDate.getTime() - (index + 1) * 3 * 60 * 60 * 1000)
+            ),
+            Pressure: pressureValue,
+          })
+        );
+        const currentPressureObject = {
+          name: formatTime(currentDate),
+          Pressure: parseFloat(pressure),
+        };
+        const nextPressureObjects = next_pressure_data.map(
+          (pressureValue, index) => ({
+            name: formatTime(
+              new Date(currentDate.getTime() + (index + 1) * 3 * 60 * 60 * 1000)
+            ),
+            Pressure: pressureValue,
+          })
+        );
+        const windResult = [
+          ...previousWindObjects.reverse(),
+          currentWindObject,
+          ...nextWindObjects,
+        ];
+        const newWind = windResult.splice(1, 17);
+        setWindData(newWind);
+        const pressureResult = [
+          ...previousPressureObjects.reverse(),
+          currentPressureObject,
+          ...nextPressureObjects,
+        ];
+        const newPressure = pressureResult.splice(1, 17);
+        setPressureData(newPressure);
+        // setPressureData(pressureResult);
+      }
+    } catch (error) {
+      console.error("There was a problem with your fetch operation:", error);
+    }
   }
 
   const router = useRouter();
@@ -574,10 +698,13 @@ const Archive = () => {
       "timestamp",
       `${convertedDateTime.date} ${convertedDateTime.time}`
     );
-    const response = await fetch("http://127.0.0.1:8000/data/archive/", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/data/archive/`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -651,21 +778,25 @@ const Archive = () => {
       currentWindObject,
       ...nextWindObjects,
     ];
-    setWindData(windResult);
+
+    const newWind = windResult.splice(1, 17);
+    setWindData(newWind);
 
     const pressureResult = [
       ...previousPressureObjects.reverse(),
       currentPressureObject,
       ...nextPressureObjects,
     ];
-    setPressureData(pressureResult);
+    const newPressure = pressureResult.splice(1, 17);
+    setPressureData(newPressure);
+    // setPressureData(pressureResult);
   }
 
   // Un comment below for fetching:
-  // useEffect( () => {
-  //Uncomment for fetch
-  //logData()
-  // }, [])
+  useEffect(() => {
+    //Uncomment for fetch
+    logData();
+  }, []);
 
   const [data, setData] = useState({});
   const [questions, setQuestions] = useState([]);
@@ -850,7 +981,7 @@ const Archive = () => {
                           time.hour + ":" + time.minute + ":" + time.second
                         );
                       }}
-                      defaultValue={dayjs("2022-04-17T15:30")}
+                      defaultValue={dayjs("2023-12-04T12:00")}
                       sx={{
                         height: "29vw",
                         "& .MuiPickersCalendarHeader-root": {
@@ -871,7 +1002,7 @@ const Archive = () => {
                 <div className="relative w-full h-full bg-white bg-opacity-10 rounded-lg text-sm flex flex-col justify-center text-center">
                   {archiveData.data_exists
                     ? "CYCLONE: " + archiveData.archive_data.name
-                    : "No Cylone!"}
+                    : "No Cyclone!"}
                   <SpeedDial
                     ariaLabel="SpeedDial basic example"
                     sx={{
@@ -932,9 +1063,12 @@ const Archive = () => {
                 time={archiveTime}
                 wind={windData}
                 pressure={pressureData}
-                original={archiveData.archive_data.original_img}
+                // original={archiveData.archive_data.original_img}
                 timezone={mainTimezone}
-                // original={"http://localhost:8000/+"archiveData.archive_data.original_img}
+                original={
+                  `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/` +
+                  archiveData.archive_data.original_img
+                }
               />
               <ArchivePredictionBar
                 windIntensity={archiveData.archive_data.wind}

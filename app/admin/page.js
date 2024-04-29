@@ -113,14 +113,24 @@ const Admin = () => {
   const { data: session } = useSession();
 
   async function logData() {
-    const response = await fetch("http://localhost:8000/real_time/prediction/");
+    console.log(
+      `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/real_time/prediction/`
+    );
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/real_time/prediction/`
+    );
     const dataset = await response.json();
+    console.log(dataset);
 
     setData(dataset);
     setIntensity(dataset.wind);
     setPressure(dataset.pressure);
-    setOriginalImage("http://localhost:8000" + dataset.original_img);
-    setProcessedImage("http://localhost:8000" + dataset.processed_img);
+    setOriginalImage(
+      `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}` + dataset.original_img
+    );
+    setProcessedImage(
+      `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}` + dataset.processed_img
+    );
     setCategory(dataset.category);
     setTNumber(dataset.t_number);
     console.log("Category 0" === "Category " + dataset.category.toString());
@@ -147,9 +157,9 @@ const Admin = () => {
   });
 
   // Uncomment for fetch
-  // useEffect(() => {
-  //     logData()
-  // },[])
+  useEffect(() => {
+    logData();
+  }, []);
 
   if (session) {
     return (

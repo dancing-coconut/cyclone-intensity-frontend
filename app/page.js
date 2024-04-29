@@ -38,6 +38,12 @@ export default function Home() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -87,12 +93,90 @@ export default function Home() {
     cssEase: "linear",
   };
 
+  async function handleSubmit(event) {
+    toast.info("Your Message Has Been Submitted!", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("subject", subject);
+    formData.append("phone", phone);
+    formData.append("message", message);
+    console.log(formData.get("name"));
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "post",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        toast.error("Please Try Resending Your Message!", {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+      const responseData = await response.json();
+      if (responseData.message == "Success") {
+        toast.success("Your Email Has Been Sent!", {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        toast.error("Please Try Resending Your Message!", {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Please Try Resending Your Message!", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <ToastContainer />
-      <div className="flex flex-col">
-        <div className="bg-black bg-cover flex flex-col justify-center p-6 h-screen w-screen">
+      <div className="flex flex-col bg-[url('/background.svg')] bg-cover">
+        <div className="bg-cover flex flex-col justify-center p-6 h-screen w-screen">
           <div className="text-white font-extrabold text-7xl ml-10">
             Cyclone
             <br />
@@ -194,7 +278,7 @@ export default function Home() {
             </Box>
           </Modal>
         </div>
-        <div className="bg-black bg-cover flex flex-row justify-center h-[50vh] w-screen pt-[5vh] pb-[5vh] overflow-hidden">
+        <div className="bg-cover flex flex-row justify-center h-[50vh] w-screen pt-[5vh] pb-[5vh] overflow-hidden">
           <div className="flex flex-col justify-center">
             <div className="text-3xl text-center mb-20">
               In Collaboration With
@@ -317,7 +401,7 @@ export default function Home() {
               ))} */}
           </div>
         </div>
-        <div className="bg-black bg-cover flex flex-row justify-center p-6 h-screen w-screen">
+        <div className="bg-cover flex flex-row justify-center p-6 h-screen w-screen">
           <div className="flex flex-col justify-center w-1/2">
             <div className="font-bold text-5xl ml-11 mb-7">Chakravaat</div>
             <div className="text-white font-extrabold text-7xl ml-10 mb-7">
@@ -363,7 +447,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="bg-black bg-cover flex flex-row justify-center h-screen w-screen">
+        <div className="bg-cover flex flex-row justify-center h-screen w-screen">
           <div className="flex flex-col w-1/2 h-full justify-center">
             <div className="w-full rounded-lg">
               <div className="font-bold text-2xl ml-11 mb-2 opacity-50">
@@ -477,12 +561,13 @@ export default function Home() {
             <div className="w-full h-20 mt-7 bg-white bg-opacity-20 rounded-lg"></div>
           </div>
         </div>
-        <div className="bg-black bg-cover flex flex-col justify-center p-6 h-screen w-screen">
+        <div className="bg-cover flex flex-col justify-center p-6 h-screen w-screen">
           <div className="w-full text-center text-7xl font-extrabold">FAQS</div>
           <div className="w-full px-40 py-20">
             <Accordion
               expanded={expanded === "panel1"}
               onChange={handleChange("panel1")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -501,6 +586,7 @@ export default function Home() {
             <Accordion
               expanded={expanded === "panel2"}
               onChange={handleChange("panel2")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -518,6 +604,7 @@ export default function Home() {
             <Accordion
               expanded={expanded === "panel3"}
               onChange={handleChange("panel3")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -536,6 +623,7 @@ export default function Home() {
             <Accordion
               expanded={expanded === "panel4"}
               onChange={handleChange("panel4")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -553,6 +641,7 @@ export default function Home() {
             <Accordion
               expanded={expanded === "panel5"}
               onChange={handleChange("panel5")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -570,6 +659,7 @@ export default function Home() {
             <Accordion
               expanded={expanded === "panel6"}
               onChange={handleChange("panel6")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -588,6 +678,7 @@ export default function Home() {
             <Accordion
               expanded={expanded === "panel7"}
               onChange={handleChange("panel7")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -606,6 +697,7 @@ export default function Home() {
             <Accordion
               expanded={expanded === "panel8"}
               onChange={handleChange("panel8")}
+              className="bg-white bg-opacity-20"
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -623,7 +715,7 @@ export default function Home() {
             </Accordion>
           </div>
         </div>
-        <div className="bg-black bg-cover flex flex-row justify-center h-screen w-screen">
+        <div className="bg-cover flex flex-row justify-center h-screen w-screen">
           <div className="flex flex-col w-1/2 p-10 justify-center">
             <div className="text-white font-extrabold text-7xl ml-10">
               Contact Us
@@ -632,34 +724,38 @@ export default function Home() {
               Get in touch us with any comments you have!
             </div>
           </div>
-          <div className="w-1/2 flex flex-col justify-center p-6">
+          <div className="w-1/2 flex flex-col justify-center p-6 mr-16">
             <TextField
               id="outlined-basic"
               label="Name"
               variant="filled"
-              className="rounded-lg mb-6 mr-16"
+              className="rounded-lg mb-6"
               type="text"
+              onChange={(event) => setName(event.target.value)}
             />
             <TextField
               id="standard-basic"
               label="Subject"
               variant="filled"
-              className="rounded-lg mb-6 mr-16"
+              className="rounded-lg mb-6"
               type="text"
+              onChange={(event) => setSubject(event.target.value)}
             />
             <TextField
               id="filled-basic"
               label="Email Address"
               variant="filled"
-              className="rounded-lg mb-6 mr-16"
+              className="rounded-lg mb-6"
               type="email"
+              onChange={(event) => setEmail(event.target.value)}
             />
             <TextField
               id="filled-basic"
               label="Phone Number"
               variant="filled"
-              className="rounded-lg mb-6 mr-16"
+              className="rounded-lg mb-6"
               type="tel"
+              onChange={(event) => setPhone(event.target.value)}
             />
             <TextField
               id="filled-multiline-static"
@@ -667,8 +763,15 @@ export default function Home() {
               multiline
               rows={7}
               variant="filled"
-              className="rounded-lg mr-16"
+              className="rounded-lg mb-6"
+              onChange={(event) => setMessage(event.target.value)}
             />
+            <button
+              className="w-full rounded p-2 bg-white bg-opacity-15 opacity-75 hover:opacity-100 transition ease-in-out delay-150"
+              onClick={handleSubmit}
+            >
+              SUBMIT
+            </button>
           </div>
         </div>
       </div>

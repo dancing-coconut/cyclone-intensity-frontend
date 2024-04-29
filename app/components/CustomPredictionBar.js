@@ -621,7 +621,8 @@ export default function CustomPredictionBar({
             className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-3 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
             onClick={handleIntensityChange}
           >
-            Predicted Intensity: {intensity} {intensityUnit["curr"]}
+            Predicted Intensity:{" "}
+            {intensity > 0 ? `${intensity} ${intensityUnit["curr"]}` : "-"}
           </button>
         </Tooltip>
         {/* <Tooltip title="Copy to logs">
@@ -657,7 +658,7 @@ export default function CustomPredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
+                    marginBottom: "4px",
                     // color:'white',
                     // '&:hover':{
                     //   color:"black"
@@ -682,7 +683,8 @@ export default function CustomPredictionBar({
             className="w-full h-10 bg-white bg-opacity-10 rounded-lg mr-3 hover:bg-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
             onClick={handlePressureChange}
           >
-            Estimated Pressure: {pressure} {pressureUnit["curr"]}
+            Estimated Pressure:{" "}
+            {pressure > 0 ? `${pressure} ${pressureUnit["curr"]}` : "-"}
           </button>
         </Tooltip>
         {/* <Tooltip title="Copy to logs">
@@ -718,7 +720,7 @@ export default function CustomPredictionBar({
               icon={
                 <SpeedDialIcon
                   sx={{
-                    marginBottom: "3px",
+                    marginBottom: "4px",
                     // color:'white',
                     // '&:hover':{
                     //   color:"black"
@@ -868,7 +870,7 @@ export default function CustomPredictionBar({
             className="w-full h-10 border border-white rounded-lg mr-3 hover:bg-white hover:text-black border-opacity-20 hover:border-opacity-100 transition ease-in-out delay-150 text-white hover:text-zinc-950"
             onClick={toggleDrawer(true)}
           >
-            Predicted Category: {category}
+            Predicted Category: {category == "10" ? "-" : `${category}`}
           </button>
         </Tooltip>
         <Modal

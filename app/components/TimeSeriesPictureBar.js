@@ -55,7 +55,7 @@ export default function TimeSeriesPictureBar({ wind, pressure, original }) {
               <XAxis dataKey="name" />
               <YAxis
                 type="number"
-                domain={["dataMin", "dataMax"]}
+                // domain={["dataMin", "dataMax + 10"]}
                 dataKey="Pressure"
               />
               <Tooltip />
