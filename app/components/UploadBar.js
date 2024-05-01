@@ -51,6 +51,16 @@ export default function UploadBar({
   });
 
   const handleSubmit = async (event) => {
+    toast.info("Your Image Has Been Submitted!", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     event.preventDefault();
 
     if (!file) {

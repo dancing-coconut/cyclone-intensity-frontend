@@ -258,7 +258,7 @@ const Archive = () => {
       wind: "0.00000",
       pressure: "0.00",
       name: "BUREVI",
-      original_img: "/cyclone.jpg",
+      original_img: "/archive.jpg",
       timestamp: "2020-12-04T09:00:00+05:30",
       category: 0,
       t_number: 1,
@@ -1066,7 +1066,7 @@ const Archive = () => {
                 // original={archiveData.archive_data.original_img}
                 timezone={mainTimezone}
                 original={
-                  `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/` +
+                  // `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/` +
                   archiveData.archive_data.original_img
                 }
               />

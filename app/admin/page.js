@@ -96,8 +96,8 @@ const Admin = () => {
 
   const [intensity, setIntensity] = useState(20);
   const [pressure, setPressure] = useState(20);
-  const [originalImage, setOriginalImage] = useState("/cyclone.jpg");
-  const [processedImage, setProcessedImage] = useState("/cyclone.jpg");
+  const [originalImage, setOriginalImage] = useState("/original.png");
+  const [processedImage, setProcessedImage] = useState("/processed.png");
   const [category, setCategory] = useState(0);
   const [tNumber, setTNumber] = useState("1.0 - 3.5");
   const [data, setData] = useState();

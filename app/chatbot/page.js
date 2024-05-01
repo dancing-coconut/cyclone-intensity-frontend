@@ -107,18 +107,23 @@ const Chatbot = () => {
           }
           const resp = decoder.decode(value, { stream: true });
           console.log(resp);
-          setMessages((oldMessages) => {
-            const newMessages = [...oldMessages];
-            newMessages[newMessages.length - 1] = {
-              message:
-                (newMessages[newMessages.length - 1].message
-                  ? newMessages[newMessages.length - 1].message
-                  : "") + JSON.parse(resp).response,
-              role: "chatbot",
-            };
-            localStorage.setItem("messages", JSON.stringify(newMessages));
-            return newMessages;
-          });
+          try {
+            setMessages((oldMessages) => {
+              const newMessages = [...oldMessages];
+              newMessages[newMessages.length - 1] = {
+                message:
+                  (newMessages[newMessages.length - 1].message
+                    ? newMessages[newMessages.length - 1].message
+                    : "") + JSON.parse(resp).response,
+                role: "chatbot",
+              };
+              localStorage.setItem("messages", JSON.stringify(newMessages));
+              return newMessages;
+            });
+          } catch (error) {
+            console.log(error);
+            break;
+          }
         }
       };
 

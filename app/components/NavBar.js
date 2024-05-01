@@ -207,16 +207,16 @@ const NavBar = ({ setVisible, visible, setNotesVisible, notesVisible }) => {
           </button>
         </Tooltip>
         <hr className="w-full opacity-20" />
-        <Tooltip title="Archives">
+        <Tooltip title="Real Time">
           <button
             className={
-              key == "/archive"
+              key == "/admin"
                 ? "flex justify-center items-center w-full mt-4 p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white"
                 : "mt-4 p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"
             }
-            onClick={() => router.push("/archive")}
+            onClick={() => router.push("/admin")}
           >
-            <CalendarMonthIcon style={{ color: "white", fontSize: 30 }} />
+            <AnalyticsIcon style={{ color: "white", fontSize: 30 }} />
           </button>
         </Tooltip>
         <Tooltip title="Time Series">
@@ -231,16 +231,28 @@ const NavBar = ({ setVisible, visible, setNotesVisible, notesVisible }) => {
             <AccessTimeIcon style={{ color: "white", fontSize: 30 }} />
           </button>
         </Tooltip>
-        <Tooltip title="Real Time">
+        <Tooltip title="Archives">
           <button
             className={
-              key == "/admin"
+              key == "/archive"
                 ? "flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white"
                 : "p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"
             }
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push("/archive")}
           >
-            <AnalyticsIcon style={{ color: "white", fontSize: 30 }} />
+            <CalendarMonthIcon style={{ color: "white", fontSize: 30 }} />
+          </button>
+        </Tooltip>
+        <Tooltip title="Upload Image">
+          <button
+            className={
+              key == "/upload"
+                ? "flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white"
+                : "p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"
+            }
+            onClick={() => router.push("/upload")}
+          >
+            <AddPhotoAlternateIcon style={{ color: "white", fontSize: 30 }} />
           </button>
         </Tooltip>
         <Tooltip title="AI Chatbot">
@@ -265,18 +277,6 @@ const NavBar = ({ setVisible, visible, setNotesVisible, notesVisible }) => {
             onClick={() => router.push("/notebook")}
           >
             <LibraryBooksIcon style={{ color: "white", fontSize: 30 }} />
-          </button>
-        </Tooltip>
-        <Tooltip title="Upload Image">
-          <button
-            className={
-              key == "/upload"
-                ? "flex justify-center items-center w-full p-4 bg-gradient-to-r from-zinc-500 to-transparent border-l-4 border-white"
-                : "p-4 opacity-40 hover:opacity-100 focus:bg-white transition ease-in-out delay-150"
-            }
-            onClick={() => router.push("/upload")}
-          >
-            <AddPhotoAlternateIcon style={{ color: "white", fontSize: 30 }} />
           </button>
         </Tooltip>
       </div>

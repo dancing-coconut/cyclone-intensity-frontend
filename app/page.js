@@ -29,6 +29,12 @@ import ChatIcon from "@mui/icons-material/Chat";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
+import TimeSeries from "./components/TimeSeries";
+import ArchiveAccess from "./components/ArchiveAccess";
+import AIAnalysis from "./components/AIAnalysis";
+import CustomPrediction from "./components/CustomPrediction";
+import RealTime from "./components/RealTime";
+
 export default function Home() {
   const router = useRouter();
 
@@ -43,6 +49,9 @@ export default function Home() {
   const [subject, setSubject] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+
+  const [text, setText] = useState("Hover To Explore!");
+  const [current, setCurrent] = useState("real");
 
   const style = {
     position: "absolute",
@@ -460,7 +469,14 @@ export default function Home() {
                 Discover insights, prepare, and mitigate with Chakravaat.
               </div>
               <div className="flex flex-col h-full px-6 ml-5">
-                <button className="flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150">
+                <button
+                  className={
+                    current == "real"
+                      ? "flex flex-row rounded-lg w-full mb-6 p-4 text-left bg-white bg-opacity-40"
+                      : "flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150"
+                  }
+                  onClick={() => setCurrent("real")}
+                >
                   <div className="h-full flex flex-col justify-center">
                     <AccessTimeIcon
                       sx={{
@@ -479,7 +495,14 @@ export default function Home() {
                     </div>
                   </div>
                 </button>
-                <button className="flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150">
+                <button
+                  className={
+                    current == "time"
+                      ? "flex flex-row rounded-lg w-full mb-6 p-4 text-left bg-white bg-opacity-40"
+                      : "flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150"
+                  }
+                  onClick={() => setCurrent("time")}
+                >
                   <div className="h-full flex flex-col justify-center">
                     <CalendarMonthIcon
                       sx={{
@@ -498,7 +521,14 @@ export default function Home() {
                     </div>
                   </div>
                 </button>
-                <button className="flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150">
+                <button
+                  className={
+                    current == "arch"
+                      ? "flex flex-row rounded-lg w-full mb-6 p-4 text-left bg-white bg-opacity-40"
+                      : "flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150"
+                  }
+                  onClick={() => setCurrent("arch")}
+                >
                   <div className="h-full flex flex-col justify-center">
                     <ChatIcon
                       sx={{
@@ -517,7 +547,14 @@ export default function Home() {
                     </div>
                   </div>
                 </button>
-                <button className="flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150">
+                <button
+                  className={
+                    current == "chat"
+                      ? "flex flex-row rounded-lg w-full mb-6 p-4 text-left bg-white bg-opacity-40"
+                      : "flex flex-row rounded-lg w-full mb-6 p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150"
+                  }
+                  onClick={() => setCurrent("chat")}
+                >
                   <div className="h-full flex flex-col justify-center">
                     <AnalyticsIcon
                       sx={{
@@ -534,7 +571,14 @@ export default function Home() {
                     </div>
                   </div>
                 </button>
-                <button className="flex flex-row rounded-lg w-full p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150">
+                <button
+                  className={
+                    current == "cust"
+                      ? "flex flex-row rounded-lg w-full p-4 text-left bg-white bg-opacity-40"
+                      : "flex flex-row rounded-lg w-full p-4 text-left hover:bg-white hover:bg-opacity-20 transition ease-in-out delay-150"
+                  }
+                  onClick={() => setCurrent("cust")}
+                >
                   <div className="h-full flex flex-col justify-center">
                     <AddPhotoAlternateIcon
                       sx={{
@@ -556,9 +600,24 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="w-1/2 flex flex-col justify-center h-full p-6">
-            <div className="w-full h-3/4 bg-white bg-opacity-20 rounded-lg"></div>
-            <div className="w-full h-20 mt-7 bg-white bg-opacity-20 rounded-lg"></div>
+          <div className="w-1/2 flex flex-col justify-center h-full p-6 mr-6">
+            <div className="w-full h-20 mb-4 rounded-lg flex flex-col justify-center text-center font-bold text-4xl">
+              {current == "real" ? "Real Time Prediction" : ""}
+              {current == "time" ? "Time Series Prediction" : ""}
+              {current == "arch" ? "Archive Access" : ""}
+              {current == "chat" ? "Artificial Intelligence Analysis" : ""}
+              {current == "cust" ? "Custom Prediction" : ""}
+            </div>
+            <div className="w-full h-[24rem] bg-white bg-opacity-20 rounded-lg">
+              {current == "real" ? <RealTime setText={setText} /> : ""}
+              {current == "time" ? <TimeSeries setText={setText} /> : ""}
+              {current == "arch" ? <ArchiveAccess setText={setText} /> : ""}
+              {current == "chat" ? <AIAnalysis setText={setText} /> : ""}
+              {current == "cust" ? <CustomPrediction setText={setText} /> : ""}
+            </div>
+            <div className="w-full h-20 mt-7 bg-white bg-opacity-20 rounded-lg flex flex-col justify-center text-center p-4">
+              {text}
+            </div>
           </div>
         </div>
         <div className="bg-cover flex flex-col justify-center p-6 h-screen w-screen">

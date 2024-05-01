@@ -209,7 +209,7 @@ const TimeSeries = () => {
       pressure: "1002.43",
       t_number: "1.0",
       category: "0",
-      original_img: "/cyclone.jpg",
+      original_img: "/original.jpg",
       processed_img: "/media/processed/processed_sYZibE5.png",
       timestamp: "2024-04-13T07:04:07.423692+05:30",
     },
@@ -1490,7 +1490,7 @@ const TimeSeries = () => {
                 pressure={pressureData}
                 // original={timeSeriesData.general_data.original_img}
                 original={
-                  `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/` +
+                  // `${process.env.NEXT_PUBLIC_IP_ADDRESS_URL}/` +
                   timeSeriesData.general_data.original_img
                 }
               />
